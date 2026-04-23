@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Blog | Dawn Christine Simmons — ServiceNow, AI & Digital Transformation Insights</title>
+<meta name="description" content="Expert insights on ServiceNow, AI automation, ITSM, digital transformation, and enterprise business solutions by Dawn Christine Simmons.">
+<meta name="keywords" content="ServiceNow blog, AI transformation blog, ITSM insights, Dawn Simmons blog, digital transformation articles">
+<link rel="canonical" href="https://www.dawncsimmons.com/blog/">
+<meta property="og:title" content="Blog | Dawn Christine Simmons">
+<meta property="og:description" content="Expert insights on ServiceNow, AI automation, ITSM, and digital transformation.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&family=Playfair+Display:ital,wght@0,700;0,900;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: oklch(11% 0.01 260);
+    --bg2: oklch(14% 0.012 260);
+    --bg3: oklch(17% 0.012 260);
+    --surface: oklch(19% 0.015 260);
+    --border: oklch(25% 0.015 260);
+    --muted: oklch(45% 0.01 260);
+    --text: oklch(92% 0.005 260);
+    --text2: oklch(65% 0.008 260);
+    --accent: oklch(72% 0.155 195);
+    --accent2: oklch(72% 0.155 145);
+    --ff-display: 'Playfair Display', Georgia, serif;
+    --ff-body: 'DM Sans', Helvetica, sans-serif;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { font-family: var(--ff-body); background: var(--bg); color: var(--text); line-height: 1.6; overflow-x: hidden; }
+
+  /* NAV */
+  nav#navbar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 48px; height: 68px;
+    background: oklch(11% 0.01 260 / 0.9); backdrop-filter: blur(18px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-logo { font-family: var(--ff-display); font-size: 18px; color: var(--text); text-decoration: none; letter-spacing: -0.02em; }
+  .nav-logo span { color: var(--accent); }
+  .nav-links { display: flex; gap: 32px; list-style: none; }
+  .nav-links a { font-size: 13px; font-weight: 500; letter-spacing: .06em; text-transform: uppercase; color: var(--text2); text-decoration: none; transition: color .2s; position: relative; }
+  .nav-links a::after { content:''; position:absolute; bottom:-4px; left:0; right:0; height:1px; background:var(--accent); transform:scaleX(0); transform-origin:left; transition:transform .3s; }
+  .nav-links a:hover, .nav-links a.active { color: var(--text); }
+  .nav-links a:hover::after, .nav-links a.active::after { transform: scaleX(1); }
+  .nav-cta { font-size: 13px; font-weight: 500; padding: 9px 22px; background: var(--accent); color: oklch(11% 0.01 260); border-radius: 4px; text-decoration: none; transition: opacity .2s; }
+  .nav-cta:hover { opacity: .85; }
+  .nav-hamburger { display: none; flex-direction: column; gap: 5px; background: none; border: none; cursor: pointer; padding: 4px; }
+  .nav-hamburger span { display: block; width: 24px; height: 2px; background: var(--text); border-radius: 2px; transition: all .3s; }
+  .nav-hamburger.open span:nth-child(1) { transform: rotate(45deg) translate(5px,5px); }
+  .nav-hamburger.open span:nth-child(2) { opacity: 0; }
+  .nav-hamburger.open span:nth-child(3) { transform: rotate(-45deg) translate(5px,-5px); }
+  .nav-mobile-drawer { display: none; position: fixed; top: 68px; left: 0; right: 0; background: oklch(11% 0.01 260 / 0.98); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border); z-index: 99; padding: 24px; transform: translateY(-10px); opacity: 0; transition: all .3s; pointer-events: none; }
+  .nav-mobile-drawer.open { transform: translateY(0); opacity: 1; pointer-events: all; }
+  .nav-mobile-drawer ul { list-style: none; display: flex; flex-direction: column; gap: 4px; }
+  .nav-mobile-drawer a { display: block; padding: 12px 0; font-size: 16px; font-weight: 500; color: var(--text2); text-decoration: none; border-bottom: 1px solid var(--border); transition: color .2s; }
+  .nav-mobile-drawer a:hover { color: var(--accent); }
+
+  /* PAGE HERO */
+  .page-hero {
+    padding: 120px 48px 64px;
+    background: var(--bg2);
+    border-bottom: 1px solid var(--border);
+    position: relative; overflow: hidden;
+  }
+  .page-hero-inner { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 1fr auto; align-items: end; gap: 40px; }
+  .hero-bg-text {
+    position: absolute; bottom: -20px; right: 48px;
+    font-family: var(--ff-display); font-size: 160px; font-weight: 900;
+    color: oklch(92% 0.005 260 / 0.03); letter-spacing: -0.04em; line-height: 1;
+    user-select: none; pointer-events: none;
+  }
+  .page-hero h1 { font-family: var(--ff-display); font-size: clamp(40px, 5vw, 72px); font-weight: 900; letter-spacing: -0.03em; line-height: 1; }
+  .page-hero h1 em { font-style: italic; color: var(--accent); }
+  .page-hero-sub { font-size: 16px; color: var(--text2); max-width: 480px; line-height: 1.75; margin-top: 14px; }
+  .hero-stats { display: flex; gap: 32px; flex-shrink: 0; }
+  .hero-stat { text-align: center; }
+  .hero-stat-num { font-family: var(--ff-display); font-size: 32px; font-weight: 900; color: var(--text); letter-spacing: -0.02em; }
+  .hero-stat-num span { color: var(--accent); }
+  .hero-stat-label { font-size: 11px; color: var(--muted); letter-spacing: .06em; text-transform: uppercase; margin-top: 2px; }
+
+  /* FILTER BAR */
+  .filter-bar {
+    background: var(--bg2); border-bottom: 1px solid var(--border);
+    padding: 0 48px; position: sticky; top: 68px; z-index: 50;
+  }
+  .filter-inner { max-width: 1200px; margin: 0 auto; display: flex; gap: 4px; overflow-x: auto; padding: 14px 0; scrollbar-width: none; }
+  .filter-inner::-webkit-scrollbar { display: none; }
+  .filter-pill {
+    flex-shrink: 0; font-size: 12px; font-weight: 500; padding: 7px 16px;
+    border-radius: 20px; border: 1px solid var(--border);
+    background: transparent; color: var(--text2); cursor: pointer;
+    font-family: var(--ff-body); transition: all .2s; white-space: nowrap;
+  }
+  .filter-pill:hover { border-color: var(--accent); color: var(--accent); }
+  .filter-pill.active { background: var(--accent); color: oklch(11% 0.01 260); border-color: var(--accent); }
+
+  /* MAIN LAYOUT */
+  .blog-layout { max-width: 1200px; margin: 0 auto; padding: 60px 48px; display: grid; grid-template-columns: 1fr 300px; gap: 60px; }
+
+  /* FEATURED POST */
+  .featured-post {
+    background: var(--surface); border: 1px solid var(--border); border-radius: 16px;
+    overflow: hidden; margin-bottom: 40px; display: grid; grid-template-columns: 1fr 1fr;
+    transition: all .3s; text-decoration: none; color: inherit;
+  }
+  .featured-post:hover { border-color: oklch(72% 0.155 195 / 0.5); transform: translateY(-2px); }
+  .featured-post:hover .fp-title { color: var(--accent); }
+  .fp-img {
+    background: var(--bg3); min-height: 280px;
+    display: flex; align-items: center; justify-content: center;
+    position: relative; overflow: hidden; border-right: 1px solid var(--border);
+  }
+  .fp-img-glow { position: absolute; inset: 0; background: linear-gradient(135deg, oklch(72% 0.155 195/0.12), oklch(72% 0.155 145/0.06)); }
+  .fp-img span { position: relative; z-index: 1; font-size: 11px; color: var(--muted); letter-spacing: .08em; text-transform: uppercase; }
+  .fp-body { padding: 36px; display: flex; flex-direction: column; justify-content: space-between; }
+  .fp-eyebrow { display: flex; align-items: center; gap: 10px; margin-bottom: 16px; }
+  .fp-badge { font-size: 10px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: oklch(11% 0.01 260); background: var(--accent); padding: 4px 10px; border-radius: 3px; }
+  .fp-cat { font-size: 11px; color: var(--muted); }
+  .fp-title { font-family: var(--ff-display); font-size: clamp(20px,2.5vw,28px); font-weight: 700; line-height: 1.2; letter-spacing: -0.02em; margin-bottom: 12px; transition: color .2s; }
+  .fp-excerpt { font-size: 14px; color: var(--text2); line-height: 1.7; margin-bottom: 24px; }
+  .fp-meta { display: flex; align-items: center; gap: 10px; font-size: 12px; color: var(--muted); }
+  .fp-meta-dot { width: 3px; height: 3px; border-radius: 50%; background: var(--border); }
+  .fp-read { font-size: 13px; font-weight: 500; color: var(--accent); display: flex; align-items: center; gap: 6px; margin-top: 16px; }
+
+  /* POSTS GRID */
+  .posts-section h2 { font-family: var(--ff-display); font-size: 22px; font-weight: 700; margin-bottom: 24px; letter-spacing: -0.02em; color: var(--text2); display: flex; align-items: center; gap: 12px; }
+  .posts-section h2::after { content:''; flex:1; height:1px; background:var(--border); }
+  .posts-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; margin-bottom: 48px; }
+  .post-card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 12px; overflow: hidden; text-decoration: none;
+    color: inherit; display: flex; flex-direction: column; transition: all .3s;
+    position: relative;
+  }
+  .post-card::before { content:''; position:absolute; top:0; left:0; right:0; height:2px; background: linear-gradient(90deg,var(--accent),var(--accent2)); transform:scaleX(0); transform-origin:left; transition:transform .4s; }
+  .post-card:hover { transform: translateY(-4px); border-color: oklch(72% 0.155 195/0.4); }
+  .post-card:hover::before { transform: scaleX(1); }
+  .post-card:hover .post-title { color: var(--accent); }
+  .post-img { aspect-ratio: 16/9; background: var(--bg3); display: flex; align-items: center; justify-content: center; border-bottom: 1px solid var(--border); position: relative; overflow: hidden; flex-shrink: 0; }
+  .post-img-accent { position: absolute; inset: 0; }
+  .post-img span { position: relative; z-index: 1; font-size: 10px; color: var(--muted); letter-spacing: .08em; text-transform: uppercase; }
+  .post-body { padding: 20px; flex: 1; display: flex; flex-direction: column; }
+  .post-cat { font-size: 10px; letter-spacing: .1em; text-transform: uppercase; color: var(--accent); margin-bottom: 8px; }
+  .post-title { font-size: 15px; font-weight: 600; line-height: 1.4; color: var(--text); margin-bottom: 8px; transition: color .2s; }
+  .post-excerpt { font-size: 13px; color: var(--text2); line-height: 1.65; flex: 1; }
+  .post-meta { display: flex; align-items: center; gap: 8px; font-size: 11px; color: var(--muted); margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--border); }
+  .post-meta-dot { width: 3px; height: 3px; border-radius: 50%; background: var(--border); }
+
+  /* PAGINATION */
+  .pagination-wrap { padding-top: 8px; border-top: 1px solid var(--border); }
+  .pagination-label { font-size: 12px; color: var(--muted); margin-bottom: 14px; }
+  .pagination { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; }
+  .page-btn { width: 38px; height: 38px; display: flex; align-items: center; justify-content: center; border-radius: 8px; border: 1px solid var(--border); background: transparent; color: var(--text2); font-size: 13px; cursor: pointer; text-decoration: none; transition: all .2s; font-family: var(--ff-body); }
+  .page-btn:hover, .page-btn.active { background: var(--accent); color: oklch(11% 0.01 260); border-color: var(--accent); }
+  .page-btn.dots { border: none; cursor: default; width: auto; padding: 0 4px; }
+  .page-btn.dots:hover { background: transparent; color: var(--muted); }
+  .page-btn.wide { width: auto; padding: 0 16px; }
+
+  /* SIDEBAR */
+  .sidebar { display: flex; flex-direction: column; gap: 24px; }
+  .sidebar-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 22px; }
+  .sidebar-title { font-size: 11px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); margin-bottom: 14px; padding-bottom: 10px; border-bottom: 1px solid var(--border); }
+  .author-wrap { display: flex; gap: 12px; align-items: center; margin-bottom: 12px; }
+  .author-avatar { width: 56px; height: 56px; border-radius: 50%; overflow: hidden; flex-shrink: 0; border: 2px solid var(--accent); }
+  .author-avatar img { width: 100%; height: 100%; object-fit: cover; object-position: center top; }
+  .author-name { font-size: 15px; font-weight: 600; }
+  .author-role { font-size: 12px; color: var(--muted); }
+  .author-bio { font-size: 13px; color: var(--text2); line-height: 1.65; margin-bottom: 12px; }
+  .cat-list { display: flex; flex-direction: column; }
+  .cat-item { display: flex; justify-content: space-between; align-items: center; font-size: 13px; color: var(--text2); text-decoration: none; padding: 9px 0; border-bottom: 1px solid var(--border); transition: color .2s; }
+  .cat-item:last-child { border-bottom: none; }
+  .cat-item:hover { color: var(--accent); }
+  .cat-count { font-size: 11px; background: var(--bg3); color: var(--muted); padding: 2px 8px; border-radius: 10px; }
+  .tags-wrap { display: flex; flex-wrap: wrap; gap: 6px; }
+  .tag { font-size: 11px; padding: 5px 11px; border-radius: 20px; border: 1px solid var(--border); color: var(--muted); text-decoration: none; transition: all .2s; }
+  .tag:hover { border-color: var(--accent); color: var(--accent); background: oklch(72% 0.155 195/0.07); }
+  .search-box { display: flex; gap: 8px; }
+  .search-input { flex: 1; background: var(--bg3); border: 1px solid var(--border); color: var(--text); font-family: var(--ff-body); font-size: 13px; padding: 10px 14px; border-radius: 6px; outline: none; transition: border-color .2s; }
+  .search-input:focus { border-color: var(--accent); }
+  .search-btn { background: var(--accent); border: none; color: oklch(11% 0.01 260); padding: 10px 14px; border-radius: 6px; cursor: pointer; transition: opacity .2s; }
+  .search-btn:hover { opacity: .85; }
+
+  /* FADE IN */
+  .fade-in { opacity: 0; transform: translateY(18px); transition: opacity .5s, transform .5s; }
+  .fade-in.visible { opacity: 1; transform: none; }
+  .fade-in-d1 { transition-delay: .08s; }
+  .fade-in-d2 { transition-delay: .16s; }
+  .fade-in-d3 { transition-delay: .24s; }
+
+  /* FOOTER */
+  footer { background: var(--bg); border-top: 1px solid var(--border); padding: 36px 48px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; }
+  .footer-logo { font-family: var(--ff-display); font-size: 16px; color: var(--text2); text-decoration: none; }
+  .footer-logo span { color: var(--accent); }
+  .footer-copy { font-size: 13px; color: var(--muted); }
+  .footer-links { display: flex; gap: 24px; }
+  .footer-links a { font-size: 13px; color: var(--muted); text-decoration: none; }
+  .footer-links a:hover { color: var(--accent); }
+
+  /* TWEAKS */
+  #tweaks-panel { display: none; position: fixed; bottom: 24px; right: 24px; z-index: 9999; width: 250px; background: var(--bg2); border: 1px solid var(--border); border-radius: 14px; padding: 18px; box-shadow: 0 24px 64px oklch(0% 0 0 / 0.5); }
+  .tweaks-title { font-size: 13px; font-weight: 600; margin-bottom: 14px; }
+  .tweak-group { margin-bottom: 12px; }
+  .tweak-label { font-size: 10px; color: var(--muted); letter-spacing: .06em; text-transform: uppercase; margin-bottom: 6px; }
+  .tweak-row { display: flex; gap: 6px; flex-wrap: wrap; }
+  .tweak-btn { font-size: 11px; padding: 5px 10px; border-radius: 4px; border: 1px solid var(--border); background: transparent; color: var(--text2); cursor: pointer; transition: all .15s; font-family: var(--ff-body); }
+  .tweak-btn.active, .tweak-btn:hover { border-color: var(--accent); color: var(--accent); background: oklch(72% 0.155 195/0.1); }
+  .tweak-divider { height: 1px; background: var(--border); margin: 10px 0; }
+
+  /* RESPONSIVE */
+  @media (max-width: 1100px) {
+    .blog-layout { grid-template-columns: 1fr 260px; gap: 40px; padding: 48px 32px; }
+  }
+  @media (max-width: 900px) {
+    nav#navbar { padding: 0 24px; }
+    .nav-links, .nav-cta { display: none; }
+    .nav-hamburger { display: flex; }
+    .nav-mobile-drawer { display: block; }
+    .page-hero { padding: 100px 24px 48px; }
+    .page-hero-inner { grid-template-columns: 1fr; }
+    .hero-stats { display: none; }
+    .filter-bar { padding: 0 24px; }
+    .blog-layout { grid-template-columns: 1fr; padding: 40px 24px; gap: 48px; }
+    .sidebar { display: grid; grid-template-columns: repeat(2,1fr); gap: 16px; }
+    .featured-post { grid-template-columns: 1fr; }
+    .fp-img { min-height: 200px; border-right: none; border-bottom: 1px solid var(--border); }
+    footer { flex-direction: column; text-align: center; padding: 28px 24px; }
+    .footer-links { justify-content: center; }
+  }
+  @media (max-width: 640px) {
+    nav#navbar { padding: 0 16px; }
+    .page-hero { padding: 90px 16px 40px; }
+    .filter-bar { padding: 0 16px; }
+    .blog-layout { padding: 32px 16px; }
+    .posts-grid { grid-template-columns: 1fr; }
+    .sidebar { grid-template-columns: 1fr; }
+    .hero-bg-text { display: none; }
+    .pagination { gap: 4px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="navbar" role="navigation" aria-label="Main navigation">
+  <a href="Dawn Simmons Website v2.html" class="nav-logo">Dawn<span>.</span></a>
+  <ul class="nav-links">
+    <li><a href="Dawn Simmons Website v2.html">Home</a></li>
+    <li><a href="Dawn Simmons Website v2.html#services">Services</a></li>
+    <li><a href="Dawn Simmons Website v2.html#ai">AI Solutions</a></li>
+    <li><a href="Dawn Simmons Website v2.html#about">About</a></li>
+    <li><a href="Blog.html" class="active">Blog</a></li>
+    <li><a href="Dawn Simmons Website v2.html#contact">Contact</a></li>
+  </ul>
+  <a href="Dawn Simmons Website v2.html#contact" class="nav-cta">Let's Talk</a>
+  <button class="nav-hamburger" id="navHamburger" aria-label="Toggle navigation" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+<div class="nav-mobile-drawer" id="mobileDrawer">
+  <ul>
+    <li><a href="Dawn Simmons Website v2.html" onclick="closeDrawer()">Home</a></li>
+    <li><a href="Dawn Simmons Website v2.html#services" onclick="closeDrawer()">Services</a></li>
+    <li><a href="Dawn Simmons Website v2.html#ai" onclick="closeDrawer()">AI Solutions</a></li>
+    <li><a href="Dawn Simmons Website v2.html#about" onclick="closeDrawer()">About</a></li>
+    <li><a href="Blog.html" onclick="closeDrawer()">Blog</a></li>
+    <li><a href="Dawn Simmons Website v2.html#contact" onclick="closeDrawer()">Contact</a></li>
+  </ul>
+</div>
+
+<!-- PAGE HERO -->
+<header class="page-hero">
+  <div class="hero-bg-text" aria-hidden="true">Blog</div>
+  <div class="page-hero-inner">
+    <div>
+      <div style="font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);display:flex;align-items:center;gap:10px;margin-bottom:14px">
+        <span style="display:block;width:24px;height:1px;background:var(--accent)"></span>Insights & Ideas
+      </div>
+      <h1>Expert <em>Perspectives</em></h1>
+      <p class="page-hero-sub">ServiceNow, AI automation, ITSM, digital transformation, and the future of enterprise — straight from the field.</p>
+    </div>
+    <div class="hero-stats">
+      <div class="hero-stat">
+        <div class="hero-stat-num">49<span>+</span></div>
+        <div class="hero-stat-label">Pages</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-num" style="color:var(--accent)">480<span>+</span></div>
+        <div class="hero-stat-label">Articles</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-num">20<span>+</span></div>
+        <div class="hero-stat-label">Categories</div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- FILTER BAR -->
+<div class="filter-bar" role="navigation" aria-label="Category filters">
+  <div class="filter-inner" id="filterBar">
+    <button class="filter-pill active" onclick="filterPosts('all',this)">All Posts</button>
+    <button class="filter-pill" onclick="filterPosts('servicenow',this)">ServiceNow</button>
+    <button class="filter-pill" onclick="filterPosts('ai',this)">AI & Generative</button>
+    <button class="filter-pill" onclick="filterPosts('automatepro',this)">AutomatePro</button>
+    <button class="filter-pill" onclick="filterPosts('itsm',this)">ITSM</button>
+    <button class="filter-pill" onclick="filterPosts('chicago',this)">Chicago</button>
+    <button class="filter-pill" onclick="filterPosts('cybersecurity',this)">Cyber Security</button>
+    <button class="filter-pill" onclick="filterPosts('career',this)">Jobs & Career</button>
+  </div>
+</div>
+
+<!-- BLOG LAYOUT -->
+<main id="main-content">
+  <div class="blog-layout">
+
+    <!-- POSTS COLUMN -->
+    <section aria-label="Blog posts">
+
+      <!-- FEATURED -->
+      <a href="Claude UIUX Market Signals.html" class="featured-post fade-in" aria-label="Featured: Claude UI/UX Market Signals">
+        <div class="fp-img">
+          <div class="fp-img-glow"></div>
+          <span>featured image</span>
+        </div>
+        <div class="fp-body">
+          <div class="fp-eyebrow">
+            <span class="fp-badge">Featured</span>
+            <span class="fp-cat">ServiceNow · AI Design · Market Analysis</span>
+          </div>
+          <h2 class="fp-title">Claude UI/UX Market Signals</h2>
+          <p class="fp-excerpt">Claude Design triggered the biggest AI and UI/UX market conversation of 2026. Explore how Claude is transforming the design cycle, why ServiceNow and Cognizant stand to benefit, and why the future belongs to human-AI collaboration.</p>
+          <div class="fp-meta">
+            <time datetime="2026-04-20">Apr 20, 2026</time>
+            <div class="fp-meta-dot"></div>
+            <span>8 min read</span>
+          </div>
+          <div class="fp-read">Read article <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+        </div>
+      </a>
+
+      <!-- POSTS GRID -->
+      <div class="posts-section">
+        <h2>Recent Posts</h2>
+        <div class="posts-grid" id="postsGrid">
+
+          <a href="https://www.dawncsimmons.com/ai-upgrades-redefined-now/" target="_blank" rel="noopener" class="post-card fade-in" data-cat="servicenow ai">
+            <div class="post-img"><div class="post-img-accent" style="background:linear-gradient(135deg,oklch(72% 0.155 145/0.1),transparent)"></div><span>image</span></div>
+            <div class="post-body">
+              <div class="post-cat">ServiceNow · AI</div>
+              <h3 class="post-title">AI Upgrades Redefined Now</h3>
+              <p class="post-excerpt">ServiceNow Australia brings AI directly into workflows — learn how release test automation and AI validation accelerate upgrades.</p>
+              <div class="post-meta"><time>Apr 13, 2026</time><div class="post-meta-dot"></div><span>6 min</span></div>
+            </div>
+          </a>
+
+          <a href="https://www.dawncsimmons.com/chicago-cybersecurity/" target="_blank" rel="noopener" class="post-card fade-in fade-in-d1" data-cat="chicago cybersecurity">
+            <div class="post-img"><div class="post-img-accent" style="background:linear-gradient(135deg,oklch(72% 0.155 220/0.1),transparent)"></div><span>image</span></div>
+            <div class="post-body">
+              <div class="post-cat">Chicago · Cyber Security</div>
+              <h3 class="post-title">Chicago Cybersecurity</h3>
+              <p class="post-excerpt">HDI Chicagoland's Courageous Cloud Leadership event — Chicago's finest cyber security leaders share trends, tips and best practices.</p>
+              <div class="post-meta"><time>Apr 7, 2026</time><div class="post-meta-dot"></div><span>4 min</span></div>
+            </div>
+          </a>
+
+          <a href="https://www.dawncsimmons.com/automatepros-fastest-release-yet/" target="_blank" rel="noopener" class="post-card fade-in fade-in-d2" data-cat="automatepro servicenow">
+            <div class="post-img"><div class="post-img-accent" style="background:linear-gradient(135deg,oklch(72% 0.155 195/0.1),transparent)"></div><span>image</span></div>
+            <div class="post-body">
+              <div class="post-cat">AutomatePro · ServiceNow</div>
+              <h3 class="post-title">AutomatePro's Fastest Release Yet</h3>
+              <p class="post-excerpt">v9.3 moves ServiceNow teams beyond manual testing — smarter automation, real-time control, and full visibility to accelerate releases.</p>
+              <div class="post-meta"><time>Mar 10, 2026</time><div class="post-meta-dot"></div><span>5 min</span></div>
+            </div>
+          </a>
+
+          <a href="https://www.dawncsimmons.com/ai-gender-gap-bias-impact/" target="_blank" rel="noopener" class="post-card fade-in fade-in-d3" data-cat="ai">
+            <div class="post-img"><div class="post-img-accent" style="background:linear-gradient(135deg,oklch(72% 0.155 145/0.1),transparent)"></div><span>image</span></div>
+            <div class="post-body">
+              <div class="post-cat">AI · Diversity & Inclusion</div>
+              <h3 class="post-title">AI Gender-Gap Bias Impact</h3>
+              <p class="post-excerpt">AI gender-gap bias creates measurable harm across hiring, healthcare, credit, and customer experience — and how to address it.</p>
+              <div class="post-meta"><time>Mar 9, 2026</time><div class="post-meta-dot"></div><span>7 min</span></div>
+            </div>
+          </a>
+
+          <a href="https://www.dawncsimmons.com/servicenow-ai-best-practices/" target="_blank" rel="noopener" class="post-card fade-in" data-cat="servicenow ai">
+            <div class="post-img"><div class="post-img-accent" style="background:linear-gradient(135deg,oklch(72% 0.155 260/0.1),transparent)"></div><span>image</span></div>
+            <div class="post-body">
+              <div class="post-cat">ServiceNow · AI Best Practices</div>
+              <h3 class="post-title">ServiceNow AI Best Practices</h3>
+              <p class="post-excerpt">Stop AI tool sprawl. Use ServiceNow SPM + EAP as your system of record, assign AI ownership across Now Assist, Moveworks, and Claude.</p>
+              <div class="post-meta"><time>Feb 18, 2026</time><div class="post-meta-dot"></div><span>6 min</span></div>
+            </div>
+          </a>
+
+          <a href="https://www.dawncsimmons.com/iwd-ai-service-management/" target="_blank" rel="noopener" class="post-card fade-in fade-in-d1" data-cat="ai itsm">
+            <div class="post-img"><div class="post-img-accent" style="background:linear-gradient(135deg,oklch(72% 0.155 195/0.1),oklch(72% 0.155 145/0.05))"></div><span>image</span></div>
+            <div class="post-body">
+              <div class="post-cat">AI · ITSM · Women in Tech</div>
+              <h3 class="post-title">IWD: AI Service Management</h3>
+              <p class="post-excerpt">HDI Chicagoland spotlights the women shaping AI-enabled ITSM, service operations, SecOps, and AI-driven customer experience.</p>
+              <div class="post-meta"><time>Feb 24, 2026</time><div class="post-meta-dot"></div><span>5 min</span></div>
+            </div>
+          </a>
+
+        </div>
+      </div>
+
+      <!-- PAGINATION (bottom of all articles) -->
+      <div class="pagination-wrap fade-in">
+        <div class="pagination-label">Showing page 1 of 49 — <strong>480+</strong> articles total</div>
+        <nav class="pagination" aria-label="Blog pagination">
+          <span class="page-btn active">1</span>
+          <a class="page-btn" href="https://www.dawncsimmons.com/blog/page/2/" target="_blank">2</a>
+          <a class="page-btn" href="https://www.dawncsimmons.com/blog/page/3/" target="_blank">3</a>
+          <a class="page-btn" href="https://www.dawncsimmons.com/blog/page/4/" target="_blank">4</a>
+          <a class="page-btn" href="https://www.dawncsimmons.com/blog/page/5/" target="_blank">5</a>
+          <span class="page-btn dots">…</span>
+          <a class="page-btn" href="https://www.dawncsimmons.com/blog/page/49/" target="_blank">49</a>
+          <a class="page-btn wide" href="https://www.dawncsimmons.com/blog/page/2/" target="_blank">Next →</a>
+        </nav>
+      </div>
+
+    </section>
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar" aria-label="Blog sidebar">
+
+      <div class="sidebar-card">
+        <div class="sidebar-title">About</div>
+        <div class="author-wrap">
+          <div class="author-avatar"><img src="uploads/dawn_c_simmons.PNG" alt="Dawn Christine Simmons"></div>
+          <div><div class="author-name">Dawn C. Simmons</div><div class="author-role">ServiceNow · AI Expert</div></div>
+        </div>
+        <p class="author-bio">20+ years delivering digital transformation and ServiceNow solutions across Fortune 500 enterprises. Chicago, IL.</p>
+        <a href="Dawn Simmons Website v2.html#contact" style="font-size:13px;color:var(--accent);text-decoration:none">Get in touch →</a>
+      </div>
+
+      <div class="sidebar-card">
+        <div class="sidebar-title">Search</div>
+        <div class="search-box">
+          <input type="search" class="search-input" placeholder="Search articles…" aria-label="Search blog">
+          <button class="search-btn" aria-label="Search" onclick="window.open('https://www.dawncsimmons.com/blog/?s='+encodeURIComponent(this.previousElementSibling.value),'_blank')">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <div class="sidebar-card">
+        <div class="sidebar-title">Top Categories</div>
+        <div class="cat-list">
+          <a href="#" class="cat-item" onclick="filterPosts('ai',document.querySelector('[onclick*=\'ai\']'));return false">AI & Generative <span class="cat-count">30</span></a>
+          <a href="#" class="cat-item" onclick="filterPosts('servicenow',document.querySelector('[onclick*=\'servicenow\']'));return false">ServiceNow <span class="cat-count">28</span></a>
+          <a href="#" class="cat-item" onclick="filterPosts('automatepro',document.querySelector('[onclick*=\'automatepro\']'));return false">AutomatePro <span class="cat-count">142</span></a>
+          <a href="https://www.dawncsimmons.com/category/healthcare/" target="_blank" class="cat-item">Healthcare <span class="cat-count">49</span></a>
+          <a href="https://www.dawncsimmons.com/category/success-motivation/" target="_blank" class="cat-item">Success & Motivation <span class="cat-count">53</span></a>
+          <a href="#" class="cat-item" onclick="filterPosts('cybersecurity',document.querySelector('[onclick*=\'cybersecurity\']'));return false">Cyber Security <span class="cat-count">8</span></a>
+        </div>
+      </div>
+
+      <div class="sidebar-card">
+        <div class="sidebar-title">Popular Tags</div>
+        <div class="tags-wrap">
+          <a href="#" class="tag">ServiceNow</a>
+          <a href="#" class="tag">AI Automation</a>
+          <a href="#" class="tag">ITSM</a>
+          <a href="#" class="tag">Claude Design</a>
+          <a href="#" class="tag">Now Assist</a>
+          <a href="#" class="tag">CMDB</a>
+          <a href="#" class="tag">GRC</a>
+          <a href="#" class="tag">Chicago</a>
+          <a href="#" class="tag">Women in Tech</a>
+          <a href="#" class="tag">AutomatePro</a>
+          <a href="#" class="tag">ITIL v4</a>
+          <a href="#" class="tag">Digital Transform.</a>
+        </div>
+      </div>
+
+    </aside>
+  </div>
+</main>
+
+<!-- TWEAKS -->
+<div id="tweaks-panel">
+  <div class="tweaks-title">⚙ Tweaks</div>
+  <div class="tweak-group">
+    <div class="tweak-label">Accent</div>
+    <div class="tweak-row">
+      <button class="tweak-btn active" onclick="setAccent('teal',this)">Teal</button>
+      <button class="tweak-btn" onclick="setAccent('violet',this)">Violet</button>
+      <button class="tweak-btn" onclick="setAccent('gold',this)">Gold</button>
+      <button class="tweak-btn" onclick="setAccent('coral',this)">Coral</button>
+    </div>
+  </div>
+  <div class="tweak-divider"></div>
+  <div class="tweak-group">
+    <div class="tweak-label">Layout</div>
+    <div class="tweak-row">
+      <button class="tweak-btn active" onclick="setLayout('sidebar',this)">Sidebar</button>
+      <button class="tweak-btn" onclick="setLayout('full',this)">Full Width</button>
+    </div>
+  </div>
+</div>
+
+<footer role="contentinfo">
+  <a href="Dawn Simmons Website v2.html" class="footer-logo">Dawn<span>.</span>C.Simmons</a>
+  <div class="footer-copy">© 2026 Dawn Christine Simmons — ServiceNow Consultant &amp; AI Transformation Expert</div>
+  <nav class="footer-links" aria-label="Footer navigation">
+    <a href="Blog.html">Blog</a>
+    <a href="https://www.dawncsimmons.com/knowledge-base/" target="_blank" rel="noopener">Knowledge Base</a>
+    <a href="Dawn Simmons Website v2.html#contact">Contact</a>
+  </nav>
+</footer>
+
+<script>
+// Hamburger
+const hamburger = document.getElementById('navHamburger');
+const drawer = document.getElementById('mobileDrawer');
+function closeDrawer() {
+  hamburger.classList.remove('open'); hamburger.setAttribute('aria-expanded','false');
+  drawer.classList.remove('open'); drawer.setAttribute('aria-hidden','true');
+}
+hamburger.addEventListener('click', () => {
+  const isOpen = drawer.classList.toggle('open');
+  hamburger.classList.toggle('open', isOpen);
+  hamburger.setAttribute('aria-expanded', isOpen);
+  drawer.setAttribute('aria-hidden', !isOpen);
+});
+
+// Fade in
+const fades = document.querySelectorAll('.fade-in');
+const obs = new IntersectionObserver(e => e.forEach(el => { if(el.isIntersecting) el.target.classList.add('visible'); }), {threshold:0.1});
+fades.forEach(el => obs.observe(el));
+
+// Filter posts
+function filterPosts(cat, btn) {
+  document.querySelectorAll('.filter-pill').forEach(p => p.classList.remove('active'));
+  if (btn) btn.classList.add('active');
+  const cards = document.querySelectorAll('.post-card');
+  cards.forEach(card => {
+    const cats = card.dataset.cat || '';
+    const show = cat === 'all' || cats.includes(cat);
+    card.style.display = show ? '' : 'none';
+    card.style.opacity = show ? '1' : '0';
+  });
+}
+
+// Tweaks
+function setAccent(name, btn) {
+  const map = { teal:['oklch(72% 0.155 195)','oklch(72% 0.155 145)'], violet:['oklch(68% 0.18 290)','oklch(68% 0.18 260)'], gold:['oklch(78% 0.15 85)','oklch(78% 0.15 60)'], coral:['oklch(68% 0.18 30)','oklch(68% 0.18 10)'] };
+  document.documentElement.style.setProperty('--accent', map[name][0]);
+  document.documentElement.style.setProperty('--accent2', map[name][1]);
+  btn.closest('.tweak-row').querySelectorAll('.tweak-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  window.parent.postMessage({type:'__edit_mode_set_keys', edits:{accent:name}},'*');
+}
+function setLayout(type, btn) {
+  const layout = document.querySelector('.blog-layout');
+  layout.style.gridTemplateColumns = type === 'full' ? '1fr' : '1fr 300px';
+  document.querySelector('.sidebar').style.display = type === 'full' ? 'none' : '';
+  btn.closest('.tweak-row').querySelectorAll('.tweak-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+}
+
+window.addEventListener('message', e => {
+  if (e.data?.type === '__activate_edit_mode') document.getElementById('tweaks-panel').style.display = 'block';
+  if (e.data?.type === '__deactivate_edit_mode') document.getElementById('tweaks-panel').style.display = 'none';
+});
+window.parent.postMessage({type:'__edit_mode_available'},'*');
+</script>
+</body>
+</html>

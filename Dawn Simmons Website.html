@@ -1,0 +1,1107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dawn Christine Simmons — ServiceNow Consultant</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&family=Playfair+Display:ital,wght@0,700;0,900;1,400&display=swap" rel="stylesheet">
+
+<style>
+  /* ===== TOKENS ===== */
+  :root {
+    --bg: oklch(11% 0.01 260);
+    --bg2: oklch(14% 0.012 260);
+    --bg3: oklch(17% 0.012 260);
+    --surface: oklch(19% 0.015 260);
+    --border: oklch(25% 0.015 260);
+    --muted: oklch(45% 0.01 260);
+    --text: oklch(92% 0.005 260);
+    --text2: oklch(65% 0.008 260);
+    --accent: oklch(72% 0.155 195);
+    --accent2: oklch(72% 0.155 145);
+    --ff-display: 'Playfair Display', Georgia, serif;
+    --ff-body: 'DM Sans', Helvetica, sans-serif;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: var(--ff-body);
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* ===== NAV ===== */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 48px;
+    height: 68px;
+    background: oklch(11% 0.01 260 / 0.85);
+    backdrop-filter: blur(18px);
+    border-bottom: 1px solid var(--border);
+    transition: all 0.3s ease;
+  }
+  nav.scrolled { height: 56px; }
+  .nav-logo {
+    font-family: var(--ff-display);
+    font-size: 18px;
+    letter-spacing: -0.02em;
+    color: var(--text);
+    text-decoration: none;
+  }
+  .nav-logo span { color: var(--accent); }
+  .nav-links { display: flex; gap: 36px; list-style: none; }
+  .nav-links a {
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--text2);
+    text-decoration: none;
+    transition: color 0.2s;
+    position: relative;
+  }
+  .nav-links a::after {
+    content: ''; position: absolute; bottom: -4px; left: 0; right: 0;
+    height: 1px; background: var(--accent);
+    transform: scaleX(0); transform-origin: left;
+    transition: transform 0.3s ease;
+  }
+  .nav-links a:hover, .nav-links a.active { color: var(--text); }
+  .nav-links a:hover::after, .nav-links a.active::after { transform: scaleX(1); }
+  .nav-cta {
+    font-size: 13px; font-weight: 500;
+    padding: 9px 22px;
+    background: var(--accent);
+    color: oklch(11% 0.01 260);
+    border-radius: 4px;
+    text-decoration: none;
+    transition: opacity 0.2s;
+  }
+  .nav-cta:hover { opacity: 0.85; }
+
+  /* ===== HERO ===== */
+  #hero {
+    min-height: 100vh;
+    display: flex; align-items: center;
+    padding: 120px 48px 80px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-grid {
+    max-width: 1200px; margin: 0 auto;
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 80px; align-items: center; width: 100%;
+  }
+  .hero-eyebrow {
+    font-size: 12px; font-weight: 500;
+    letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--accent); margin-bottom: 20px;
+    display: flex; align-items: center; gap: 12px;
+  }
+  .hero-eyebrow::before {
+    content: ''; display: block; width: 32px; height: 1px; background: var(--accent);
+  }
+  h1 {
+    font-family: var(--ff-display);
+    font-size: clamp(44px, 5vw, 72px);
+    font-weight: 900;
+    line-height: 1.05;
+    letter-spacing: -0.025em;
+    margin-bottom: 28px;
+  }
+  h1 em {
+    font-style: italic;
+    color: var(--accent);
+  }
+  .hero-sub {
+    font-size: 16px; color: var(--text2);
+    max-width: 420px; line-height: 1.75;
+    margin-bottom: 40px;
+  }
+  .hero-roles {
+    display: flex; flex-direction: column; gap: 8px; margin-bottom: 44px;
+  }
+  .hero-role {
+    display: flex; align-items: center; gap: 12px;
+    font-size: 14px; color: var(--text2);
+  }
+  .hero-role-dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--accent); flex-shrink: 0;
+  }
+  .hero-btns { display: flex; gap: 16px; flex-wrap: wrap; }
+  .btn-primary {
+    padding: 14px 32px;
+    background: var(--accent);
+    color: oklch(11% 0.01 260);
+    font-family: var(--ff-body);
+    font-size: 14px; font-weight: 600;
+    letter-spacing: 0.02em;
+    border: none; border-radius: 4px;
+    cursor: pointer; text-decoration: none;
+    transition: all 0.25s;
+    display: inline-flex; align-items: center; gap: 8px;
+  }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 32px oklch(72% 0.155 195 / 0.3); }
+  .btn-outline {
+    padding: 14px 32px;
+    background: transparent;
+    color: var(--text);
+    font-family: var(--ff-body);
+    font-size: 14px; font-weight: 500;
+    letter-spacing: 0.02em;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    cursor: pointer; text-decoration: none;
+    transition: all 0.25s;
+  }
+  .btn-outline:hover { border-color: var(--accent); color: var(--accent); }
+  .hero-stats {
+    display: flex; gap: 48px; padding-top: 48px; border-top: 1px solid var(--border);
+    margin-top: 8px;
+  }
+  .stat-num {
+    font-family: var(--ff-display);
+    font-size: 36px; font-weight: 700;
+    color: var(--text); letter-spacing: -0.02em;
+  }
+  .stat-num span { color: var(--accent); }
+  .stat-label { font-size: 12px; color: var(--text2); letter-spacing: 0.04em; margin-top: 2px; }
+
+  /* Hero visual */
+  .hero-visual {
+    position: relative; display: flex; justify-content: center;
+  }
+  .hero-card {
+    width: 340px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 32px;
+    position: relative;
+  }
+  .hero-photo-placeholder {
+    width: 100%; aspect-ratio: 1/1;
+    border-radius: 12px;
+    background: var(--bg3);
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    gap: 12px;
+    font-size: 12px; color: var(--muted);
+    letter-spacing: 0.06em; text-transform: uppercase;
+    border: 1px dashed var(--border);
+    margin-bottom: 24px;
+    overflow: hidden;
+    position: relative;
+  }
+  .hero-photo-placeholder svg { opacity: 0.3; }
+  .hero-card-name {
+    font-family: var(--ff-display);
+    font-size: 22px; font-weight: 700; margin-bottom: 4px;
+  }
+  .hero-card-title { font-size: 13px; color: var(--accent); margin-bottom: 20px; }
+  .hero-card-badges { display: flex; flex-wrap: wrap; gap: 8px; }
+  .badge {
+    font-size: 11px; font-weight: 500;
+    padding: 5px 10px; border-radius: 3px;
+    background: oklch(72% 0.155 195 / 0.12);
+    color: var(--accent);
+    letter-spacing: 0.04em;
+  }
+  .hero-card-accent {
+    position: absolute; top: -12px; right: -12px;
+    width: 80px; height: 80px;
+    background: oklch(72% 0.155 195 / 0.08);
+    border-radius: 50%;
+    border: 1px solid oklch(72% 0.155 195 / 0.2);
+  }
+  .hero-card-accent2 {
+    position: absolute; bottom: -24px; left: -24px;
+    width: 120px; height: 120px;
+    background: oklch(72% 0.155 145 / 0.06);
+    border-radius: 50%;
+  }
+  /* Floating skill bars */
+  .floating-skill {
+    position: absolute;
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 12px 16px;
+    font-size: 12px;
+    min-width: 160px;
+    box-shadow: 0 16px 40px oklch(0% 0 0 / 0.4);
+  }
+  .floating-skill.s1 { top: 20px; right: -80px; }
+  .floating-skill.s2 { bottom: 60px; right: -70px; }
+  .fs-label { color: var(--text2); margin-bottom: 6px; }
+  .fs-bar { height: 4px; background: var(--border); border-radius: 2px; overflow: hidden; }
+  .fs-fill { height: 100%; border-radius: 2px; background: var(--accent); }
+  .fs-pct { color: var(--text); font-weight: 600; float: right; margin-bottom: 4px; }
+
+  /* BG decoration */
+  .bg-grid {
+    position: absolute; inset: 0; z-index: -1;
+    background-image:
+      linear-gradient(oklch(25% 0.015 260 / 0.3) 1px, transparent 1px),
+      linear-gradient(90deg, oklch(25% 0.015 260 / 0.3) 1px, transparent 1px);
+    background-size: 60px 60px;
+    mask-image: radial-gradient(ellipse 80% 80% at 60% 40%, black 30%, transparent 100%);
+  }
+  .bg-glow {
+    position: absolute; top: 10%; right: 10%;
+    width: 500px; height: 500px;
+    background: radial-gradient(circle, oklch(72% 0.155 195 / 0.06) 0%, transparent 70%);
+    pointer-events: none; z-index: -1;
+  }
+
+  /* ===== SECTION COMMON ===== */
+  section { padding: 100px 48px; }
+  .container { max-width: 1200px; margin: 0 auto; }
+  .section-eyebrow {
+    font-size: 11px; font-weight: 500;
+    letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--accent); margin-bottom: 14px;
+    display: flex; align-items: center; gap: 12px;
+  }
+  .section-eyebrow::before { content: ''; display: block; width: 24px; height: 1px; background: var(--accent); }
+  .section-title {
+    font-family: var(--ff-display);
+    font-size: clamp(32px, 4vw, 52px);
+    font-weight: 900; letter-spacing: -0.025em; line-height: 1.1;
+    margin-bottom: 16px;
+  }
+  .section-title em { font-style: italic; color: var(--accent); }
+  .section-sub { font-size: 16px; color: var(--text2); max-width: 520px; line-height: 1.75; }
+  .section-header { margin-bottom: 60px; }
+
+  /* ===== SERVICES ===== */
+  #services { background: var(--bg2); }
+  .services-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+  .service-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 40px 32px;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+  }
+  .service-card::before {
+    content: ''; position: absolute;
+    top: 0; left: 0; right: 0; height: 2px;
+    background: var(--accent);
+    transform: scaleX(0); transform-origin: left;
+    transition: transform 0.4s ease;
+  }
+  .service-card:hover { transform: translateY(-4px); border-color: oklch(72% 0.155 195 / 0.4); }
+  .service-card:hover::before { transform: scaleX(1); }
+  .service-num {
+    font-family: var(--ff-display);
+    font-size: 48px; font-weight: 900;
+    color: oklch(25% 0.015 260);
+    line-height: 1; margin-bottom: 24px;
+    letter-spacing: -0.04em;
+  }
+  .service-title {
+    font-size: 18px; font-weight: 600;
+    margin-bottom: 12px; color: var(--text);
+  }
+  .service-desc { font-size: 14px; color: var(--text2); line-height: 1.7; }
+  .service-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 24px; }
+  .stag {
+    font-size: 10px; letter-spacing: 0.06em; text-transform: uppercase;
+    padding: 4px 10px; border-radius: 2px;
+    border: 1px solid var(--border); color: var(--muted);
+  }
+
+  /* ===== ABOUT ===== */
+  #about {
+    background: var(--bg);
+  }
+  .about-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 80px; align-items: start;
+  }
+  .about-photo {
+    aspect-ratio: 4/5;
+    background: var(--bg3);
+    border-radius: 12px;
+    border: 1px dashed var(--border);
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    gap: 12px; color: var(--muted);
+    font-size: 12px; letter-spacing: 0.06em; text-transform: uppercase;
+    position: relative;
+  }
+  .about-photo-accent {
+    position: absolute; bottom: -2px; right: -2px;
+    width: 120px; height: 120px;
+    border-right: 2px solid var(--accent);
+    border-bottom: 2px solid var(--accent);
+    border-radius: 0 0 12px 0;
+  }
+  .about-info p {
+    font-size: 15px; color: var(--text2); line-height: 1.8;
+    margin-bottom: 16px;
+  }
+  .skills-list { margin: 36px 0; display: flex; flex-direction: column; gap: 18px; }
+  .skill-item {}
+  .skill-head {
+    display: flex; justify-content: space-between;
+    font-size: 13px; font-weight: 500; margin-bottom: 8px;
+  }
+  .skill-pct { color: var(--accent); }
+  .skill-track {
+    height: 3px; background: var(--border); border-radius: 2px; overflow: hidden;
+  }
+  .skill-fill {
+    height: 100%; border-radius: 2px;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    width: 0; transition: width 1.2s cubic-bezier(0.22,1,0.36,1);
+  }
+  .about-details {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 12px; margin-top: 36px;
+    border-top: 1px solid var(--border); padding-top: 36px;
+  }
+  .detail-item { font-size: 13px; }
+  .detail-label { color: var(--muted); margin-bottom: 3px; font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; }
+  .detail-val { color: var(--text); font-weight: 500; }
+
+  /* ===== TESTIMONIALS ===== */
+  #testimonials { background: var(--bg2); }
+  .testimonials-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+  .tcard {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 32px;
+    transition: all 0.3s;
+  }
+  .tcard:hover { border-color: oklch(72% 0.155 195 / 0.3); }
+  .tcard-quote {
+    font-size: 32px; color: var(--accent); font-family: var(--ff-display);
+    line-height: 1; margin-bottom: 16px;
+  }
+  .tcard-text {
+    font-size: 14px; color: var(--text2); line-height: 1.75;
+    margin-bottom: 24px;
+  }
+  .tcard-author { display: flex; align-items: center; gap: 12px; border-top: 1px solid var(--border); padding-top: 20px; }
+  .tcard-avatar {
+    width: 40px; height: 40px; border-radius: 50%;
+    background: var(--bg3);
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--ff-display); font-size: 16px; font-weight: 700;
+    color: var(--accent); flex-shrink: 0;
+  }
+  .tcard-name { font-size: 14px; font-weight: 600; }
+  .tcard-role { font-size: 12px; color: var(--muted); }
+
+  /* ===== BLOG ===== */
+  #blog { background: var(--bg); }
+  .blog-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+  .blog-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    text-decoration: none;
+    display: block;
+    transition: all 0.3s;
+  }
+  .blog-card:hover { transform: translateY(-4px); border-color: oklch(72% 0.155 195 / 0.35); }
+  .blog-card-img {
+    aspect-ratio: 16/9;
+    background: var(--bg3);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px; color: var(--muted);
+    letter-spacing: 0.06em; text-transform: uppercase;
+    border-bottom: 1px solid var(--border);
+    position: relative;
+    overflow: hidden;
+  }
+  .blog-card-img-accent {
+    position: absolute; inset: 0;
+    background: linear-gradient(135deg, oklch(72% 0.155 195 / 0.06), oklch(72% 0.155 145 / 0.04));
+  }
+  .blog-card-body { padding: 24px; }
+  .blog-date { font-size: 11px; color: var(--muted); letter-spacing: 0.06em; margin-bottom: 10px; }
+  .blog-title { font-size: 16px; font-weight: 600; color: var(--text); line-height: 1.4; margin-bottom: 10px; }
+  .blog-card:hover .blog-title { color: var(--accent); }
+  .blog-excerpt { font-size: 13px; color: var(--text2); line-height: 1.65; }
+
+  /* ===== CONTACT ===== */
+  #contact { background: var(--bg2); }
+  .contact-grid {
+    display: grid; grid-template-columns: 1fr 1.4fr;
+    gap: 80px; align-items: start;
+  }
+  .contact-info { }
+  .contact-item {
+    display: flex; gap: 16px; align-items: flex-start;
+    margin-bottom: 32px;
+  }
+  .contact-icon {
+    width: 44px; height: 44px; flex-shrink: 0;
+    background: oklch(72% 0.155 195 / 0.1);
+    border: 1px solid oklch(72% 0.155 195 / 0.25);
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--accent);
+  }
+  .contact-label { font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); margin-bottom: 4px; }
+  .contact-val { font-size: 15px; color: var(--text); }
+  .contact-val a { color: var(--text); text-decoration: none; }
+  .contact-val a:hover { color: var(--accent); }
+  .contact-form { display: flex; flex-direction: column; gap: 16px; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .form-group { display: flex; flex-direction: column; gap: 6px; }
+  label { font-size: 12px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); }
+  input, textarea {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    color: var(--text);
+    font-family: var(--ff-body);
+    font-size: 14px;
+    padding: 13px 16px;
+    border-radius: 6px;
+    transition: border-color 0.2s;
+    outline: none;
+    width: 100%;
+  }
+  input:focus, textarea:focus { border-color: var(--accent); }
+  textarea { resize: vertical; min-height: 120px; }
+  .form-submit {
+    padding: 15px 36px;
+    background: var(--accent);
+    color: oklch(11% 0.01 260);
+    font-family: var(--ff-body);
+    font-size: 14px; font-weight: 600;
+    border: none; border-radius: 4px;
+    cursor: pointer;
+    align-self: flex-start;
+    transition: all 0.25s;
+    letter-spacing: 0.02em;
+  }
+  .form-submit:hover { transform: translateY(-2px); box-shadow: 0 12px 32px oklch(72% 0.155 195 / 0.3); }
+  .form-success {
+    display: none; padding: 14px 20px;
+    background: oklch(72% 0.155 145 / 0.1);
+    border: 1px solid oklch(72% 0.155 145 / 0.3);
+    border-radius: 6px; color: var(--accent2);
+    font-size: 14px;
+  }
+
+  /* ===== FOOTER ===== */
+  footer {
+    background: var(--bg);
+    border-top: 1px solid var(--border);
+    padding: 40px 48px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .footer-logo {
+    font-family: var(--ff-display); font-size: 16px;
+    color: var(--text2); text-decoration: none;
+  }
+  .footer-logo span { color: var(--accent); }
+  .footer-copy { font-size: 13px; color: var(--muted); }
+  .footer-links { display: flex; gap: 24px; }
+  .footer-links a { font-size: 13px; color: var(--muted); text-decoration: none; }
+  .footer-links a:hover { color: var(--accent); }
+
+  /* ===== TWEAKS PANEL ===== */
+  #tweaks-panel {
+    display: none;
+    position: fixed; bottom: 24px; right: 24px; z-index: 9999;
+    width: 260px;
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 20px;
+    box-shadow: 0 24px 64px oklch(0% 0 0 / 0.5);
+  }
+  .tweaks-title { font-size: 13px; font-weight: 600; margin-bottom: 16px; letter-spacing: 0.02em; }
+  .tweak-group { margin-bottom: 16px; }
+  .tweak-label { font-size: 11px; color: var(--muted); letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 6px; }
+  .tweak-row { display: flex; gap: 8px; flex-wrap: wrap; }
+  .tweak-btn {
+    font-size: 11px; padding: 5px 10px; border-radius: 4px;
+    border: 1px solid var(--border); background: transparent;
+    color: var(--text2); cursor: pointer; transition: all 0.15s;
+    font-family: var(--ff-body);
+  }
+  .tweak-btn.active { border-color: var(--accent); color: var(--accent); background: oklch(72% 0.155 195 / 0.1); }
+  .tweak-btn:hover { border-color: var(--accent); color: var(--accent); }
+  .tweak-divider { height: 1px; background: var(--border); margin: 12px 0; }
+
+  /* ===== ANIMATIONS ===== */
+  .fade-in {
+    opacity: 0; transform: translateY(24px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .fade-in.visible { opacity: 1; transform: translateY(0); }
+  .fade-in-d1 { transition-delay: 0.1s; }
+  .fade-in-d2 { transition-delay: 0.2s; }
+  .fade-in-d3 { transition-delay: 0.3s; }
+
+  @media (max-width: 900px) {
+    nav { padding: 0 24px; }
+    .nav-links { display: none; }
+    section { padding: 70px 24px; }
+    .hero-grid, .about-grid, .contact-grid { grid-template-columns: 1fr; gap: 48px; }
+    .hero-visual { display: none; }
+    .services-grid, .testimonials-grid, .blog-grid { grid-template-columns: 1fr; }
+    footer { flex-direction: column; gap: 16px; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="navbar">
+  <a href="#hero" class="nav-logo">Dawn<span>.</span></a>
+  <ul class="nav-links">
+    <li><a href="#hero">Home</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#testimonials">Reviews</a></li>
+    <li><a href="#blog">Blog</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a href="#contact" class="nav-cta">Let's Talk</a>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="bg-grid"></div>
+  <div class="bg-glow"></div>
+  <div class="hero-grid">
+    <div class="hero-left">
+      <div class="hero-eyebrow fade-in">ServiceNow Expert · Chicago, IL</div>
+      <h1 class="fade-in fade-in-d1">
+        Transforming<br>Business With <em>Digital</em><br>Excellence
+      </h1>
+      <div class="hero-roles fade-in fade-in-d2">
+        <div class="hero-role"><div class="hero-role-dot"></div>ServiceNow Consultant</div>
+        <div class="hero-role"><div class="hero-role-dot" style="background:var(--accent2)"></div>Digital Transformation Agent</div>
+        <div class="hero-role"><div class="hero-role-dot"></div>Business Solution Architect</div>
+      </div>
+      <div class="hero-btns fade-in fade-in-d3">
+        <a href="#contact" class="btn-primary">Start a Conversation</a>
+        <a href="#about" class="btn-outline">View Resume</a>
+      </div>
+      <div class="hero-stats fade-in fade-in-d3">
+        <div>
+          <div class="stat-num"><span class="counter" data-target="20">0</span>+</div>
+          <div class="stat-label">Years Experience</div>
+        </div>
+        <div>
+          <div class="stat-num"><span class="counter" data-target="94">0</span><span>%</span></div>
+          <div class="stat-label">Client Satisfaction</div>
+        </div>
+        <div>
+          <div class="stat-num"><span class="counter" data-target="50">0</span>+</div>
+          <div class="stat-label">Enterprise Clients</div>
+        </div>
+      </div>
+    </div>
+    <div class="hero-visual fade-in fade-in-d2">
+      <div class="hero-card">
+        <div class="hero-card-accent"></div>
+        <div class="hero-card-accent2"></div>
+        <div class="hero-photo-placeholder">
+          <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
+            <circle cx="24" cy="18" r="10" stroke="currentColor" stroke-width="2"/>
+            <path d="M6 42c0-9.941 8.059-18 18-18s18 8.059 18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+          profile photo
+        </div>
+        <div class="hero-card-name">Dawn C. Simmons</div>
+        <div class="hero-card-title">Senior ServiceNow Consultant</div>
+        <div class="hero-card-badges">
+          <span class="badge">ServiceNow CSA</span>
+          <span class="badge">ITIL v4</span>
+          <span class="badge">Fortune 500</span>
+          <span class="badge">ITSM</span>
+          <span class="badge">GRC</span>
+        </div>
+      </div>
+      <div class="floating-skill s1">
+        <div class="fs-label">ServiceNow</div>
+        <div class="fs-pct">100%</div>
+        <div class="fs-bar"><div class="fs-fill" style="width:100%"></div></div>
+      </div>
+      <div class="floating-skill s2">
+        <div class="fs-label">ITSM / CMDB</div>
+        <div class="fs-pct">98%</div>
+        <div class="fs-bar"><div class="fs-fill" style="width:98%"></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="container">
+    <div class="section-header fade-in">
+      <div class="section-eyebrow">What I Do</div>
+      <h2 class="section-title">Expert-level <em>services</em><br>built on 20+ years</h2>
+      <p class="section-sub">From global program management to hands-on implementation — I deliver end-to-end digital transformation.</p>
+    </div>
+    <div class="services-grid">
+      <div class="service-card fade-in">
+        <div class="service-num">01</div>
+        <div class="service-title">Program Director (Global)</div>
+        <div class="service-desc">Directed multi-million-dollar cloud implementations, aligning ServiceNow Cloud, ITAM, SCCM, GRC, and AI automation to organizational goals across global enterprises.</div>
+        <div class="service-tags">
+          <span class="stag">ServiceNow</span><span class="stag">AI Automation</span><span class="stag">ITAM</span>
+        </div>
+      </div>
+      <div class="service-card fade-in fade-in-d1">
+        <div class="service-num">02</div>
+        <div class="service-title">Enterprise IT Consulting</div>
+        <div class="service-desc">ServiceNow transformations in healthcare, pharma, higher education, and energy — delivering end-to-end ITSM, CMDB, SecOps, HRSD, and predictive intelligence solutions.</div>
+        <div class="service-tags">
+          <span class="stag">ITSM</span><span class="stag">CMDB</span><span class="stag">SecOps</span><span class="stag">HRSD</span>
+        </div>
+      </div>
+      <div class="service-card fade-in fade-in-d2">
+        <div class="service-num">03</div>
+        <div class="service-title">Strategic Leadership & Advisory</div>
+        <div class="service-desc">Fortune 500 executive guidance — aligning technology with business goals, driving cost savings and efficiency, and developing long-term growth roadmaps for lasting impact.</div>
+        <div class="service-tags">
+          <span class="stag">Executive Advisory</span><span class="stag">Roadmapping</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="container">
+    <div class="about-grid">
+      <div class="about-photo fade-in">
+        <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
+          <circle cx="24" cy="18" r="10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          <path d="M6 42c0-9.941 8.059-18 18-18s18 8.059 18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+        <span style="font-size:11px;color:var(--muted);letter-spacing:.08em">professional photo</span>
+        <div class="about-photo-accent"></div>
+      </div>
+      <div class="about-info fade-in fade-in-d1">
+        <div class="section-eyebrow">About Me</div>
+        <h2 class="section-title" style="margin-bottom:20px">Dynamic Leadership with <em>Global Impact</em></h2>
+        <p>Dawn C. Simmons is a transformative, visionary leader with over 20 years of executive experience in digital transformation and business process improvement.</p>
+        <p>With a proven track record across Fortune 500 companies, she specializes in ServiceNow implementations, ITSM standards, and global enterprise solutions — delivering measurable results in healthcare, pharma, higher education, and energy sectors.</p>
+
+        <div class="skills-list">
+          <div class="skill-item">
+            <div class="skill-head"><span>ServiceNow</span><span class="skill-pct">100%</span></div>
+            <div class="skill-track"><div class="skill-fill" data-width="100"></div></div>
+          </div>
+          <div class="skill-item">
+            <div class="skill-head"><span>Service Management COE</span><span class="skill-pct">98%</span></div>
+            <div class="skill-track"><div class="skill-fill" data-width="98"></div></div>
+          </div>
+          <div class="skill-item">
+            <div class="skill-head"><span>Business Process Management</span><span class="skill-pct">92%</span></div>
+            <div class="skill-track"><div class="skill-fill" data-width="92"></div></div>
+          </div>
+          <div class="skill-item">
+            <div class="skill-head"><span>ITSM / ITIL</span><span class="skill-pct">96%</span></div>
+            <div class="skill-track"><div class="skill-fill" data-width="96"></div></div>
+          </div>
+        </div>
+
+        <div class="about-details">
+          <div class="detail-item">
+            <div class="detail-label">Name</div>
+            <div class="detail-val">Dawn Christine Simmons</div>
+          </div>
+          <div class="detail-item">
+            <div class="detail-label">Location</div>
+            <div class="detail-val">Chicago, IL USA</div>
+          </div>
+          <div class="detail-item">
+            <div class="detail-label">Email</div>
+            <div class="detail-val"><a href="/cdn-cgi/l/email-protection#afcbced8c1ccc4c7cec1efc8c2cec6c381ccc0c2" style="color:var(--accent);text-decoration:none"><span class="__cf_email__" data-cfemail="bdd9dccad3ded6d5dcd3fddad0dcd4d193ded2d0">[email&#160;protected]</span></a></div>
+          </div>
+          <div class="detail-item">
+            <div class="detail-label">Phone</div>
+            <div class="detail-val"><a href="tel:+19252977901" style="color:var(--text);text-decoration:none">+1-925-297-7901</a></div>
+          </div>
+        </div>
+        <div style="margin-top:32px">
+          <a href="#contact" class="btn-primary">Download Resume</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section id="testimonials">
+  <div class="container">
+    <div class="section-header fade-in" style="text-align:center;max-width:600px;margin:0 auto 60px">
+      <div class="section-eyebrow" style="justify-content:center">Social Proof</div>
+      <h2 class="section-title">What colleagues<br>& clients <em>say</em></h2>
+    </div>
+    <div class="testimonials-grid">
+      <div class="tcard fade-in">
+        <div class="tcard-quote">"</div>
+        <div class="tcard-text">Dawn has demonstrated exemplary leadership in the Support Services industry through her incredible efforts. She is a seasoned management practitioner that understands service management concepts extremely well.</div>
+        <div class="tcard-author">
+          <div class="tcard-avatar">SW</div>
+          <div><div class="tcard-name">Steve West</div><div class="tcard-role">Board of Directors, Denver Metro HDI</div></div>
+        </div>
+      </div>
+      <div class="tcard fade-in fade-in-d1">
+        <div class="tcard-quote">"</div>
+        <div class="tcard-text">Very few people equal Dawn in persistence and dedication. I am continually impressed with her insight, intelligence, tenacity and ability to network across organizations.</div>
+        <div class="tcard-author">
+          <div class="tcard-avatar">LS</div>
+          <div><div class="tcard-name">Lori Shaw</div><div class="tcard-role">Senior Consultant</div></div>
+        </div>
+      </div>
+      <div class="tcard fade-in fade-in-d2">
+        <div class="tcard-quote">"</div>
+        <div class="tcard-text">"Solution provider" — that can summarize how good she knows the business. She is one of the few people with excellent knowledge about Support Readiness. She is GREAT to work with.</div>
+        <div class="tcard-author">
+          <div class="tcard-avatar">VT</div>
+          <div><div class="tcard-name">Venkatesh Thiruvaipati</div><div class="tcard-role">Sun Microsystems</div></div>
+        </div>
+      </div>
+      <div class="tcard fade-in">
+        <div class="tcard-quote">"</div>
+        <div class="tcard-text">Dawn is able to quickly assess the needs of a project and break it into manageable, achievable parts. Her ability to network and work with all personalities facilitates the influencing of all key stakeholders.</div>
+        <div class="tcard-author">
+          <div class="tcard-avatar">DA</div>
+          <div><div class="tcard-name">Dale Avery</div><div class="tcard-role">Enterprise Network Services, Sun Microsystems</div></div>
+        </div>
+      </div>
+      <div class="tcard fade-in fade-in-d1">
+        <div class="tcard-quote">"</div>
+        <div class="tcard-text">Dawn is one of the most passionate and driven people I know. Her background and experience makes her a very well rounded qualified candidate for any challenging opportunity.</div>
+        <div class="tcard-author">
+          <div class="tcard-avatar">FT</div>
+          <div><div class="tcard-name">Frank Tawil</div><div class="tcard-role">Enterprise Network Services, Sun Microsystems Bay Area</div></div>
+        </div>
+      </div>
+      <div class="tcard fade-in fade-in-d2">
+        <div class="tcard-quote">"</div>
+        <div class="tcard-text">Dawn is an excellent project and program manager, bringing diverse skills including effective teamwork, attention to detail, excellent facilitation, and strong leadership. Dawn produces results.</div>
+        <div class="tcard-author">
+          <div class="tcard-avatar">DB</div>
+          <div><div class="tcard-name">Deepanker Baderia</div><div class="tcard-role">Solution Architect, Sun Microsystems</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BLOG -->
+<section id="blog">
+  <div class="container">
+    <div class="section-header fade-in" style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:48px">
+      <div>
+        <div class="section-eyebrow">Insights</div>
+        <h2 class="section-title" style="margin-bottom:0">Latest from<br>the <em>blog</em></h2>
+      </div>
+      <a href="https://www.dawncsimmons.com/blog" target="_blank" class="btn-outline" style="flex-shrink:0">All Articles</a>
+    </div>
+    <div class="blog-grid">
+      <a href="https://www.dawncsimmons.com/claude-ui-ux-market-signals/" target="_blank" class="blog-card fade-in">
+        <div class="blog-card-img">
+          <div class="blog-card-img-accent"></div>
+          <span style="position:relative;z-index:1;font-size:11px;color:var(--muted);letter-spacing:.08em">article image</span>
+        </div>
+        <div class="blog-card-body">
+          <div class="blog-date">Apr 20, 2026</div>
+          <div class="blog-title">Claude UI/UX Market Signals</div>
+          <div class="blog-excerpt">Exploring AI-driven design shifts and what they mean for enterprise digital transformation teams.</div>
+        </div>
+      </a>
+      <a href="https://www.dawncsimmons.com/ai-upgrades-redefined-now/" target="_blank" class="blog-card fade-in fade-in-d1">
+        <div class="blog-card-img">
+          <div class="blog-card-img-accent" style="background:linear-gradient(135deg,oklch(72% 0.155 145 / 0.08),oklch(72% 0.155 195 / 0.04))"></div>
+          <span style="position:relative;z-index:1;font-size:11px;color:var(--muted);letter-spacing:.08em">article image</span>
+        </div>
+        <div class="blog-card-body">
+          <div class="blog-date">Apr 13, 2026</div>
+          <div class="blog-title">AI Upgrades Redefined Now</div>
+          <div class="blog-excerpt">How ServiceNow's latest AI enhancements are reshaping ITSM workflows and business process automation.</div>
+        </div>
+      </a>
+      <a href="https://www.dawncsimmons.com/chicago-cybersecurity/" target="_blank" class="blog-card fade-in fade-in-d2">
+        <div class="blog-card-img">
+          <div class="blog-card-img-accent" style="background:linear-gradient(135deg,oklch(72% 0.155 220 / 0.08),oklch(72% 0.155 195 / 0.04))"></div>
+          <span style="position:relative;z-index:1;font-size:11px;color:var(--muted);letter-spacing:.08em">article image</span>
+        </div>
+        <div class="blog-card-body">
+          <div class="blog-date">Apr 7, 2026</div>
+          <div class="blog-title">Chicago Cybersecurity</div>
+          <div class="blog-excerpt">A deep dive into Chicago's evolving cybersecurity landscape and what enterprise leaders should know now.</div>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="container">
+    <div class="contact-grid">
+      <div class="fade-in">
+        <div class="section-eyebrow">Get in Touch</div>
+        <h2 class="section-title">Let's work<br><em>together</em></h2>
+        <p style="font-size:15px;color:var(--text2);line-height:1.8;margin-bottom:40px">Ready to transform your enterprise? I'd love to hear about your challenges and explore how we can work together.</p>
+        <div class="contact-item">
+          <div class="contact-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/>
+            </svg>
+          </div>
+          <div>
+            <div class="contact-label">Email</div>
+            <div class="contact-val"><a href="/cdn-cgi/l/email-protection#7f1b1e08111c14171e113f18121e1613511c1012"><span class="__cf_email__" data-cfemail="e08481978e838b88818ea0878d81898cce838f8d">[email&#160;protected]</span></a></div>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.72A2 2 0 012.18 1h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.91 8.15A16 16 0 0015.54 16.78l1.41-1.41a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/>
+            </svg>
+          </div>
+          <div>
+            <div class="contact-label">Phone</div>
+            <div class="contact-val"><a href="tel:+19252977901">+1-925-297-7901</a></div>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/>
+            </svg>
+          </div>
+          <div>
+            <div class="contact-label">Location</div>
+            <div class="contact-val">Chicago, IL USA</div>
+          </div>
+        </div>
+      </div>
+      <div class="fade-in fade-in-d1">
+        <form class="contact-form" id="contactForm" onsubmit="handleSubmit(event)">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="fname">First Name</label>
+              <input type="text" id="fname" placeholder="Jane" required>
+            </div>
+            <div class="form-group">
+              <label for="lname">Last Name</label>
+              <input type="text" id="lname" placeholder="Smith" required>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="email">Email Address</label>
+            <input type="email" id="email" placeholder="jane@company.com" required>
+          </div>
+          <div class="form-group">
+            <label for="subject">Subject</label>
+            <input type="text" id="subject" placeholder="ServiceNow consultation">
+          </div>
+          <div class="form-group">
+            <label for="message">Message</label>
+            <textarea id="message" placeholder="Tell me about your project..." required></textarea>
+          </div>
+          <button type="submit" class="form-submit">Send Message →</button>
+          <div class="form-success" id="formSuccess">✓ Message sent! I'll get back to you within 24 hours.</div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <a href="#hero" class="footer-logo">Dawn<span>.</span>C.Simmons</a>
+  <div class="footer-copy">© 2026 Dawn Christine Simmons. All rights reserved.</div>
+  <div class="footer-links">
+    <a href="https://www.dawncsimmons.com/blog" target="_blank">Blog</a>
+    <a href="https://www.dawncsimmons.com/knowledge-base/" target="_blank">Knowledge Base</a>
+    <a href="#contact">Contact</a>
+  </div>
+</footer>
+
+<!-- TWEAKS PANEL -->
+<div id="tweaks-panel">
+  <div class="tweaks-title">⚙ Tweaks</div>
+  <div class="tweak-group">
+    <div class="tweak-label">Color Accent</div>
+    <div class="tweak-row">
+      <button class="tweak-btn active" onclick="setAccent('teal', this)">Teal</button>
+      <button class="tweak-btn" onclick="setAccent('violet', this)">Violet</button>
+      <button class="tweak-btn" onclick="setAccent('gold', this)">Gold</button>
+      <button class="tweak-btn" onclick="setAccent('coral', this)">Coral</button>
+    </div>
+  </div>
+  <div class="tweak-divider"></div>
+  <div class="tweak-group">
+    <div class="tweak-label">Background</div>
+    <div class="tweak-row">
+      <button class="tweak-btn active" onclick="setBg('dark', this)">Dark</button>
+      <button class="tweak-btn" onclick="setBg('midnight', this)">Midnight</button>
+      <button class="tweak-btn" onclick="setBg('warm', this)">Warm Dark</button>
+    </div>
+  </div>
+  <div class="tweak-divider"></div>
+  <div class="tweak-group">
+    <div class="tweak-label">Type Style</div>
+    <div class="tweak-row">
+      <button class="tweak-btn active" onclick="setFont('playfair', this)">Elegant</button>
+      <button class="tweak-btn" onclick="setFont('geo', this)">Geometric</button>
+      <button class="tweak-btn" onclick="setFont('editorial', this)">Editorial</button>
+    </div>
+  </div>
+</div>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+// --- NAV SCROLL ---
+const navbar = document.getElementById('navbar');
+const navLinks = document.querySelectorAll('.nav-links a');
+const sections = document.querySelectorAll('section[id]');
+
+window.addEventListener('scroll', () => {
+  navbar.classList.toggle('scrolled', window.scrollY > 60);
+
+  // Active nav link
+  let current = '';
+  sections.forEach(s => {
+    if (window.scrollY >= s.offsetTop - 100) current = s.id;
+  });
+  navLinks.forEach(a => {
+    a.classList.toggle('active', a.getAttribute('href') === '#' + current);
+  });
+});
+
+// --- FADE IN OBSERVER ---
+const fadeEls = document.querySelectorAll('.fade-in');
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); } });
+}, { threshold: 0.12 });
+fadeEls.forEach(el => observer.observe(el));
+
+// --- COUNTER ANIMATION ---
+function animateCounter(el, target, duration = 1200) {
+  let start = 0;
+  const step = (timestamp) => {
+    if (!start) start = timestamp;
+    const progress = Math.min((timestamp - start) / duration, 1);
+    el.textContent = Math.floor(progress * target);
+    if (progress < 1) requestAnimationFrame(step);
+    else el.textContent = target;
+  };
+  requestAnimationFrame(step);
+}
+const counterEls = document.querySelectorAll('.counter');
+const counterObserver = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      const target = parseInt(e.target.dataset.target);
+      animateCounter(e.target, target);
+      counterObserver.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.5 });
+counterEls.forEach(el => counterObserver.observe(el));
+
+// --- SKILL BARS ---
+const skillFills = document.querySelectorAll('.skill-fill');
+const skillObserver = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.style.width = e.target.dataset.width + '%';
+      skillObserver.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.3 });
+skillFills.forEach(el => skillObserver.observe(el));
+
+// --- CONTACT FORM ---
+function handleSubmit(e) {
+  e.preventDefault();
+  const success = document.getElementById('formSuccess');
+  success.style.display = 'block';
+  e.target.querySelector('.form-submit').textContent = 'Sent ✓';
+  e.target.querySelector('.form-submit').style.opacity = '0.6';
+  setTimeout(() => { success.style.display = 'none'; }, 5000);
+}
+
+// --- TWEAKS ---
+function setAccent(name, btn) {
+  const accents = {
+    teal: ['oklch(72% 0.155 195)', 'oklch(72% 0.155 145)'],
+    violet: ['oklch(68% 0.18 290)', 'oklch(68% 0.18 260)'],
+    gold: ['oklch(78% 0.15 85)', 'oklch(78% 0.15 60)'],
+    coral: ['oklch(68% 0.18 30)', 'oklch(68% 0.18 10)'],
+  };
+  const [a, a2] = accents[name];
+  document.documentElement.style.setProperty('--accent', a);
+  document.documentElement.style.setProperty('--accent2', a2);
+  btn.closest('.tweak-row').querySelectorAll('.tweak-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  window.parent.postMessage({ type: '__edit_mode_set_keys', edits: { accent: name } }, '*');
+}
+
+function setBg(name, btn) {
+  const bgs = {
+    dark: ['oklch(11% 0.01 260)', 'oklch(14% 0.012 260)', 'oklch(17% 0.012 260)'],
+    midnight: ['oklch(8% 0.025 265)', 'oklch(11% 0.03 265)', 'oklch(14% 0.03 265)'],
+    warm: ['oklch(10% 0.015 40)', 'oklch(13% 0.018 40)', 'oklch(16% 0.018 40)'],
+  };
+  const [bg, bg2, bg3] = bgs[name];
+  document.documentElement.style.setProperty('--bg', bg);
+  document.documentElement.style.setProperty('--bg2', bg2);
+  document.documentElement.style.setProperty('--bg3', bg3);
+  btn.closest('.tweak-row').querySelectorAll('.tweak-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+}
+
+function setFont(name, btn) {
+  const fonts = {
+    playfair: ["'Playfair Display', Georgia, serif", "'DM Sans', Helvetica, sans-serif"],
+    geo: ["'DM Sans', Helvetica, sans-serif", "'DM Sans', Helvetica, sans-serif"],
+    editorial: ["'Playfair Display', Georgia, serif", "'DM Sans', Helvetica, sans-serif"],
+  };
+  const [display, body] = fonts[name];
+  document.documentElement.style.setProperty('--ff-display', display);
+  document.documentElement.style.setProperty('--ff-body', body);
+  btn.closest('.tweak-row').querySelectorAll('.tweak-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+}
+
+// --- TWEAKS PANEL TOGGLE ---
+window.addEventListener('message', e => {
+  if (e.data?.type === '__activate_edit_mode') document.getElementById('tweaks-panel').style.display = 'block';
+  if (e.data?.type === '__deactivate_edit_mode') document.getElementById('tweaks-panel').style.display = 'none';
+});
+window.parent.postMessage({ type: '__edit_mode_available' }, '*');
+</script>
+</body>
+</html>
