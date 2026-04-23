@@ -8,25 +8,76 @@
   "description": "AI capabilities section with flow diagram and feature cards.",
   "version": "1.0.0",
   "textdomain": "dawn-simmons",
-  "editorScript": "file:../../../../../assets/js/blocks/index.js",
-  "render_callback": "ds_render_ai_section",
   "attributes": {
-    "eyebrow":   { "type": "string", "default": "AI & Automation" },
-    "headline":  { "type": "string", "default": "Powering the Future with <em>Intelligent Automation</em>" },
-    "lead":      { "type": "string", "default": "From AI-powered ITSM to predictive analytics, I design automation frameworks that eliminate toil and unlock strategic capacity." },
-    "pills":     { "type": "string", "default": "Predictive Analytics\nNatural Language Processing\nProcess Mining\nML Ops\nAI Governance" },
-    "flowSteps": { "type": "array",  "default": [
-      { "icon": "🔍", "name": "Discovery & Assessment",   "desc": "Map current processes and pain points" },
-      { "icon": "🧠", "name": "AI Model Design",          "desc": "Select and train models for your data" },
-      { "icon": "⚙",       "name": "ServiceNow Integration",   "desc": "Deploy via Flow Designer & IntegrationHub" },
-      { "icon": "📈", "name": "Continuous Optimisation",  "desc": "Monitor KPIs and retrain models" }
-    ]},
-    "cards": { "type": "array", "default": [
-      { "icon": "🤖", "title": "AI-Powered ITSM",        "desc": "Intelligent ticket routing and auto-resolution." },
-      { "icon": "📊", "title": "Predictive Analytics",    "desc": "Forecast capacity and predict outages." },
-      { "icon": "🔗", "title": "Process Automation",      "desc": "End-to-end workflow automation." },
-      { "icon": "🛡", "title": "AI Governance Framework", "desc": "Responsible AI with audit trails." }
-    ]}
+    "eyebrow": {
+      "type": "string",
+      "default": "AI & Automation"
+    },
+    "headline": {
+      "type": "string",
+      "default": "Powering the Future with <em>Intelligent Automation</em>"
+    },
+    "lead": {
+      "type": "string",
+      "default": "From AI-powered ITSM to predictive analytics, I design automation frameworks that eliminate toil and unlock strategic capacity."
+    },
+    "pills": {
+      "type": "string",
+      "default": "Predictive Analytics\nNatural Language Processing\nProcess Mining\nML Ops\nAI Governance"
+    },
+    "flowSteps": {
+      "type": "array",
+      "default": [
+        {
+          "icon": "🔍",
+          "name": "Discovery & Assessment",
+          "desc": "Map current processes and pain points"
+        },
+        {
+          "icon": "🧠",
+          "name": "AI Model Design",
+          "desc": "Select and train models for your data"
+        },
+        {
+          "icon": "⚙",
+          "name": "ServiceNow Integration",
+          "desc": "Deploy via Flow Designer & IntegrationHub"
+        },
+        {
+          "icon": "📈",
+          "name": "Continuous Optimisation",
+          "desc": "Monitor KPIs and retrain models"
+        }
+      ]
+    },
+    "cards": {
+      "type": "array",
+      "default": [
+        {
+          "icon": "🤖",
+          "title": "AI-Powered ITSM",
+          "desc": "Intelligent ticket routing and auto-resolution."
+        },
+        {
+          "icon": "📊",
+          "title": "Predictive Analytics",
+          "desc": "Forecast capacity and predict outages."
+        },
+        {
+          "icon": "🔗",
+          "title": "Process Automation",
+          "desc": "End-to-end workflow automation."
+        },
+        {
+          "icon": "🛡",
+          "title": "AI Governance Framework",
+          "desc": "Responsible AI with audit trails."
+        }
+      ]
+    }
   },
-  "supports": { "align": false, "html": false }
+  "supports": {
+    "align": false,
+    "html": false
+  }
 }

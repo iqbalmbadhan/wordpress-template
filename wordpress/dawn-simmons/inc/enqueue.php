@@ -54,7 +54,10 @@ add_action( 'enqueue_block_editor_assets', function () {
     }
 } );
 
-// Admin global styles
-add_action( 'admin_enqueue_scripts', function () {
-    wp_enqueue_style( 'ds-admin', DS_ASSETS . '/css/admin.css', [], DS_VERSION );
+// Admin: enqueue editor CSS on block editor screens
+add_action( 'admin_enqueue_scripts', function ( string $hook ) {
+    if ( ! in_array( $hook, [ 'post.php', 'post-new.php' ], true ) ) {
+        return;
+    }
+    wp_enqueue_style( 'ds-editor-admin', DS_ASSETS . '/css/editor.css', [], DS_VERSION );
 } );

@@ -94,5 +94,3 @@ class DS_Plugin_Checker {
         wp_send_json_success();
     }
 }
-
-DS_Plugin_Checker::init();

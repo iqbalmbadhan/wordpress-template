@@ -27,17 +27,10 @@ class DS_Setup_Wizard {
     }
 
     public static function enqueue( string $hook ): void {
+        // Wizard uses inline styles/scripts — nothing external to enqueue.
         if ( $hook !== 'dashboard_page_ds-setup-wizard' ) {
             return;
         }
-        wp_enqueue_style(  'ds-wizard', DS_ASSETS . '/css/wizard.css', [], DS_VERSION );
-        wp_enqueue_script( 'ds-wizard', DS_ASSETS . '/js/wizard.js',  [ 'jquery' ], DS_VERSION, true );
-        wp_localize_script( 'ds-wizard', 'dsWizard', [
-            'nonce'      => wp_create_nonce( 'ds_wizard_nonce' ),
-            'ajaxUrl'    => admin_url( 'admin-ajax.php' ),
-            'adminUrl'   => admin_url(),
-            'plugins'    => DS_Plugin_Checker::all_plugins(),
-        ] );
     }
 
     // ── AJAX: save editor preference ─────────────────────────────────────────
@@ -383,5 +376,3 @@ class DS_Setup_Wizard {
         <?php
     }
 }
-
-DS_Setup_Wizard::init();

@@ -74,7 +74,7 @@ class DS_Widget_Contact extends \Elementor\Widget_Base {
                     </div>
                     <div>
                         <?php
-                        if ( ! empty( $s['cf7_id'] ) && function_exists( 'wpcf7_contact_form_tag_func' ) ) {
+                        if ( ! empty( $s['cf7_id'] ) && shortcode_exists( 'contact-form-7' ) ) {
                             echo do_shortcode( '[contact-form-7 id="' . esc_attr( $s['cf7_id'] ) . '"]' );
                         } else {
                             $this->render_fallback_form( $s['email'] );

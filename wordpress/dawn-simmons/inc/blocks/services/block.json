@@ -8,20 +8,63 @@
   "description": "Services grid with numbered cards, descriptions, and tags.",
   "version": "1.0.0",
   "textdomain": "dawn-simmons",
-  "editorScript": "file:../../../../../assets/js/blocks/index.js",
-  "render_callback": "ds_render_services",
   "attributes": {
-    "eyebrow":  { "type": "string", "default": "What I Do" },
-    "title":    { "type": "string", "default": "End-to-End <em>ServiceNow</em> Excellence" },
-    "sub":      { "type": "string", "default": "From strategy through delivery, I bring senior-level expertise across every phase of the ServiceNow lifecycle." },
-    "services": { "type": "array",  "default": [
-      { "num": "01", "title": "ServiceNow Implementation", "desc": "Full-cycle ITSM, ITOM, and CSM implementations.",         "tags": "ITSM, ITOM, CSM" },
-      { "num": "02", "title": "AI & Process Automation",   "desc": "Intelligent automation using Flow Designer.",              "tags": "AI, ML, Flow Designer" },
-      { "num": "03", "title": "Platform Architecture",     "desc": "Instance strategy and technical governance.",              "tags": "Architecture, Governance" },
-      { "num": "04", "title": "Executive Advisory",        "desc": "Strategic roadmapping and transformation counsel.",        "tags": "Strategy, Advisory" },
-      { "num": "05", "title": "Training & Enablement",     "desc": "Custom training programmes and capability building.",      "tags": "Training, Enablement" },
-      { "num": "06", "title": "Managed Services",          "desc": "Ongoing platform optimisation and improvement retainers.","tags": "Support, Optimisation" }
-    ]}
+    "eyebrow": {
+      "type": "string",
+      "default": "What I Do"
+    },
+    "title": {
+      "type": "string",
+      "default": "End-to-End <em>ServiceNow</em> Excellence"
+    },
+    "sub": {
+      "type": "string",
+      "default": "From strategy through delivery, I bring senior-level expertise across every phase of the ServiceNow lifecycle."
+    },
+    "services": {
+      "type": "array",
+      "default": [
+        {
+          "num": "01",
+          "title": "ServiceNow Implementation",
+          "desc": "Full-cycle ITSM, ITOM, and CSM implementations.",
+          "tags": "ITSM, ITOM, CSM"
+        },
+        {
+          "num": "02",
+          "title": "AI & Process Automation",
+          "desc": "Intelligent automation using Flow Designer.",
+          "tags": "AI, ML, Flow Designer"
+        },
+        {
+          "num": "03",
+          "title": "Platform Architecture",
+          "desc": "Instance strategy and technical governance.",
+          "tags": "Architecture, Governance"
+        },
+        {
+          "num": "04",
+          "title": "Executive Advisory",
+          "desc": "Strategic roadmapping and transformation counsel.",
+          "tags": "Strategy, Advisory"
+        },
+        {
+          "num": "05",
+          "title": "Training & Enablement",
+          "desc": "Custom training programmes and capability building.",
+          "tags": "Training, Enablement"
+        },
+        {
+          "num": "06",
+          "title": "Managed Services",
+          "desc": "Ongoing platform optimisation and improvement retainers.",
+          "tags": "Support, Optimisation"
+        }
+      ]
+    }
   },
-  "supports": { "align": false, "html": false }
+  "supports": {
+    "align": false,
+    "html": false
+  }
 }

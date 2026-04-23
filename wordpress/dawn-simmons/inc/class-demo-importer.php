@@ -93,7 +93,7 @@ class DS_Demo_Importer {
                 }
             }
             // Add Shop if WooCommerce active
-            $shop_id = wc_get_page_id( 'shop' );
+            $shop_id = function_exists( 'wc_get_page_id' ) ? wc_get_page_id( 'shop' ) : -1;
             if ( $shop_id && $shop_id !== -1 ) {
                 wp_update_nav_menu_item( $primary_id, 0, [
                     'menu-item-title'     => 'Shop',
@@ -260,7 +260,7 @@ BLOCKS;
 
     // ── Elementor homepage ───────────────────────────────────────────────────
     private static function create_elementor_homepage( int $page_id ): void {
-        $elementor_data = json_encode( self::build_elementor_data() );
+        $elementor_data = wp_json_encode( self::build_elementor_data() );
 
         update_post_meta( $page_id, '_elementor_data',          $elementor_data );
         update_post_meta( $page_id, '_elementor_edit_mode',     'builder'       );
@@ -282,13 +282,14 @@ BLOCKS;
     }
 
     private static function build_elementor_data(): array {
+        // widgetType must match each widget class's get_name() return value.
         return [
-            self::el_section( 'hero-section',    'dawn_hero',         self::hero_settings()         ),
-            self::el_section( 'ai-section',      'dawn_ai_section',   self::ai_settings()           ),
-            self::el_section( 'services-section','dawn_services',     self::services_settings()     ),
-            self::el_section( 'about-section',   'dawn_about',        self::about_settings()        ),
-            self::el_section( 'testi-section',   'dawn_testimonials', self::testimonials_settings() ),
-            self::el_section( 'contact-section', 'dawn_contact',      self::contact_settings()      ),
+            self::el_section( 'hero-section',    'ds-hero',         self::hero_settings()         ),
+            self::el_section( 'ai-section',      'ds-ai-section',   self::ai_settings()           ),
+            self::el_section( 'services-section','ds-services',     self::services_settings()     ),
+            self::el_section( 'about-section',   'ds-about',        self::about_settings()        ),
+            self::el_section( 'testi-section',   'ds-testimonials', self::testimonials_settings() ),
+            self::el_section( 'contact-section', 'ds-contact',      self::contact_settings()      ),
         ];
     }
 

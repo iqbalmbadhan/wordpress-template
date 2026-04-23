@@ -10,18 +10,20 @@ add_action( 'init', 'ds_register_blocks' );
 
 function ds_register_blocks(): void {
     $blocks = [
-        'hero',
-        'services',
-        'ai-section',
-        'about',
-        'testimonials',
-        'contact',
+        'hero'         => 'ds_render_hero',
+        'services'     => 'ds_render_services',
+        'ai-section'   => 'ds_render_ai_section',
+        'about'        => 'ds_render_about',
+        'testimonials' => 'ds_render_testimonials',
+        'contact'      => 'ds_render_contact',
     ];
 
-    foreach ( $blocks as $block ) {
+    foreach ( $blocks as $block => $callback ) {
         $dir = DS_DIR . '/inc/blocks/' . $block;
         if ( file_exists( $dir . '/block.json' ) ) {
-            register_block_type( $dir );
+            register_block_type( $dir, [
+                'render_callback' => $callback,
+            ] );
         }
     }
 }

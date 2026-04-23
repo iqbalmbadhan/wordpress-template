@@ -19,7 +19,7 @@ class DS_Elementor_Manager {
     }
 
     public static function register_widgets( $manager ): void {
-        $widget_dir = DS_INC . 'elementor/widgets/';
+        $widget_dir = DS_INC . '/elementor/widgets/';
         $widgets = [
             'class-widget-hero',
             'class-widget-ai-section',
