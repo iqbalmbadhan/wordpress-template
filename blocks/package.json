@@ -1,0 +1,14 @@
+{
+  "name": "dawn-simmons-blocks",
+  "version": "1.0.0",
+  "description": "Custom Gutenberg blocks for the Dawn Simmons WordPress theme",
+  "private": true,
+  "scripts": {
+    "build":   "wp-scripts build   src/index.js --output-path=../wordpress/dawn-simmons/assets/js/blocks",
+    "start":   "wp-scripts start   src/index.js --output-path=../wordpress/dawn-simmons/assets/js/blocks",
+    "lint:js": "wp-scripts lint-js src"
+  },
+  "devDependencies": {
+    "@wordpress/scripts": "^30.0.0"
+  }
+}

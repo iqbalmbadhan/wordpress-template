@@ -1,0 +1,23 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "dawn-simmons/contact",
+  "title": "DS Contact Section",
+  "category": "dawn-simmons",
+  "icon": "email",
+  "description": "Contact section with info and form (native or CF7 shortcode).",
+  "version": "1.0.0",
+  "textdomain": "dawn-simmons",
+  "editorScript": "file:../../../../../assets/js/blocks/index.js",
+  "render_callback": "ds_render_contact",
+  "attributes": {
+    "eyebrow":      { "type": "string",  "default": "Let’s Work Together" },
+    "title":        { "type": "string",  "default": "Start Your <em>Transformation</em>" },
+    "sub":          { "type": "string",  "default": "Ready to modernise your IT operations? Let’s discuss your ServiceNow roadmap and transformation goals." },
+    "email":        { "type": "string",  "default": "dawn@dawnsimmons.com" },
+    "location":     { "type": "string",  "default": "Remote — Available Worldwide" },
+    "responseTime": { "type": "string",  "default": "Within 24 hours" },
+    "cf7Id":        { "type": "integer", "default": 0 }
+  },
+  "supports": { "align": false, "html": false }
+}
