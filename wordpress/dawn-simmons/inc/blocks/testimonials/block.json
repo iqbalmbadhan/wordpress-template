@@ -1,0 +1,48 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "dawn-simmons/testimonials",
+  "title": "DS Testimonials Section",
+  "category": "dawn-simmons",
+  "icon": "format-quote",
+  "description": "Three-column testimonials grid with quote cards.",
+  "version": "1.0.0",
+  "textdomain": "dawn-simmons",
+  "attributes": {
+    "eyebrow": {
+      "type": "string",
+      "default": "Client Voices"
+    },
+    "title": {
+      "type": "string",
+      "default": "What Leaders <em>Say</em>"
+    },
+    "testimonials": {
+      "type": "array",
+      "default": [
+        {
+          "text": "Dawn’s ServiceNow implementation transformed our IT operations. Ticket resolution time dropped 60% in the first quarter.",
+          "name": "Michael Chen",
+          "role": "CIO, HealthFirst Systems",
+          "initial": "M"
+        },
+        {
+          "text": "The AI automation framework Dawn architected processes 40,000 requests monthly with 94% auto-resolution. Transformative.",
+          "name": "Sarah Johnson",
+          "role": "VP Technology, Apex Capital",
+          "initial": "S"
+        },
+        {
+          "text": "Dawn translates complex technical solutions into clear business value. Our board finally understands IT investment ROI.",
+          "name": "Robert Williams",
+          "role": "COO, Federal Agency",
+          "initial": "R"
+        }
+      ]
+    }
+  },
+  "supports": {
+    "align": false,
+    "html": false
+  }
+}

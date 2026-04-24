@@ -1,0 +1,78 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "dawn-simmons/hero",
+  "title": "DS Hero Section",
+  "category": "dawn-simmons",
+  "icon": "cover-image",
+  "description": "Full-screen hero section with photo, roles, stats and CTA buttons.",
+  "keywords": [
+    "hero",
+    "header",
+    "banner"
+  ],
+  "version": "1.0.0",
+  "textdomain": "dawn-simmons",
+  "attributes": {
+    "eyebrow": {
+      "type": "string",
+      "default": "ServiceNow Consultant & AI Strategist"
+    },
+    "heading": {
+      "type": "string",
+      "default": "Transforming Enterprise IT Through <em>Intelligent Design</em>"
+    },
+    "subheading": {
+      "type": "string",
+      "default": "Senior ServiceNow consultant and AI automation specialist with 12+ years driving digital transformation for Fortune 500 enterprises."
+    },
+    "btnPrimaryText": {
+      "type": "string",
+      "default": "View My Work"
+    },
+    "btnPrimaryUrl": {
+      "type": "string",
+      "default": "#services"
+    },
+    "btnSecondaryText": {
+      "type": "string",
+      "default": "Let’s Connect"
+    },
+    "btnSecondaryUrl": {
+      "type": "string",
+      "default": "#contact"
+    },
+    "photoUrl": {
+      "type": "string",
+      "default": ""
+    },
+    "roles": {
+      "type": "string",
+      "default": "ServiceNow Elite Partner Consultant\nAI/ML Integration Specialist\nDigital Transformation Lead"
+    },
+    "stats": {
+      "type": "array",
+      "default": [
+        {
+          "num": 50,
+          "suffix": "+",
+          "label": "Enterprise Deployments"
+        },
+        {
+          "num": 12,
+          "suffix": "+",
+          "label": "Years Experience"
+        },
+        {
+          "num": 98,
+          "suffix": "%",
+          "label": "Client Satisfaction"
+        }
+      ]
+    }
+  },
+  "supports": {
+    "align": false,
+    "html": false
+  }
+}

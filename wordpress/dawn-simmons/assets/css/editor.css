@@ -1,0 +1,64 @@
+/* Block editor styles — mirrors front-end design tokens */
+:root {
+    --bg: oklch(11% 0.01 260);
+    --bg2: oklch(14% 0.012 260);
+    --bg3: oklch(17% 0.012 260);
+    --surface: oklch(19% 0.015 260);
+    --border: oklch(25% 0.015 260);
+    --muted: oklch(45% 0.01 260);
+    --text: oklch(92% 0.005 260);
+    --text2: oklch(65% 0.008 260);
+    --accent: oklch(72% 0.155 195);
+    --accent2: oklch(72% 0.155 145);
+    --ff-display: 'Playfair Display', Georgia, serif;
+    --ff-body: 'DM Sans', Helvetica, sans-serif;
+}
+
+.editor-styles-wrapper {
+    font-family: var(--ff-body);
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+}
+
+.editor-styles-wrapper h1,
+.editor-styles-wrapper h2,
+.editor-styles-wrapper h3,
+.editor-styles-wrapper h4,
+.editor-styles-wrapper h5,
+.editor-styles-wrapper h6 {
+    font-family: var(--ff-display);
+    font-weight: 900;
+    letter-spacing: -0.025em;
+    color: var(--text);
+}
+
+.editor-styles-wrapper p {
+    font-size: 16px;
+    color: var(--text2);
+    line-height: 1.85;
+}
+
+.editor-styles-wrapper a {
+    color: var(--accent);
+}
+
+.editor-styles-wrapper .ds-entry-content > * {
+    max-width: 860px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Block-specific editor styles */
+.editor-styles-wrapper [data-type="dawn-simmons/hero"],
+.editor-styles-wrapper [data-type="dawn-simmons/services"],
+.editor-styles-wrapper [data-type="dawn-simmons/ai-section"],
+.editor-styles-wrapper [data-type="dawn-simmons/about"],
+.editor-styles-wrapper [data-type="dawn-simmons/testimonials"],
+.editor-styles-wrapper [data-type="dawn-simmons/contact-form"] {
+    background: var(--bg);
+    border: 1px dashed var(--border);
+    border-radius: 8px;
+    padding: 24px;
+    margin-bottom: 16px;
+}

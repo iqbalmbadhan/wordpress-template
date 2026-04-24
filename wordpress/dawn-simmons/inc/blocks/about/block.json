@@ -1,0 +1,79 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "dawn-simmons/about",
+  "title": "DS About Section",
+  "category": "dawn-simmons",
+  "icon": "admin-users",
+  "description": "About section with photo, bio, skill bars, and details grid.",
+  "version": "1.0.0",
+  "textdomain": "dawn-simmons",
+  "attributes": {
+    "eyebrow": {
+      "type": "string",
+      "default": "About Me"
+    },
+    "title": {
+      "type": "string",
+      "default": "Bridging Technology &amp; <em>Human Impact</em>"
+    },
+    "bio1": {
+      "type": "string",
+      "default": "With over 12 years in enterprise IT and digital transformation, I’ve helped organisations across healthcare, finance, and government modernise their service management platforms."
+    },
+    "bio2": {
+      "type": "string",
+      "default": "My approach combines technical depth with strategic vision — ensuring technology investments translate into measurable business outcomes and improved employee experiences."
+    },
+    "photoUrl": {
+      "type": "string",
+      "default": ""
+    },
+    "skills": {
+      "type": "array",
+      "default": [
+        {
+          "skill": "ServiceNow Platform",
+          "pct": 95
+        },
+        {
+          "skill": "AI/ML Integration",
+          "pct": 88
+        },
+        {
+          "skill": "ITIL & Frameworks",
+          "pct": 92
+        },
+        {
+          "skill": "Solution Architecture",
+          "pct": 85
+        }
+      ]
+    },
+    "details": {
+      "type": "array",
+      "default": [
+        {
+          "label": "Location",
+          "value": "Remote / USA"
+        },
+        {
+          "label": "Certifications",
+          "value": "CSA, CAD, CIS-ITSM, PMP"
+        },
+        {
+          "label": "Availability",
+          "value": "Consulting & Advisory"
+        },
+        {
+          "label": "Industries",
+          "value": "Healthcare, Finance, Gov"
+        }
+      ]
+    }
+  },
+  "supports": {
+    "align": false,
+    "html": false
+  }
+}
