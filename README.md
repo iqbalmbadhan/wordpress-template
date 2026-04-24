@@ -296,7 +296,206 @@ All component styles reference these variables — change theme settings in the 
 
 ---
 
-## REST API
+## React Usage
+
+There are **two separate React projects** in this repository. They are independent — use one, both, or neither depending on your workflow.
+
+---
+
+### Project 1 — Gutenberg Block Editor UI (`blocks/`)
+
+This is a **WordPress-native React build** using `@wordpress/scripts`. It adds sidebar inspector panels to the six custom blocks inside the WordPress Block Editor. The frontend (what visitors see) always renders via PHP — this build only affects the editing experience inside WordPress Admin.
+
+#### When you need it
+
+- You want to edit homepage section content (text, images, stats, testimonials, etc.) through the WordPress Block Editor sidebar instead of directly modifying PHP or re-running the demo importer.
+- You see blocks on the homepage but no controls appear in the right-hand panel when you select one.
+
+#### Setup
+
+```bash
+cd blocks
+npm install
+npm run build
+```
+
+The compiled file is written to:
+
+```
+wordpress/dawn-simmons/assets/js/blocks/index.js
+```
+
+The theme loads it automatically when the file exists. **No changes to WordPress or PHP are needed.**
+
+#### Development (watch mode)
+
+```bash
+cd blocks
+npm run start
+```
+
+Watches `blocks/src/` and rebuilds on every save. Keep this running while editing block controls.
+
+#### How it works
+
+Each block has its own file at `blocks/src/blocks/{block-name}/index.js`. The file calls `registerBlockType()` with:
+
+- **`metadata`** — imported directly from the corresponding `block.json` (attributes, name, category, icon)
+- **`edit()`** — a React component using `@wordpress/components` (`TextControl`, `TextareaControl`, `PanelBody`, etc.) that renders the inspector sidebar UI. Changes call `setAttributes()` to update block data.
+- **`save()`** — returns `null` because all frontend HTML is produced by the PHP render callback in `inc/blocks/register-blocks.php`
+
+Example structure of a block file:
+
+```js
+import { registerBlockType } from '@wordpress/blocks';
+import { InspectorControls } from '@wordpress/block-editor';
+import { PanelBody, TextControl } from '@wordpress/components';
+import metadata from '../../../wordpress/dawn-simmons/inc/blocks/hero/block.json';
+
+registerBlockType(metadata.name, {
+    ...metadata,
+
+    edit({ attributes, setAttributes }) {
+        return (
+            <>
+                <InspectorControls>
+                    <PanelBody title="Hero Content">
+                        <TextControl
+                            label="Eyebrow Text"
+                            value={attributes.eyebrow}
+                            onChange={v => setAttributes({ eyebrow: v })}
+                        />
+                        {/* more controls… */}
+                    </PanelBody>
+                </InspectorControls>
+                {/* optional canvas preview */}
+            </>
+        );
+    },
+
+    save: () => null,   // PHP renders the frontend
+});
+```
+
+#### Adding a control to an existing block
+
+1. Open `blocks/src/blocks/{block-name}/index.js`
+2. Destructure the new attribute from `attributes`
+3. Add a `TextControl` / `TextareaControl` / `ToggleControl` inside `<InspectorControls>`
+4. Add the attribute to the matching `block.json` with a `type` and `default`
+5. Read it in the PHP render callback in `inc/blocks/register-blocks.php`
+6. Run `npm run build` (or keep `npm run start` running)
+
+#### Linting
+
+```bash
+cd blocks
+npm run lint:js
+```
+
+---
+
+### Project 2 — Standalone React + Vite App (`src/`)
+
+This is a **fully self-contained React application** that reproduces the entire Dawn Simmons portfolio site — no WordPress required. It is useful for:
+
+- Live previewing the design and content before importing into WordPress
+- Sharing a static demo with clients (deploy to Netlify, Vercel, GitHub Pages, etc.)
+- Rapidly prototyping layout changes without touching WordPress
+
+#### Tech stack
+
+| Package | Purpose |
+|---|---|
+| `react` + `react-dom` 18 | UI rendering |
+| `react-router-dom` 6 | Client-side routing (HashRouter) |
+| `vite` 6 | Dev server and bundler |
+| `@vitejs/plugin-react` | JSX transform + fast refresh |
+
+#### Setup
+
+```bash
+# from the repo root
+npm install
+npm run dev
+```
+
+Open `http://localhost:5173` in your browser.
+
+#### Available commands
+
+| Command | What it does |
+|---|---|
+| `npm run dev` | Start local dev server with hot module reload |
+| `npm run build` | Production build → `dist/` |
+| `npm run preview` | Serve the `dist/` build locally for final checks |
+
+#### Routes
+
+| URL (hash) | Component | Description |
+|---|---|---|
+| `/#/` | `src/pages/HomePage.jsx` | Full portfolio — all 6 sections |
+| `/#/blog` | `src/pages/BlogPage.jsx` | Blog post grid |
+| `/#/article` | `src/pages/ArticlePage.jsx` | Single article view |
+
+#### Project layout
+
+```
+src/
+├── main.jsx               Entry point — mounts <App /> to #root
+├── App.jsx                Router + ThemeProvider wrapper
+├── context/
+│   └── ThemeContext.jsx   Global accent / background / font state
+├── pages/
+│   ├── HomePage.jsx       Hero, AI, Services, About, Testimonials, Contact
+│   ├── BlogPage.jsx       Post grid with category filter
+│   └── ArticlePage.jsx    Single post with TOC and related posts
+└── components/
+    ├── Navbar.jsx         Sticky nav with scroll-spy and mobile drawer
+    ├── Footer.jsx         Footer with links and copyright
+    └── EditorPanel.jsx    Live tweaks panel (accent/bg/font switcher)
+```
+
+#### Theme context
+
+`ThemeContext` holds `accent`, `bg`, and `font` values and exposes a `setTheme()` helper. The `EditorPanel` component calls it to apply changes instantly via CSS variables on `:root`. Any component can consume the context:
+
+```jsx
+import { useTheme } from '../context/ThemeContext';
+
+function MyComponent() {
+    const { accent, setTheme } = useTheme();
+    return (
+        <button onClick={() => setTheme({ accent: 'violet' })}>
+            Switch to Violet
+        </button>
+    );
+}
+```
+
+#### Deploying the static build
+
+```bash
+npm run build          # outputs to dist/
+```
+
+Deploy the `dist/` folder to any static host. Because the app uses `HashRouter`, all routes (`/#/blog`, etc.) work without server-side redirect rules.
+
+For Netlify / Vercel: point the publish directory to `dist/`. No `_redirects` file needed with hash routing.
+
+---
+
+### Which React project should I use?
+
+| Goal | Use |
+|---|---|
+| Edit block content in WordPress Admin | `blocks/` (Gutenberg build) |
+| Preview / demo the site without WordPress | `src/` (Vite app) |
+| Deploy a static portfolio site | `src/` → `npm run build` → deploy `dist/` |
+| Add a new editable field to a block | `blocks/` + `block.json` + PHP render callback |
+| Build a headless frontend consuming the WP REST API | `src/` + `GET /wp-json/dawn-simmons/v1/settings` |
+
+
 
 ```
 GET /wp-json/dawn-simmons/v1/settings
