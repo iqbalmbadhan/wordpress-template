@@ -14,6 +14,8 @@ class DS_Setup_Wizard {
         add_action( 'wp_ajax_ds_save_editor_pref',   [ __CLASS__, 'ajax_save_editor'   ] );
         add_action( 'wp_ajax_ds_run_demo_import',    [ __CLASS__, 'ajax_demo_import'   ] );
         add_action( 'wp_ajax_ds_finish_wizard',      [ __CLASS__, 'ajax_finish'        ] );
+        add_action( 'wp_ajax_ds_install_plugin',     [ __CLASS__, 'ajax_install_plugin' ] );
+        add_action( 'wp_ajax_ds_activate_plugin',    [ __CLASS__, 'ajax_activate_plugin' ] );
     }
 
     public static function register_page(): void {
@@ -68,6 +70,57 @@ class DS_Setup_Wizard {
         check_ajax_referer( 'ds_wizard_nonce', 'nonce' );
         update_option( 'ds_setup_complete', true );
         wp_send_json_success( [ 'redirect' => admin_url() ] );
+    }
+
+    // ── AJAX: install plugin (no page reload) ────────────────────────────────
+    public static function ajax_install_plugin(): void {
+        check_ajax_referer( 'ds_wizard_nonce', 'nonce' );
+        if ( ! current_user_can( 'install_plugins' ) ) {
+            wp_send_json_error( 'Unauthorized', 403 );
+        }
+        $slug = sanitize_key( $_POST['slug'] ?? '' );
+        if ( ! $slug ) {
+            wp_send_json_error( 'No plugin slug provided.' );
+        }
+        require_once ABSPATH . 'wp-admin/includes/plugin-install.php';
+        require_once ABSPATH . 'wp-admin/includes/class-wp-upgrader.php';
+        require_once ABSPATH . 'wp-admin/includes/class-wp-ajax-upgrader-skin.php';
+        $api = plugins_api( 'plugin_information', [
+            'slug'   => $slug,
+            'fields' => [ 'sections' => false, 'screenshots' => false ],
+        ] );
+        if ( is_wp_error( $api ) ) {
+            wp_send_json_error( $api->get_error_message() );
+        }
+        $skin   = new WP_Ajax_Upgrader_Skin();
+        $result = ( new Plugin_Upgrader( $skin ) )->install( $api->download_link );
+        if ( is_wp_error( $result ) ) {
+            wp_send_json_error( $result->get_error_message() );
+        }
+        if ( is_wp_error( $skin->result ) ) {
+            wp_send_json_error( $skin->result->get_error_message() );
+        }
+        if ( ! $result ) {
+            wp_send_json_error( 'Installation failed.' );
+        }
+        wp_send_json_success( [ 'message' => 'Plugin installed.' ] );
+    }
+
+    // ── AJAX: activate plugin (no page reload) ───────────────────────────────
+    public static function ajax_activate_plugin(): void {
+        check_ajax_referer( 'ds_wizard_nonce', 'nonce' );
+        if ( ! current_user_can( 'activate_plugins' ) ) {
+            wp_send_json_error( 'Unauthorized', 403 );
+        }
+        $file = sanitize_text_field( $_POST['file'] ?? '' );
+        if ( ! $file ) {
+            wp_send_json_error( 'No plugin file provided.' );
+        }
+        $result = activate_plugin( $file );
+        if ( is_wp_error( $result ) ) {
+            wp_send_json_error( $result->get_error_message() );
+        }
+        wp_send_json_success( [ 'message' => 'Plugin activated.' ] );
     }
 
     // ── Render wizard page ───────────────────────────────────────────────────
@@ -184,9 +237,9 @@ class DS_Setup_Wizard {
                                 <?php if ( $active ) : ?>
                                     <span class="status-active">✓ <?php esc_html_e( 'Active', 'dawn-simmons' ); ?></span>
                                 <?php elseif ( $installed ) : ?>
-                                    <a href="<?php echo esc_url( DS_Plugin_Checker::get_activate_url( $plugin['file'] ) ); ?>" class="btn btn-sm btn-primary"><?php esc_html_e( 'Activate', 'dawn-simmons' ); ?></a>
+                                    <button class="btn btn-sm btn-primary ds-plugin-btn" data-action="activate" data-slug="<?php echo esc_attr( $plugin['slug'] ); ?>" data-file="<?php echo esc_attr( $plugin['file'] ); ?>"><?php esc_html_e( 'Activate', 'dawn-simmons' ); ?></button>
                                 <?php else : ?>
-                                    <a href="<?php echo esc_url( DS_Plugin_Checker::get_install_url( $plugin['slug'] ) ); ?>" class="btn btn-sm btn-install"><?php esc_html_e( 'Install', 'dawn-simmons' ); ?></a>
+                                    <button class="btn btn-sm btn-install ds-plugin-btn" data-action="install" data-slug="<?php echo esc_attr( $plugin['slug'] ); ?>" data-file="<?php echo esc_attr( $plugin['file'] ); ?>"><?php esc_html_e( 'Install', 'dawn-simmons' ); ?></button>
                                 <?php endif; ?>
                             </div>
                         </div>
@@ -365,6 +418,43 @@ class DS_Setup_Wizard {
                     goTo(4);
                 } else {
                     goTo(currentStep + 1);
+                }
+            });
+
+            // Plugin install / activate — runs inline without page reload
+            document.querySelector('.plugin-list').addEventListener('click', async function(e) {
+                const btn = e.target.closest('.ds-plugin-btn');
+                if (!btn) return;
+                const action = btn.dataset.action;
+                const slug   = btn.dataset.slug;
+                const file   = btn.dataset.file;
+                const wrap   = btn.closest('.plugin-status');
+
+                btn.disabled = true;
+                btn.innerHTML = '<span class="spinner"></span>' + (action === 'install' ? 'Installing…' : 'Activating…');
+
+                const fd = new FormData();
+                fd.append('action',  action === 'install' ? 'ds_install_plugin' : 'ds_activate_plugin');
+                fd.append('nonce',   nonce);
+                fd.append(action === 'install' ? 'slug' : 'file', action === 'install' ? slug : file);
+
+                try {
+                    const res  = await fetch(ajaxUrl, { method: 'POST', body: fd });
+                    const json = await res.json();
+                    if (json.success) {
+                        if (action === 'install') {
+                            wrap.innerHTML = '<button class="btn btn-sm btn-primary ds-plugin-btn" data-action="activate" data-slug="' + slug + '" data-file="' + file + '">Activate</button>';
+                        } else {
+                            wrap.innerHTML = '<span class="status-active">✓ Active</span>';
+                        }
+                    } else {
+                        btn.disabled  = false;
+                        btn.textContent = action === 'install' ? 'Install' : 'Activate';
+                        alert(json.data || 'An error occurred.');
+                    }
+                } catch(err) {
+                    btn.disabled  = false;
+                    btn.textContent = action === 'install' ? 'Install' : 'Activate';
                 }
             });
 
