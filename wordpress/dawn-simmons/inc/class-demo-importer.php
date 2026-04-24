@@ -242,20 +242,102 @@ class DS_Demo_Importer {
 
     // ── Gutenberg homepage ───────────────────────────────────────────────────
     private static function create_gutenberg_homepage( int $page_id ): void {
-        $content = <<<BLOCKS
-<!-- wp:dawn-simmons/hero {"eyebrow":"ServiceNow Expert · AI Transformation · Chicago, IL","headline":"Transforming Business With AI & ServiceNow","roles":["ServiceNow Consultant & AI Architect","Digital Transformation & Business Agent","Enterprise AI & ITSM Solution Architect"],"ctaPrimary":"Start a Conversation","ctaSecondary":"View Resume","stats":[{"value":20,"label":"Years Experience","suffix":"+"},{"value":94,"label":"Client Satisfaction","suffix":"%"},{"value":50,"label":"Enterprise Clients","suffix":"+"}]} /-->
-<!-- wp:dawn-simmons/ai-section {"eyebrow":"AI + ServiceNow + Business","headline":"Unlocking AI-Powered Business Intelligence"} /-->
-<!-- wp:dawn-simmons/services {"eyebrow":"What I Do","headline":"Expert-level services built on 20+ years"} /-->
-<!-- wp:dawn-simmons/about {"eyebrow":"About Me","headline":"Dynamic Leadership with Global Impact"} /-->
-<!-- wp:dawn-simmons/testimonials {"eyebrow":"Social Proof","headline":"What colleagues & clients say"} /-->
-<!-- wp:dawn-simmons/contact {"eyebrow":"Get in Touch","headline":"Let's work together"} /-->
-BLOCKS;
+        // Attribute names must exactly match block.json + render callback expectations.
+        $blocks = [
+            'dawn-simmons/hero' => [
+                'eyebrow'          => 'ServiceNow Expert · AI Transformation · Chicago, IL',
+                'heading'          => 'Transforming Business With AI & ServiceNow',
+                'roles'            => "ServiceNow Consultant & AI Architect\nDigital Transformation & Business Agent\nEnterprise AI & ITSM Solution Architect",
+                'btnPrimaryText'   => 'Start a Conversation',
+                'btnPrimaryUrl'    => '#contact',
+                'btnSecondaryText' => 'View Resume',
+                'btnSecondaryUrl'  => '#about',
+                'stats'            => [
+                    [ 'num' => 20, 'suffix' => '+', 'label' => 'Years Experience'    ],
+                    [ 'num' => 94, 'suffix' => '%', 'label' => 'Client Satisfaction' ],
+                    [ 'num' => 50, 'suffix' => '+', 'label' => 'Enterprise Clients'  ],
+                ],
+            ],
+            'dawn-simmons/ai-section' => [
+                'eyebrow'   => 'AI + ServiceNow + Business',
+                'headline'  => 'Unlocking AI-Powered Business Intelligence',
+                'lead'      => 'Dawn bridges the gap between cutting-edge artificial intelligence and real-world enterprise operations — embedding AI capabilities directly into ServiceNow workflows to automate, predict, and accelerate business outcomes.',
+                'pills'     => "Predictive Intelligence\nAI Automation\nNow Assist (GenAI)\nML Classification\nNLP & Virtual Agent\nAI-Ops\nProcess Mining\nIntelligent Workflows",
+                'flowSteps' => [
+                    [ 'icon' => '📡', 'name' => 'Data Ingestion & Signal Detection', 'desc' => 'CMDB, incidents, events, HRSD records'          ],
+                    [ 'icon' => '🧠', 'name' => 'AI & ML Processing Layer',          'desc' => 'Predictive Intelligence, NLP, classification'    ],
+                    [ 'icon' => '⚡', 'name' => 'Intelligent Automation',            'desc' => 'Auto-routing, resolution, virtual agent'         ],
+                    [ 'icon' => '📈', 'name' => 'Business Outcomes & KPIs',          'desc' => 'Cost savings, SLA improvement, ROI'             ],
+                ],
+                'cards' => [
+                    [ 'icon' => '💡', 'title' => 'Predictive Intelligence', 'desc' => "Leverage ServiceNow's built-in ML to auto-classify incidents, predict SLA breaches, and surface patterns before they become problems." ],
+                    [ 'icon' => '🤖', 'title' => 'Now Assist (GenAI)',       'desc' => "Deploy generative AI capabilities — AI-powered case summarization, resolution recommendations, and agent assist across ITSM and HRSD." ],
+                    [ 'icon' => '⚙',  'title' => 'Intelligent Automation',   'desc' => 'Design AI-driven workflow automation — eliminating repetitive tasks, accelerating approvals, and reducing MTTR.' ],
+                    [ 'icon' => '📊', 'title' => 'AI-Ops & AIOps',           'desc' => 'Integrate AI into IT operations — intelligent event correlation, noise reduction, and proactive anomaly detection.' ],
+                ],
+            ],
+            'dawn-simmons/services' => [
+                'eyebrow'  => 'What I Do',
+                'title'    => 'Expert-level services built on 20+ years',
+                'sub'      => 'From global AI-powered program management to hands-on ServiceNow implementation — end-to-end digital transformation for enterprise.',
+                'services' => [
+                    [ 'num' => '01', 'title' => 'Global Program Director',        'desc' => 'Directed multi-million-dollar cloud implementations, aligning ServiceNow Cloud, ITAM, SCCM, GRC, and AI automation to organizational goals across global enterprises.',                                                                           'tags' => 'ServiceNow, AI Automation, ITAM, GRC'             ],
+                    [ 'num' => '02', 'title' => 'Enterprise IT & AI Consulting',   'desc' => 'ServiceNow and AI transformations in healthcare, pharma, higher education, and energy — delivering end-to-end ITSM, CMDB, SecOps, HRSD, and predictive intelligence solutions.',                                                                    'tags' => 'ITSM, CMDB, SecOps, HRSD, AI/ML'                 ],
+                    [ 'num' => '03', 'title' => 'Strategic Leadership & Advisory', 'desc' => 'Fortune 500 executive guidance — aligning AI and technology strategy with business goals, driving measurable cost savings, efficiency gains, and long-term digital roadmaps.',                                                                     'tags' => 'Executive Advisory, AI Strategy, Roadmapping'     ],
+                ],
+            ],
+            'dawn-simmons/about' => [
+                'eyebrow' => 'About Me',
+                'title'   => 'Dynamic Leadership with Global Impact',
+                'bio1'    => 'Dawn C. Simmons is a transformative, visionary leader with over 20 years of executive experience in digital transformation, AI-powered business solutions, and ServiceNow implementations.',
+                'bio2'    => 'A recognized expert in enterprise AI integration and ServiceNow architecture, Dawn has delivered measurable results across Fortune 500 companies in healthcare, pharma, higher education, and energy — combining deep technical expertise with executive-level strategic vision.',
+                'skills'  => [
+                    [ 'skill' => 'ServiceNow Platform',          'pct' => 100 ],
+                    [ 'skill' => 'AI & Predictive Intelligence', 'pct' => 95  ],
+                    [ 'skill' => 'Service Management COE',       'pct' => 98  ],
+                    [ 'skill' => 'Business Process Management',  'pct' => 92  ],
+                    [ 'skill' => 'ITSM / ITIL v4',               'pct' => 96  ],
+                ],
+                'details' => [
+                    [ 'label' => 'Name',     'value' => 'Dawn Christine Simmons' ],
+                    [ 'label' => 'Location', 'value' => 'Chicago, IL USA'        ],
+                    [ 'label' => 'Email',    'value' => 'dawnckhan@gmail.com'    ],
+                    [ 'label' => 'Phone',    'value' => '+1-925-297-7901'        ],
+                ],
+            ],
+            'dawn-simmons/testimonials' => [
+                'eyebrow'      => 'Social Proof',
+                'title'        => 'What colleagues & clients say',
+                'testimonials' => [
+                    [ 'text' => 'Dawn has demonstrated exemplary leadership in the Support Services industry through her incredible efforts. She is a seasoned management practitioner that understands service management concepts extremely well.',                                'name' => 'Steve West',             'role' => 'Board of Directors, Denver Metro HDI',                  'initial' => 'SW' ],
+                    [ 'text' => 'Very few people equal Dawn in persistence and dedication. I am continually impressed with her insight, intelligence, tenacity and ability to network across organizations.',                                                                    'name' => 'Lori Shaw',              'role' => 'Senior Consultant',                                    'initial' => 'LS' ],
+                    [ 'text' => '"Solution provider" — that can summarize how good she knows the business. She is one of the few people with excellent knowledge about Support Readiness. She is GREAT to work with.',                                                          'name' => 'Venkatesh Thiruvaipati', 'role' => 'Sun Microsystems',                                     'initial' => 'VT' ],
+                    [ 'text' => 'Dawn is able to quickly assess the needs of a project and break it into manageable, achievable parts. Her ability to network and work with all personalities facilitates the influencing of all key stakeholders.',                              'name' => 'Dale Avery',             'role' => 'Enterprise Network Services, Sun Microsystems',         'initial' => 'DA' ],
+                    [ 'text' => 'Dawn is one of the most passionate and driven people I know. Her background and experience makes her a very well rounded qualified candidate for any challenging opportunity.',                                                                  'name' => 'Frank Tawil',            'role' => 'Enterprise Network Services, Sun Microsystems Bay Area', 'initial' => 'FT' ],
+                    [ 'text' => 'Dawn is an excellent project and program manager, bringing diverse skills including effective teamwork, attention to detail, excellent facilitation, and strong leadership. Dawn produces results.',                                               'name' => 'Deepanker Baderia',      'role' => 'Solution Architect, Sun Microsystems',                  'initial' => 'DB' ],
+                ],
+            ],
+            'dawn-simmons/contact' => [
+                'eyebrow'      => 'Get in Touch',
+                'title'        => "Let's work together",
+                'sub'          => "Ready to transform your enterprise? I'd love to hear about your challenges and explore how we can work together.",
+                'email'        => 'dawnckhan@gmail.com',
+                'location'     => 'Chicago, IL USA',
+                'responseTime' => 'Within 24 hours',
+            ],
+        ];
+
+        $lines = [];
+        foreach ( $blocks as $block_name => $attrs ) {
+            $json    = wp_json_encode( $attrs, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES );
+            $lines[] = "<!-- wp:{$block_name} {$json} /-->";
+        }
 
         wp_update_post( [
             'ID'           => $page_id,
-            'post_content' => $content,
+            'post_content' => implode( "\n", $lines ),
         ] );
-        self::$log[] = '✓ Gutenberg blocks written to homepage.';
+        self::$log[] = '✓ Homepage content populated from Dawn Simmons v2 data.';
     }
 
     // ── Elementor homepage ───────────────────────────────────────────────────
