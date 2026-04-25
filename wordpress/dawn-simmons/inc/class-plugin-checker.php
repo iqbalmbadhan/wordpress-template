@@ -7,15 +7,7 @@ defined( 'ABSPATH' ) || exit;
 
 class DS_Plugin_Checker {
 
-    const REQUIRED = [
-        [
-            'name'     => 'WooCommerce',
-            'slug'     => 'woocommerce',
-            'file'     => 'woocommerce/woocommerce.php',
-            'required' => true,
-            'desc'     => 'Powers the shop, cart, checkout, and product pages.',
-        ],
-    ];
+    const REQUIRED = [];
 
     const RECOMMENDED = [
         [
@@ -31,6 +23,13 @@ class DS_Plugin_Checker {
             'file'     => 'contact-form-7/wp-contact-form-7.php',
             'required' => false,
             'desc'     => 'Flexible contact forms for the Contact section.',
+        ],
+        [
+            'name'     => 'WooCommerce',
+            'slug'     => 'woocommerce',
+            'file'     => 'woocommerce/woocommerce.php',
+            'required' => false,
+            'desc'     => 'Optional: powers the shop, cart, checkout, and product pages. Skip if you don\'t need eCommerce.',
         ],
     ];
 
@@ -69,21 +68,13 @@ class DS_Plugin_Checker {
         if ( get_option( 'ds_plugin_notices_dismissed' ) ) {
             return;
         }
-        $missing = [];
-        foreach ( self::REQUIRED as $plugin ) {
-            if ( ! self::is_active( $plugin['file'] ) ) {
-                $missing[] = $plugin;
-            }
-        }
-        if ( empty( $missing ) ) {
+        if ( get_option( 'ds_setup_complete' ) ) {
             return;
         }
-        $names = implode( ', ', array_column( $missing, 'name' ) );
-        echo '<div class="notice notice-warning is-dismissible" id="ds-plugin-notice">';
+        echo '<div class="notice notice-info is-dismissible" id="ds-plugin-notice">';
         printf(
-            '<p><strong>Dawn Simmons Theme</strong> requires: %s. <a href="%s">Go to Setup Wizard</a> to install them.</p>',
-            esc_html( $names ),
-            esc_url( admin_url( 'admin.php?page=ds-setup-wizard' ) )
+            '<p><strong>Dawn Simmons Theme</strong> — <a href="%s">Open Theme Control</a> to finish setting up your site.</p>',
+            esc_url( admin_url( 'index.php?page=ds-setup-wizard' ) )
         );
         echo '</div>';
     }

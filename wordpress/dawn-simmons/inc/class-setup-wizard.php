@@ -20,8 +20,8 @@ class DS_Setup_Wizard {
 
     public static function register_page(): void {
         add_dashboard_page(
-            __( 'Theme Setup', 'dawn-simmons' ),
-            __( 'Theme Setup', 'dawn-simmons' ),
+            __( 'Theme Control', 'dawn-simmons' ),
+            __( 'Theme Control', 'dawn-simmons' ),
             'manage_options',
             'ds-setup-wizard',
             [ __CLASS__, 'render' ]
@@ -133,7 +133,7 @@ class DS_Setup_Wizard {
         <head>
             <meta charset="<?php bloginfo( 'charset' ); ?>">
             <meta name="viewport" content="width=device-width, initial-scale=1">
-            <title><?php esc_html_e( 'Theme Setup — Dawn Simmons', 'dawn-simmons' ); ?></title>
+            <title><?php esc_html_e( 'Theme Control — Dawn Simmons', 'dawn-simmons' ); ?></title>
             <style>
                 *{box-sizing:border-box;margin:0;padding:0}
                 body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#0a0b10;color:#e8eaf0;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px 20px}
@@ -199,7 +199,7 @@ class DS_Setup_Wizard {
 
             <!-- Header -->
             <div class="wizard-header">
-                <div class="wizard-logo">Dawn<span>.</span> Theme Setup</div>
+                <div class="wizard-logo">Dawn<span>.</span> Theme Control</div>
                 <div class="wizard-subtitle"><?php esc_html_e( "Let's get your site configured in 3 quick steps.", 'dawn-simmons' ); ?></div>
             </div>
 

@@ -397,78 +397,104 @@ class DS_Demo_Importer {
 
     private static function hero_settings(): array {
         return [
-            'eyebrow'        => 'ServiceNow Expert · AI Transformation · Chicago, IL',
-            'headline'       => 'Transforming Business With AI & ServiceNow',
-            'role_1'         => 'ServiceNow Consultant & AI Architect',
-            'role_2'         => 'Digital Transformation & Business Agent',
-            'role_3'         => 'Enterprise AI & ITSM Solution Architect',
-            'cta_primary'    => 'Start a Conversation',
-            'cta_secondary'  => 'View Resume',
-            'stat_1_value'   => '20', 'stat_1_suffix' => '+', 'stat_1_label' => 'Years Experience',
-            'stat_2_value'   => '94', 'stat_2_suffix' => '%', 'stat_2_label' => 'Client Satisfaction',
-            'stat_3_value'   => '50', 'stat_3_suffix' => '+', 'stat_3_label' => 'Enterprise Clients',
+            'eyebrow'           => 'ServiceNow Expert · AI Transformation · Chicago, IL',
+            'heading'           => 'Transforming Business With AI & ServiceNow',
+            'subheading'        => 'Senior ServiceNow consultant and AI architect with 20+ years driving digital transformation for Fortune 500 enterprises.',
+            'btn_primary_text'  => 'Start a Conversation',
+            'btn_primary_url'   => [ 'url' => '#contact',  'is_external' => false, 'nofollow' => false ],
+            'btn_secondary_text'=> 'View Resume',
+            'btn_secondary_url' => [ 'url' => '#about',    'is_external' => false, 'nofollow' => false ],
+            'photo'             => [ 'id' => 0, 'url' => '' ],
+            'roles'             => "ServiceNow Consultant & AI Architect\nDigital Transformation & Business Agent\nEnterprise AI & ITSM Solution Architect",
+            'stats'             => [
+                [ 'num' => 20, 'suffix' => '+', 'label' => 'Years Experience'    ],
+                [ 'num' => 94, 'suffix' => '%', 'label' => 'Client Satisfaction' ],
+                [ 'num' => 50, 'suffix' => '+', 'label' => 'Enterprise Clients'  ],
+            ],
         ];
     }
 
     private static function ai_settings(): array {
         return [
-            'eyebrow'  => 'AI + ServiceNow + Business',
-            'headline' => 'Unlocking AI-Powered Business Intelligence',
-            'lead_1'   => 'Dawn bridges the gap between cutting-edge artificial intelligence and real-world enterprise operations — embedding AI capabilities directly into ServiceNow workflows.',
-            'lead_2'   => 'From predictive incident management to AI-driven CMDB health scoring and intelligent automation across ITSM, HRSD and SecOps.',
+            'eyebrow'    => 'AI + ServiceNow + Business',
+            'headline'   => 'Unlocking AI-Powered Business Intelligence',
+            'lead'       => 'Dawn bridges the gap between cutting-edge artificial intelligence and real-world enterprise operations — embedding AI capabilities directly into ServiceNow workflows to automate, predict, and accelerate business outcomes.',
+            'pills'      => "Predictive Intelligence\nAI Automation\nNow Assist (GenAI)\nML Classification\nNLP & Virtual Agent\nAI-Ops\nProcess Mining\nIntelligent Workflows",
+            'flow_steps' => [
+                [ 'icon_char' => '📡', 'name' => 'Data Ingestion & Signal Detection', 'desc' => 'CMDB, incidents, events, HRSD records'       ],
+                [ 'icon_char' => '🧠', 'name' => 'AI & ML Processing Layer',          'desc' => 'Predictive Intelligence, NLP, classification' ],
+                [ 'icon_char' => '⚡', 'name' => 'Intelligent Automation',            'desc' => 'Auto-routing, resolution, virtual agent'      ],
+                [ 'icon_char' => '📈', 'name' => 'Business Outcomes & KPIs',          'desc' => 'Cost savings, SLA improvement, ROI'          ],
+            ],
+            'cards'      => [
+                [ 'icon' => '💡', 'title' => 'Predictive Intelligence', 'desc' => "Leverage ServiceNow's built-in ML to auto-classify incidents, predict SLA breaches, and surface patterns before they become problems." ],
+                [ 'icon' => '🤖', 'title' => 'Now Assist (GenAI)',       'desc' => 'Deploy generative AI capabilities — AI-powered case summarization, resolution recommendations, and agent assist across ITSM and HRSD.' ],
+                [ 'icon' => '⚙',  'title' => 'Intelligent Automation',   'desc' => 'Design AI-driven workflow automation — eliminating repetitive tasks, accelerating approvals, and reducing MTTR.' ],
+                [ 'icon' => '📊', 'title' => 'AI-Ops & AIOps',           'desc' => 'Integrate AI into IT operations — intelligent event correlation, noise reduction, and proactive anomaly detection.' ],
+            ],
         ];
     }
 
     private static function services_settings(): array {
         return [
-            'eyebrow'       => 'What I Do',
-            'headline'      => 'Expert-level services built on 20+ years',
-            'subtitle'      => 'From global AI-powered program management to hands-on ServiceNow implementation.',
-            'service_1_num' => '01', 'service_1_title' => 'Global Program Director',
-            'service_1_desc'=> 'Directed multi-million-dollar cloud implementations, aligning ServiceNow Cloud, ITAM, SCCM, GRC, and AI automation.',
-            'service_2_num' => '02', 'service_2_title' => 'Enterprise IT & AI Consulting',
-            'service_2_desc'=> 'ServiceNow and AI transformations in healthcare, pharma, higher education, and energy.',
-            'service_3_num' => '03', 'service_3_title' => 'Strategic Leadership & Advisory',
-            'service_3_desc'=> 'Fortune 500 executive guidance — aligning AI and technology strategy with business goals.',
+            'eyebrow'  => 'What I Do',
+            'title'    => 'Expert-level services built on 20+ years',
+            'sub'      => 'From global AI-powered program management to hands-on ServiceNow implementation — end-to-end digital transformation for enterprise.',
+            'services' => [
+                [ 'num' => '01', 'title' => 'Global Program Director',        'desc' => 'Directed multi-million-dollar cloud implementations, aligning ServiceNow Cloud, ITAM, SCCM, GRC, and AI automation to organizational goals across global enterprises.',                 'tags' => 'ServiceNow, AI Automation, ITAM, GRC'         ],
+                [ 'num' => '02', 'title' => 'Enterprise IT & AI Consulting',   'desc' => 'ServiceNow and AI transformations in healthcare, pharma, higher education, and energy — delivering end-to-end ITSM, CMDB, SecOps, HRSD, and predictive intelligence solutions.',          'tags' => 'ITSM, CMDB, SecOps, HRSD, AI/ML'             ],
+                [ 'num' => '03', 'title' => 'Strategic Leadership & Advisory', 'desc' => 'Fortune 500 executive guidance — aligning AI and technology strategy with business goals, driving measurable cost savings, efficiency gains, and long-term digital roadmaps.',             'tags' => 'Executive Advisory, AI Strategy, Roadmapping' ],
+            ],
         ];
     }
 
     private static function about_settings(): array {
         return [
-            'eyebrow'   => 'About Me',
-            'headline'  => 'Dynamic Leadership with Global Impact',
-            'bio_1'     => 'Dawn C. Simmons is a transformative, visionary leader with over 20 years of executive experience in digital transformation, AI-powered business solutions, and ServiceNow implementations.',
-            'bio_2'     => 'A recognized expert in enterprise AI integration and ServiceNow architecture, Dawn has delivered measurable results across Fortune 500 companies.',
-            'name'      => 'Dawn Christine Simmons',
-            'location'  => 'Chicago, IL USA',
-            'email'     => 'dawnckhan@gmail.com',
-            'phone'     => '+1-925-297-7901',
+            'eyebrow' => 'About Me',
+            'title'   => 'Dynamic Leadership with Global Impact',
+            'bio_1'   => 'Dawn C. Simmons is a transformative, visionary leader with over 20 years of executive experience in digital transformation, AI-powered business solutions, and ServiceNow implementations.',
+            'bio_2'   => 'A recognized expert in enterprise AI integration and ServiceNow architecture, Dawn has delivered measurable results across Fortune 500 companies in healthcare, pharma, higher education, and energy.',
+            'photo'   => [ 'id' => 0, 'url' => '' ],
+            'skills'  => [
+                [ 'skill' => 'ServiceNow Platform',          'pct' => 100 ],
+                [ 'skill' => 'AI & Predictive Intelligence', 'pct' => 95  ],
+                [ 'skill' => 'Service Management COE',       'pct' => 98  ],
+                [ 'skill' => 'Business Process Management',  'pct' => 92  ],
+                [ 'skill' => 'ITSM / ITIL v4',               'pct' => 96  ],
+            ],
+            'details' => [
+                [ 'label' => 'Name',     'value' => 'Dawn Christine Simmons' ],
+                [ 'label' => 'Location', 'value' => 'Chicago, IL USA'        ],
+                [ 'label' => 'Email',    'value' => 'dawnckhan@gmail.com'    ],
+                [ 'label' => 'Phone',    'value' => '+1-925-297-7901'        ],
+            ],
         ];
     }
 
     private static function testimonials_settings(): array {
         return [
-            'eyebrow'  => 'Social Proof',
-            'headline' => 'What colleagues & clients say',
-            'items'    => json_encode([
-                [ 'init' => 'SW', 'name' => 'Steve West',             'role' => 'Board of Directors, Denver Metro HDI',           'text' => 'Dawn has demonstrated exemplary leadership in the Support Services industry through her incredible efforts.' ],
-                [ 'init' => 'LS', 'name' => 'Lori Shaw',              'role' => 'Senior Consultant',                               'text' => 'Very few people equal Dawn in persistence and dedication. I am continually impressed with her insight and intelligence.' ],
-                [ 'init' => 'VT', 'name' => 'Venkatesh Thiruvaipati', 'role' => 'Sun Microsystems',                                'text' => '"Solution provider" — that can summarize how good she knows the business. She is GREAT to work with.' ],
-                [ 'init' => 'DA', 'name' => 'Dale Avery',             'role' => 'Enterprise Network Services, Sun Microsystems',   'text' => 'Dawn is able to quickly assess the needs of a project and break it into manageable, achievable parts.' ],
-                [ 'init' => 'FT', 'name' => 'Frank Tawil',            'role' => 'Sun Microsystems Bay Area',                       'text' => 'Dawn is one of the most passionate and driven people I know. A very well rounded qualified candidate.' ],
-                [ 'init' => 'DB', 'name' => 'Deepanker Baderia',      'role' => 'Solution Architect, Sun Microsystems',            'text' => 'Dawn is an excellent project and program manager, bringing diverse skills including effective teamwork and strong leadership.' ],
-            ]),
+            'eyebrow'      => 'Social Proof',
+            'title'        => 'What colleagues & clients say',
+            'testimonials' => [
+                [ 'text' => 'Dawn has demonstrated exemplary leadership in the Support Services industry through her incredible efforts. She is a seasoned management practitioner that understands service management concepts extremely well.',                 'name' => 'Steve West',             'role' => 'Board of Directors, Denver Metro HDI',                  'initial' => 'SW' ],
+                [ 'text' => 'Very few people equal Dawn in persistence and dedication. I am continually impressed with her insight, intelligence, tenacity and ability to network across organizations.',                                                    'name' => 'Lori Shaw',              'role' => 'Senior Consultant',                                    'initial' => 'LS' ],
+                [ 'text' => '"Solution provider" — that can summarize how good she knows the business. She is one of the few people with excellent knowledge about Support Readiness. She is GREAT to work with.',                                           'name' => 'Venkatesh Thiruvaipati', 'role' => 'Sun Microsystems',                                     'initial' => 'VT' ],
+                [ 'text' => 'Dawn is able to quickly assess the needs of a project and break it into manageable, achievable parts. Her ability to network and work with all personalities facilitates the influencing of all key stakeholders.',              'name' => 'Dale Avery',             'role' => 'Enterprise Network Services, Sun Microsystems',         'initial' => 'DA' ],
+                [ 'text' => 'Dawn is one of the most passionate and driven people I know. Her background and experience makes her a very well rounded qualified candidate for any challenging opportunity.',                                                  'name' => 'Frank Tawil',            'role' => 'Enterprise Network Services, Sun Microsystems Bay Area', 'initial' => 'FT' ],
+                [ 'text' => 'Dawn is an excellent project and program manager, bringing diverse skills including effective teamwork, attention to detail, excellent facilitation, and strong leadership. Dawn produces results.',                               'name' => 'Deepanker Baderia',      'role' => 'Solution Architect, Sun Microsystems',                  'initial' => 'DB' ],
+            ],
         ];
     }
 
     private static function contact_settings(): array {
         return [
-            'eyebrow'  => 'Get in Touch',
-            'headline' => "Let's work together",
-            'body'     => "Ready to transform your enterprise? I'd love to hear about your challenges and explore how we can work together.",
-            'email'    => 'dawnckhan@gmail.com',
-            'phone'    => '+1-925-297-7901',
-            'location' => 'Chicago, IL USA',
+            'eyebrow'       => 'Get in Touch',
+            'title'         => "Let's work together",
+            'sub'           => "Ready to transform your enterprise? I'd love to hear about your challenges and explore how we can work together.",
+            'email'         => 'dawnckhan@gmail.com',
+            'location'      => 'Chicago, IL USA',
+            'response_time' => 'Within 24 hours',
+            'cf7_id'        => 0,
         ];
     }
 }
