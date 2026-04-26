@@ -333,9 +333,13 @@ class DS_Demo_Importer {
             $lines[] = "<!-- wp:{$block_name} {$json} /-->";
         }
 
+        // wp_update_post() calls wp_unslash() internally, which strips all backslashes
+        // from the post content string. Our JSON has legitimate backslashes (\" for
+        // quoted values, \n for newlines). We must wp_slash() the content first so
+        // wp_unslash() restores it to the original string instead of corrupting it.
         wp_update_post( [
             'ID'           => $page_id,
-            'post_content' => implode( "\n", $lines ),
+            'post_content' => wp_slash( implode( "\n", $lines ) ),
         ] );
         self::$log[] = '✓ Homepage content populated from Dawn Simmons v2 data.';
     }
@@ -344,7 +348,10 @@ class DS_Demo_Importer {
     private static function create_elementor_homepage( int $page_id ): void {
         $elementor_data = wp_json_encode( self::build_elementor_data(), JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES );
 
-        update_post_meta( $page_id, '_elementor_data',          $elementor_data );
+        // update_post_meta() calls wp_unslash() internally, stripping backslashes from
+        // the JSON string (corrupting \" → " and \n → n). wp_slash() pre-doubles
+        // all backslashes so wp_unslash() restores them to their intended value.
+        update_post_meta( $page_id, '_elementor_data', wp_slash( $elementor_data ) );
         update_post_meta( $page_id, '_elementor_edit_mode',     'builder'       );
         update_post_meta( $page_id, '_elementor_template_type', 'wp-page'       );
         update_post_meta( $page_id, '_elementor_version',       ELEMENTOR_VERSION );
