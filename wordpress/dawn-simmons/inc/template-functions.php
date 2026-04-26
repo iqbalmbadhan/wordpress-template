@@ -10,7 +10,9 @@ function ds_navbar(): void {
     $home_url  = home_url( '/' );
     ?>
     <nav id="navbar" role="navigation" aria-label="<?php esc_attr_e( 'Main navigation', 'dawn-simmons' ); ?>">
-        <a href="<?php echo esc_url( $home_url ); ?>" class="nav-logo"><?php echo esc_html( $logo_text ); ?></a>
+        <a href="<?php echo esc_url( $home_url ); ?>" class="nav-logo">
+            <?php echo esc_html( $logo_text ); ?>
+        </a>
         <?php
         wp_nav_menu( [
             'theme_location' => 'primary',
@@ -20,12 +22,14 @@ function ds_navbar(): void {
             'fallback_cb'    => 'ds_fallback_menu',
         ] );
         ?>
-        <a href="<?php echo esc_url( get_permalink( get_option('ds_page_contact') ) ?: $home_url . '#contact' ); ?>" class="nav-cta">
-            <?php echo esc_html( $cta_text ); ?>
-        </a>
-        <button class="nav-hamburger" id="navHamburger" aria-label="<?php esc_attr_e( 'Toggle navigation', 'dawn-simmons' ); ?>" aria-expanded="false">
-            <span></span><span></span><span></span>
-        </button>
+        <div class="nav-right">
+            <a href="<?php echo esc_url( get_permalink( get_option('ds_page_contact') ) ?: $home_url . '#contact' ); ?>" class="nav-cta">
+                <?php echo esc_html( $cta_text ); ?>
+            </a>
+            <button class="nav-hamburger" id="navHamburger" aria-label="<?php esc_attr_e( 'Toggle navigation', 'dawn-simmons' ); ?>" aria-expanded="false">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
     </nav>
     <div class="nav-mobile-drawer" id="mobileDrawer" aria-hidden="true">
         <?php
@@ -37,6 +41,9 @@ function ds_navbar(): void {
             'fallback_cb'    => false,
         ] );
         ?>
+        <a href="<?php echo esc_url( get_permalink( get_option('ds_page_contact') ) ?: $home_url . '#contact' ); ?>" class="nav-mobile-cta">
+            <?php echo esc_html( $cta_text ); ?>
+        </a>
     </div>
     <?php
 }
