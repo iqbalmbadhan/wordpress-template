@@ -2,7 +2,7 @@ import { registerBlockType } from '@wordpress/blocks';
 import { __ } from '@wordpress/i18n';
 import { InspectorControls, MediaUpload, MediaUploadCheck } from '@wordpress/block-editor';
 import { PanelBody, TextControl, TextareaControl, Button } from '@wordpress/components';
-import metadata from '../../../../../../../wordpress/dawn-simmons/inc/blocks/about/block.json';
+import metadata from '../../../../wordpress/dawn-simmons/inc/blocks/about/block.json';
 
 registerBlockType( metadata.name, {
     ...metadata,
