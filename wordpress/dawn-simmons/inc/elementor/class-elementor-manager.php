@@ -7,9 +7,16 @@ defined( 'ABSPATH' ) || exit;
 class DS_Elementor_Manager {
 
     public static function init(): void {
-        add_action( 'elementor/widgets/register', [ __CLASS__, 'register_widgets' ] );
+        // 'elementor/widgets/register' is the current hook (Elementor 3.5+).
+        // 'elementor/widgets_registered' is the legacy hook (older versions).
+        // We hook both so the theme works across Elementor version ranges.
+        add_action( 'elementor/widgets/register',   [ __CLASS__, 'register_widgets' ] );
+        add_action( 'elementor/widgets_registered', [ __CLASS__, 'register_widgets' ] );
         add_action( 'elementor/elements/categories_registered', [ __CLASS__, 'register_category' ] );
     }
+
+    // Guard against double-registration if both hooks fire.
+    private static bool $widgets_registered = false;
 
     public static function register_category( $manager ): void {
         $manager->add_category( 'dawn-simmons', [
@@ -18,7 +25,22 @@ class DS_Elementor_Manager {
         ] );
     }
 
-    public static function register_widgets( $manager ): void {
+    public static function register_widgets( $manager = null ): void {
+        if ( self::$widgets_registered ) {
+            return;
+        }
+        self::$widgets_registered = true;
+
+        // When called via the legacy hook the manager isn't passed — fetch it.
+        if ( ! $manager instanceof \Elementor\Widgets_Manager ) {
+            if ( ! class_exists( '\Elementor\Plugin' ) ) {
+                return;
+            }
+            $manager = \Elementor\Plugin::$instance->widgets_manager ?? null;
+            if ( ! $manager ) {
+                return;
+            }
+        }
         $widget_dir = DS_INC . '/elementor/widgets/';
         $widgets = [
             'class-widget-hero',
