@@ -1,19 +1,20 @@
 /* Dawn Simmons — Gutenberg block registrations (pre-built, no npm required)
+ * Registers blocks at script load time (no wp.domReady wrapper) so Gutenberg
+ * picks them up before the editor initialises its block-type registry.
  * Attributes come from block.json via PHP register_block_type() — NOT re-declared here.
- * Edit UI uses wp.serverSideRender so the PHP render callback previews live in editor.
  */
-wp.domReady( function () {
+(function () {
     'use strict';
 
-    var el        = wp.element.createElement;
-    var Fragment  = wp.element.Fragment;
-    var __        = wp.i18n.__;
-    var reg       = wp.blocks.registerBlockType;
-    var SSR       = wp.serverSideRender;
-    var IC        = wp.blockEditor.InspectorControls;
-    var PB        = wp.components.PanelBody;
-    var TC        = wp.components.TextControl;
-    var TAC       = wp.components.TextareaControl;
+    var el       = wp.element.createElement;
+    var Fragment = wp.element.Fragment;
+    var __       = wp.i18n.__;
+    var reg      = wp.blocks.registerBlockType;
+    var SSR      = wp.serverSideRender;
+    var IC       = wp.blockEditor.InspectorControls;
+    var PB       = wp.components.PanelBody;
+    var TC       = wp.components.TextControl;
+    var TAC      = wp.components.TextareaControl;
 
     /* ── Helpers ── */
     function tc(label, key, props) {
@@ -159,4 +160,4 @@ wp.domReady( function () {
         save: function () { return null; }
     });
 
-} );
+}());
