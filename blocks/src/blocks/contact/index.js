@@ -2,7 +2,7 @@ import { registerBlockType } from '@wordpress/blocks';
 import { __ } from '@wordpress/i18n';
 import { InspectorControls } from '@wordpress/block-editor';
 import { PanelBody, TextControl, TextareaControl } from '@wordpress/components';
-import metadata from '../../../../../../../wordpress/dawn-simmons/inc/blocks/contact/block.json';
+import metadata from '../../../../wordpress/dawn-simmons/inc/blocks/contact/block.json';
 
 registerBlockType( metadata.name, {
     ...metadata,

@@ -11,7 +11,7 @@ import {
     TextareaControl,
     Button,
 } from '@wordpress/components';
-import metadata from '../../../../../../../wordpress/dawn-simmons/inc/blocks/hero/block.json';
+import metadata from '../../../../wordpress/dawn-simmons/inc/blocks/hero/block.json';
 
 registerBlockType( metadata.name, {
     ...metadata,
