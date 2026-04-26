@@ -2,7 +2,7 @@
 
 <main id="main-content">
     <?php while ( have_posts() ) : the_post(); ?>
-    <div class="woocommerce" style="padding-top:80px">
+    <div class="woocommerce" style="padding-top:104px">
         <div style="max-width:1200px;margin:0 auto;padding:20px 48px 0">
             <?php woocommerce_breadcrumb(); ?>
         </div>

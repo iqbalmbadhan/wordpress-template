@@ -1,5 +1,7 @@
 <?php get_header(); ?>
 
+<main id="main-content">
+
 <header class="page-hero">
     <div class="hero-bg-text" aria-hidden="true"><?php echo esc_html( mb_substr( get_the_title(), 0, 4 ) ); ?></div>
     <div class="page-hero-inner">
@@ -13,7 +15,7 @@
     </div>
 </header>
 
-<main id="main-content" class="ds-page-main">
+<div class="ds-page-main">
     <div class="ds-page-container">
         <?php while ( have_posts() ) : the_post(); ?>
         <article id="post-<?php the_ID(); ?>" <?php post_class( 'ds-page-article' ); ?>>
@@ -29,6 +31,8 @@
         </article>
         <?php endwhile; ?>
     </div>
+</div>
+
 </main>
 
 <?php get_footer(); ?>

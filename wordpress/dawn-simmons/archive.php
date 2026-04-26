@@ -1,5 +1,7 @@
 <?php get_header(); ?>
 
+<main id="main-content">
+
 <!-- PAGE HERO -->
 <header class="page-hero">
     <div class="hero-bg-text" aria-hidden="true">Blog</div>
@@ -65,8 +67,6 @@ if ( $filter_cats ) :
     </div>
 </div>
 <?php endif; ?>
-
-<main id="main-content">
     <div class="blog-layout">
 
         <!-- POSTS COLUMN -->

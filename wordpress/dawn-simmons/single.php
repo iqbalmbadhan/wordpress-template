@@ -1,5 +1,7 @@
 <?php get_header(); ?>
 
+<main id="main-content">
+
 <!-- ARTICLE HERO -->
 <header class="article-hero" role="banner">
     <div class="article-hero-inner">
@@ -45,8 +47,6 @@
         <?php endif; ?>
     </div>
 </header>
-
-<main id="main-content">
     <div class="article-layout">
 
         <!-- ARTICLE BODY -->
