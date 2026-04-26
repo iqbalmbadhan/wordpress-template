@@ -41,7 +41,7 @@ add_action( 'enqueue_block_editor_assets', function () {
         wp_enqueue_script(
             'ds-blocks',
             DS_ASSETS . '/js/blocks/index.js',
-            [ 'wp-blocks', 'wp-element', 'wp-editor', 'wp-components', 'wp-i18n', 'wp-block-editor', 'wp-data' ],
+            [ 'wp-blocks', 'wp-element', 'wp-components', 'wp-i18n', 'wp-block-editor', 'wp-data', 'wp-dom-ready', 'wp-server-side-render' ],
             DS_VERSION,
             true
         );

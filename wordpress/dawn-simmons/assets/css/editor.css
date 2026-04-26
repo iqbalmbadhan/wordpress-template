@@ -55,10 +55,33 @@
 .editor-styles-wrapper [data-type="dawn-simmons/ai-section"],
 .editor-styles-wrapper [data-type="dawn-simmons/about"],
 .editor-styles-wrapper [data-type="dawn-simmons/testimonials"],
-.editor-styles-wrapper [data-type="dawn-simmons/contact-form"] {
+.editor-styles-wrapper [data-type="dawn-simmons/contact"] {
     background: var(--bg);
     border: 1px dashed var(--border);
     border-radius: 8px;
     padding: 24px;
     margin-bottom: 16px;
+}
+
+/* Server-side render loading state */
+.editor-styles-wrapper .wp-block-dawn-simmons-hero,
+.editor-styles-wrapper .wp-block-dawn-simmons-ai-section,
+.editor-styles-wrapper .wp-block-dawn-simmons-services,
+.editor-styles-wrapper .wp-block-dawn-simmons-about,
+.editor-styles-wrapper .wp-block-dawn-simmons-testimonials,
+.editor-styles-wrapper .wp-block-dawn-simmons-contact {
+    overflow: hidden;
+}
+
+/* SSR placeholder while loading */
+.editor-styles-wrapper .components-placeholder {
+    background: var(--bg2);
+    border: 1px dashed var(--border);
+    color: var(--text2);
+    border-radius: 8px;
+    min-height: 80px;
+}
+.editor-styles-wrapper .components-spinner {
+    border-color: var(--accent) !important;
+    border-right-color: transparent !important;
 }

@@ -366,27 +366,57 @@ class DS_Demo_Importer {
     private static function build_elementor_data(): array {
         // widgetType must match each widget class's get_name() return value.
         return [
-            self::el_section( 'hero-section',    'ds-hero',         self::hero_settings()         ),
-            self::el_section( 'ai-section',      'ds-ai-section',   self::ai_settings()           ),
-            self::el_section( 'services-section','ds-services',     self::services_settings()     ),
-            self::el_section( 'about-section',   'ds-about',        self::about_settings()        ),
-            self::el_section( 'testi-section',   'ds-testimonials', self::testimonials_settings() ),
-            self::el_section( 'contact-section', 'ds-contact',      self::contact_settings()      ),
+            self::el_section( 'a1b2c3d4', 'ds-hero',         self::hero_settings()         ),
+            self::el_section( 'e5f6a7b8', 'ds-ai-section',   self::ai_settings()           ),
+            self::el_section( 'c9d0e1f2', 'ds-services',     self::services_settings()     ),
+            self::el_section( 'a3b4c5d6', 'ds-about',        self::about_settings()        ),
+            self::el_section( 'e7f8a9b0', 'ds-testimonials', self::testimonials_settings() ),
+            self::el_section( 'c1d2e3f4', 'ds-contact',      self::contact_settings()      ),
         ];
     }
 
+    private static function el_id(): string {
+        return substr( md5( uniqid( '', true ) ), 0, 8 );
+    }
+
+    private static function add_ids( array $items ): array {
+        return array_map( function ( $item ) {
+            if ( ! isset( $item['_id'] ) ) {
+                $item['_id'] = substr( md5( serialize( $item ) . uniqid() ), 0, 8 );
+            }
+            return $item;
+        }, $items );
+    }
+
     private static function el_section( string $id, string $widget_type, array $settings ): array {
+        $col_id    = substr( md5( $id . 'col' ), 0, 8 );
+        $widget_id = substr( md5( $id . 'wid' ), 0, 8 );
+
+        // Add _id to all repeater fields (Elementor requirement for repeater items).
+        foreach ( $settings as $key => $value ) {
+            if ( is_array( $value ) && ! empty( $value ) && is_array( reset( $value ) ) ) {
+                $settings[ $key ] = self::add_ids( $value );
+            }
+        }
+
         return [
-            'id'       => $id,
-            'elType'   => 'section',
-            'settings' => [ 'layout' => 'full_width', '_element_width' => '' ],
-            'elements' => [[
-                'id'       => $id . '-col',
+            'id'          => $id,
+            'elType'      => 'section',
+            'isInner'     => false,
+            'settings'    => [
+                'layout'          => 'full_width',
+                '_element_width'  => '',
+                'content_width'   => [ 'unit' => 'px', 'size' => 1200, 'sizes' => [] ],
+            ],
+            'elements'    => [[
+                'id'       => $col_id,
                 'elType'   => 'column',
+                'isInner'  => false,
                 'settings' => [ '_column_size' => 100, '_inline_size' => null ],
                 'elements' => [[
-                    'id'         => $id . '-widget',
+                    'id'         => $widget_id,
                     'elType'     => 'widget',
+                    'isInner'    => false,
                     'widgetType' => $widget_type,
                     'settings'   => $settings,
                     'elements'   => [],
