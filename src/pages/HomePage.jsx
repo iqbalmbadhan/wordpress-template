@@ -97,7 +97,7 @@ export default function HomePage() {
                 <div className="hero-card-accent" />
                 <div className="hero-card-accent2" />
                 <div className="hero-photo-placeholder" style={{background:'var(--bg3)',border:'none',padding:0,overflow:'hidden'}}>
-                  <img src="uploads/dawn_c_simmons.PNG" alt="Dawn Christine Simmons — ServiceNow Consultant &amp; AI Transformation Expert" style={{width:'100%',height:'100%',objectFit:'cover',objectPosition:'center top',display:'block'}} />
+                  <img src="https://www.dawncsimmons.com/wp-content/uploads/2025/12/dawn_c_simmons.png" alt="Dawn Christine Simmons — ServiceNow Consultant &amp; AI Transformation Expert" style={{width:'100%',height:'100%',objectFit:'cover',objectPosition:'center top',display:'block'}} />
                 </div>
                 <div className="hero-card-name">Dawn C. Simmons</div>
                 <div className="hero-card-title">Senior ServiceNow Consultant</div>
@@ -209,7 +209,7 @@ export default function HomePage() {
           <div className="container">
             <div className="about-grid">
               <div className="about-photo fade-in" style={{background:'none',border:'none',padding:0,overflow:'hidden',borderRadius:'12px',position:'relative'}}>
-                <img src="uploads/dawn_c_simmons.PNG" alt="Dawn Christine Simmons — Senior ServiceNow Consultant, Chicago IL" style={{width:'100%',height:'100%',objectFit:'cover',objectPosition:'center top',display:'block',borderRadius:'12px'}} />
+                <img src="https://www.dawncsimmons.com/wp-content/uploads/2024/09/dawn-c-simmons-abou-me-1.png" alt="Dawn Christine Simmons — Senior ServiceNow Consultant, Chicago IL" style={{width:'100%',height:'100%',objectFit:'cover',objectPosition:'center top',display:'block',borderRadius:'12px'}} />
                 <div className="about-photo-accent" />
               </div>
               <div className="about-info fade-in fade-in-d1">
