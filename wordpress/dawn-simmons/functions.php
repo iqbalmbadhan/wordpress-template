@@ -25,13 +25,14 @@ require_once DS_INC . '/blocks/register-blocks.php';
 DS_Plugin_Checker::init();
 DS_Setup_Wizard::init();
 
-// Elementor integration — load only when Elementor is active
+// Elementor integration — priority 5 ensures our widget hooks are added
+// before Elementor fires elementor/widgets/register during its own init.
 add_action( 'plugins_loaded', function () {
     if ( defined( 'ELEMENTOR_VERSION' ) ) {
         require_once DS_INC . '/elementor/class-elementor-manager.php';
         DS_Elementor_Manager::init();
     }
-} );
+}, 5 );
 
 // ── Theme setup ──────────────────────────────────────────────────────────────
 add_action( 'after_setup_theme', function () {

@@ -342,22 +342,37 @@ class DS_Demo_Importer {
 
     // ── Elementor homepage ───────────────────────────────────────────────────
     private static function create_elementor_homepage( int $page_id ): void {
-        $elementor_data = wp_json_encode( self::build_elementor_data() );
+        $elementor_data = wp_json_encode( self::build_elementor_data(), JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES );
 
         update_post_meta( $page_id, '_elementor_data',          $elementor_data );
         update_post_meta( $page_id, '_elementor_edit_mode',     'builder'       );
         update_post_meta( $page_id, '_elementor_template_type', 'wp-page'       );
         update_post_meta( $page_id, '_elementor_version',       ELEMENTOR_VERSION );
 
-        // Update post content to Elementor's placeholder
+        // Clear post content so Elementor is the sole renderer
         wp_update_post( [
             'ID'           => $page_id,
             'post_content' => '',
         ] );
 
-        // Flush Elementor CSS cache
-        if ( class_exists( '\Elementor\Plugin' ) ) {
-            \Elementor\Plugin::$instance->files_manager->clear_cache();
+        // Flush Elementor CSS cache — wrapped in try/catch because the API
+        // differs across Elementor versions and must never crash the importer.
+        try {
+            if (
+                class_exists( '\Elementor\Plugin' )
+                && isset( \Elementor\Plugin::$instance->files_manager )
+                && method_exists( \Elementor\Plugin::$instance->files_manager, 'clear_cache' )
+            ) {
+                \Elementor\Plugin::$instance->files_manager->clear_cache();
+            } elseif (
+                class_exists( '\Elementor\Core\Files\CSS\Post' )
+            ) {
+                // Older Elementor: regenerate per-post CSS
+                $css = new \Elementor\Core\Files\CSS\Post( $page_id );
+                $css->update();
+            }
+        } catch ( \Throwable $e ) {
+            self::$log[] = '→ Elementor cache clear skipped: ' . $e->getMessage();
         }
 
         self::$log[] = '✓ Elementor page data written to homepage.';
