@@ -2,6 +2,8 @@
 
 <main id="main-content">
 
+<?php while ( have_posts() ) : the_post(); ?>
+
 <!-- ARTICLE HERO -->
 <header class="article-hero" role="banner">
     <div class="article-hero-inner">
@@ -47,11 +49,11 @@
         <?php endif; ?>
     </div>
 </header>
+
     <div class="article-layout">
 
         <!-- ARTICLE BODY -->
         <article class="article-body" itemscope itemtype="https://schema.org/BlogPosting">
-            <?php while ( have_posts() ) : the_post(); ?>
             <meta itemprop="headline" content="<?php echo esc_attr( get_the_title() ); ?>">
             <meta itemprop="datePublished" content="<?php echo esc_attr( get_the_date( 'c' ) ); ?>">
             <meta itemprop="author" content="<?php echo esc_attr( get_the_author() ); ?>">
@@ -68,7 +70,6 @@
                 endif;
                 ?>
             </div>
-            <?php endwhile; ?>
         </article>
 
         <!-- SIDEBAR -->
@@ -158,6 +159,9 @@
         </div>
     </section>
     <?php endif; ?>
+
+<?php endwhile; ?>
+
 </main>
 
 <?php get_footer(); ?>

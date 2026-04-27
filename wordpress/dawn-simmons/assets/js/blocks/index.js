@@ -1,17 +1,18 @@
+/* eslint-disable */
 /* Dawn Simmons — Gutenberg block registrations
  *
- * Must run at script-load time (no wp.domReady wrapper) so blocks are
- * registered before Gutenberg initialises its editor.
+ * Compiled by wp-scripts (webpack) from blocks/src/index.js.
+ * This file is the canonical source — do NOT edit the compiled output at
+ * assets/js/blocks/index.js directly; run `npm run build` instead.
  *
- * WordPress 6.x sends server-registered block types to the JS registry via
- * wp-blocks inline scripts before this file executes. We therefore
- * unregister any pre-existing copy before re-registering with our edit
- * function — otherwise registerBlockType returns early and the inspector
- * controls are never attached.
+ * WordPress 6.x pre-registers server-defined block types (block.json via
+ * register_block_type()) into the JS registry before this file executes.
+ * We therefore unregister any pre-existing copy with safeReg() before
+ * re-registering with our edit function — otherwise registerBlockType()
+ * returns early silently and the inspector controls are never attached.
  *
- * Attribute definitions are declared here in full (matching block.json)
- * so Gutenberg can parse saved block-comment JSON into props.attributes
- * even when the server-sent schema hasn't been applied yet.
+ * All blocks use server-side rendering (save: null) with a live preview
+ * via ServerSideRender in the editor canvas.
  */
 (function () {
     'use strict';
@@ -118,16 +119,16 @@
         },
         edit: makeEdit( 'dawn-simmons/hero', function ( props ) {
             return [
-                tc(  'Eyebrow Text',                  'eyebrow',          props ),
-                tac( 'Heading (HTML: <em> for italic)','heading',          props ),
-                tac( 'Sub-heading',                   'subheading',       props ),
-                tc(  'Primary Button Text',            'btnPrimaryText',   props ),
-                tc(  'Primary Button URL',             'btnPrimaryUrl',    props ),
-                tc(  'Secondary Button Text',          'btnSecondaryText', props ),
-                tc(  'Secondary Button URL',           'btnSecondaryUrl',  props ),
-                tac( 'Roles — one per line',           'roles',            props ),
-                tc(  'Profile Photo URL',              'photoUrl',         props ),
-                jsonTac( 'Stats [{num,suffix,label}]', 'stats',            props )
+                tc(  'Eyebrow Text',                   'eyebrow',          props ),
+                tac( 'Heading (HTML: <em> for italic)', 'heading',          props ),
+                tac( 'Sub-heading',                    'subheading',       props ),
+                tc(  'Primary Button Text',             'btnPrimaryText',   props ),
+                tc(  'Primary Button URL',              'btnPrimaryUrl',    props ),
+                tc(  'Secondary Button Text',           'btnSecondaryText', props ),
+                tc(  'Secondary Button URL',            'btnSecondaryUrl',  props ),
+                tac( 'Roles — one per line',            'roles',            props ),
+                tc(  'Profile Photo URL',               'photoUrl',         props ),
+                jsonTac( 'Stats [{num,suffix,label}]',  'stats',            props )
             ];
         } ),
         save: function () { return null; }
@@ -167,12 +168,12 @@
         },
         edit: makeEdit( 'dawn-simmons/ai-section', function ( props ) {
             return [
-                tc(     'Eyebrow',                          'eyebrow',   props ),
-                tac(    'Headline (HTML allowed)',           'headline',  props ),
-                tac(    'Lead Paragraph',                   'lead',      props ),
-                tac(    'AI Pills — one per line',          'pills',     props ),
-                jsonTac('Flow Steps [{icon,name,desc}]',    'flowSteps', props ),
-                jsonTac('Feature Cards [{icon,title,desc}]','cards',     props )
+                tc(     'Eyebrow',                           'eyebrow',   props ),
+                tac(    'Headline (HTML allowed)',            'headline',  props ),
+                tac(    'Lead Paragraph',                    'lead',      props ),
+                tac(    'AI Pills — one per line',           'pills',     props ),
+                jsonTac('Flow Steps [{icon,name,desc}]',     'flowSteps', props ),
+                jsonTac('Feature Cards [{icon,title,desc}]', 'cards',     props )
             ];
         } ),
         save: function () { return null; }
@@ -230,10 +231,10 @@
             skills: {
                 type: 'array',
                 default: [
-                    { skill: 'ServiceNow Platform',  pct: 95 },
-                    { skill: 'AI/ML Integration',    pct: 88 },
-                    { skill: 'ITIL & Frameworks',    pct: 92 },
-                    { skill: 'Solution Architecture',pct: 85 }
+                    { skill: 'ServiceNow Platform',   pct: 95 },
+                    { skill: 'AI/ML Integration',     pct: 88 },
+                    { skill: 'ITIL & Frameworks',     pct: 92 },
+                    { skill: 'Solution Architecture', pct: 85 }
                 ]
             },
             details: {
@@ -248,13 +249,13 @@
         },
         edit: makeEdit( 'dawn-simmons/about', function ( props ) {
             return [
-                tc(     'Eyebrow',                       'eyebrow',  props ),
-                tac(    'Title (HTML allowed)',           'title',    props ),
-                tac(    'Bio Paragraph 1',               'bio1',     props ),
-                tac(    'Bio Paragraph 2',               'bio2',     props ),
-                tc(     'Profile Photo URL',             'photoUrl', props ),
-                jsonTac('Skills [{skill,pct}]',          'skills',   props ),
-                jsonTac('Details [{label,value}]',       'details',  props )
+                tc(     'Eyebrow',                     'eyebrow',  props ),
+                tac(    'Title (HTML allowed)',         'title',    props ),
+                tac(    'Bio Paragraph 1',             'bio1',     props ),
+                tac(    'Bio Paragraph 2',             'bio2',     props ),
+                tc(     'Profile Photo URL',           'photoUrl', props ),
+                jsonTac('Skills [{skill,pct}]',        'skills',   props ),
+                jsonTac('Details [{label,value}]',     'details',  props )
             ];
         } ),
         save: function () { return null; }
@@ -282,9 +283,9 @@
         },
         edit: makeEdit( 'dawn-simmons/testimonials', function ( props ) {
             return [
-                tc(     'Eyebrow',                                    'eyebrow',      props ),
-                tac(    'Title (HTML allowed)',                        'title',        props ),
-                jsonTac('Testimonials [{text,name,role,initial}]',     'testimonials', props )
+                tc(     'Eyebrow',                                   'eyebrow',      props ),
+                tac(    'Title (HTML allowed)',                       'title',        props ),
+                jsonTac('Testimonials [{text,name,role,initial}]',    'testimonials', props )
             ];
         } ),
         save: function () { return null; }
