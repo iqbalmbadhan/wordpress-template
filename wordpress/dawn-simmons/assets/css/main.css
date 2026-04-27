@@ -368,7 +368,7 @@ footer {
 .sidebar { display: flex; flex-direction: column; gap: 24px; }
 .sidebar-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 22px; }
 .sidebar-title {
-  font-size: 11px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase;
+  font-size: 12px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase;
   color: var(--muted); margin-bottom: 14px; padding-bottom: 10px; border-bottom: 1px solid var(--border);
 }
 .author-wrap { display: flex; gap: 12px; align-items: center; margin-bottom: 12px; }
@@ -778,10 +778,8 @@ textarea { resize: vertical; min-height: 120px; }
 .nav-dir { font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); margin-bottom: 8px; }
 .nav-title { font-size: 14px; font-weight: 600; color: var(--text); line-height: 1.4; }
 
-/* ===== SIDEBAR ===== */
-.sidebar { position: sticky; top: 92px; display: flex; flex-direction: column; gap: 24px; align-self: start; }
-.sidebar-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 22px; }
-.sidebar-title { font-size: 12px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); margin-bottom: 14px; padding-bottom: 10px; border-bottom: 1px solid var(--border); }
+/* ===== SIDEBAR (article-specific: sticky within the article layout) ===== */
+.article-layout .sidebar { position: sticky; top: 92px; align-self: start; }
 .toc-list { list-style: none; display: flex; flex-direction: column; gap: 2px; }
 .toc-item a { display: block; font-size: 13px; color: var(--text2); text-decoration: none; padding: 6px 10px; border-radius: 5px; transition: all .15s; line-height: 1.4; }
 .toc-item a:hover, .toc-item a.toc-active { background: oklch(72% 0.155 195 / 0.1); color: var(--accent); }
@@ -820,7 +818,7 @@ textarea { resize: vertical; min-height: 120px; }
 /* ===== RESPONSIVE ===== */
 @media (max-width: 1024px) {
   .article-layout { grid-template-columns: 1fr; padding: 48px 32px; }
-  .sidebar { position: static; display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+  .article-layout .sidebar { position: static; display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
   .ds-related-grid { grid-template-columns: repeat(2, 1fr); }
 }
 @media (max-width: 900px) {
@@ -835,7 +833,7 @@ textarea { resize: vertical; min-height: 120px; }
 @media (max-width: 600px) {
   .article-hero { padding: 85px 16px 0; }
   .article-layout { padding: 32px 16px; }
-  .sidebar { grid-template-columns: 1fr; }
+  .article-layout .sidebar { grid-template-columns: 1fr; }
   .article-nav { grid-template-columns: 1fr; }
   .article-meta { gap: 10px; }
   .pullquote { padding: 16px 20px; }
