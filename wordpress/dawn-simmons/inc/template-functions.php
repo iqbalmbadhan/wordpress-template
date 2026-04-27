@@ -7,6 +7,7 @@ defined( 'ABSPATH' ) || exit;
 function ds_navbar(): void {
     $logo_text = get_theme_mod( 'ds_logo_text', 'Dawn.' );
     $cta_text  = get_theme_mod( 'ds_cta_text', "Let's Talk" );
+    $cta_url   = get_theme_mod( 'ds_cta_url',  '#contact' );
     $home_url  = home_url( '/' );
     ?>
     <nav id="navbar" role="navigation" aria-label="<?php esc_attr_e( 'Main navigation', 'dawn-simmons' ); ?>">
@@ -23,7 +24,7 @@ function ds_navbar(): void {
         ] );
         ?>
         <div class="nav-right">
-            <a href="<?php echo esc_url( get_permalink( get_option('ds_page_contact') ) ?: $home_url . '#contact' ); ?>" class="nav-cta">
+            <a href="<?php echo esc_url( $cta_url ); ?>" class="nav-cta">
                 <?php echo esc_html( $cta_text ); ?>
             </a>
             <button class="nav-hamburger" id="navHamburger" aria-label="<?php esc_attr_e( 'Toggle navigation', 'dawn-simmons' ); ?>" aria-expanded="false">
@@ -41,7 +42,7 @@ function ds_navbar(): void {
             'fallback_cb'    => false,
         ] );
         ?>
-        <a href="<?php echo esc_url( get_permalink( get_option('ds_page_contact') ) ?: $home_url . '#contact' ); ?>" class="nav-mobile-cta">
+        <a href="<?php echo esc_url( $cta_url ); ?>" class="nav-mobile-cta">
             <?php echo esc_html( $cta_text ); ?>
         </a>
     </div>

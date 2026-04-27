@@ -246,12 +246,13 @@ class DS_Demo_Importer {
         $blocks = [
             'dawn-simmons/hero' => [
                 'eyebrow'          => 'ServiceNow Expert · AI Transformation · Chicago, IL',
-                'heading'          => 'Transforming Business With AI & ServiceNow',
-                'roles'            => "ServiceNow Consultant & AI Architect\nDigital Transformation & Business Agent\nEnterprise AI & ITSM Solution Architect",
+                'heading'          => 'Transforming Business With <em>AI & ServiceNow</em>',
+                'subheading'       => 'Senior ServiceNow consultant and AI architect with 20+ years driving digital transformation for Fortune 500 enterprises in healthcare, finance, and energy.',
+                'roles'            => "ServiceNow Consultant & AI Architect\nDigital Transformation Leader\nEnterprise AI & ITSM Solution Architect",
                 'btnPrimaryText'   => 'Start a Conversation',
                 'btnPrimaryUrl'    => '#contact',
-                'btnSecondaryText' => 'View Resume',
-                'btnSecondaryUrl'  => '#about',
+                'btnSecondaryText' => 'View My Work',
+                'btnSecondaryUrl'  => '#services',
                 'stats'            => [
                     [ 'num' => 20, 'suffix' => '+', 'label' => 'Years Experience'    ],
                     [ 'num' => 94, 'suffix' => '%', 'label' => 'Client Satisfaction' ],
@@ -260,37 +261,40 @@ class DS_Demo_Importer {
             ],
             'dawn-simmons/ai-section' => [
                 'eyebrow'   => 'AI + ServiceNow + Business',
-                'headline'  => 'Unlocking AI-Powered Business Intelligence',
-                'lead'      => 'Dawn bridges the gap between cutting-edge artificial intelligence and real-world enterprise operations — embedding AI capabilities directly into ServiceNow workflows to automate, predict, and accelerate business outcomes.',
-                'pills'     => "Predictive Intelligence\nAI Automation\nNow Assist (GenAI)\nML Classification\nNLP & Virtual Agent\nAI-Ops\nProcess Mining\nIntelligent Workflows",
+                'headline'  => 'Powering the Future with <em>Intelligent Automation</em>',
+                'lead'      => 'From AI-powered ITSM to predictive analytics, I design automation frameworks that eliminate toil, reduce MTTR, and unlock strategic capacity across your enterprise.',
+                'pills'     => "Predictive Intelligence\nNow Assist (GenAI)\nML Classification\nNLP & Virtual Agent\nAI-Ops\nProcess Mining\nIntelligent Workflows\nAI Governance",
                 'flowSteps' => [
-                    [ 'icon' => '📡', 'name' => 'Data Ingestion & Signal Detection', 'desc' => 'CMDB, incidents, events, HRSD records'          ],
-                    [ 'icon' => '🧠', 'name' => 'AI & ML Processing Layer',          'desc' => 'Predictive Intelligence, NLP, classification'    ],
-                    [ 'icon' => '⚡', 'name' => 'Intelligent Automation',            'desc' => 'Auto-routing, resolution, virtual agent'         ],
-                    [ 'icon' => '📈', 'name' => 'Business Outcomes & KPIs',          'desc' => 'Cost savings, SLA improvement, ROI'             ],
+                    [ 'icon' => '📡', 'name' => 'Data Ingestion & Signal Detection', 'desc' => 'CMDB, incidents, events, HRSD records'         ],
+                    [ 'icon' => '🧠', 'name' => 'AI & ML Processing Layer',          'desc' => 'Predictive Intelligence, NLP, classification'   ],
+                    [ 'icon' => '⚡', 'name' => 'Intelligent Automation',            'desc' => 'Auto-routing, resolution, virtual agent'        ],
+                    [ 'icon' => '📈', 'name' => 'Business Outcomes & KPIs',          'desc' => 'Cost savings, SLA improvement, measurable ROI'  ],
                 ],
                 'cards' => [
-                    [ 'icon' => '💡', 'title' => 'Predictive Intelligence', 'desc' => "Leverage ServiceNow's built-in ML to auto-classify incidents, predict SLA breaches, and surface patterns before they become problems." ],
-                    [ 'icon' => '🤖', 'title' => 'Now Assist (GenAI)',       'desc' => "Deploy generative AI capabilities — AI-powered case summarization, resolution recommendations, and agent assist across ITSM and HRSD." ],
-                    [ 'icon' => '⚙',  'title' => 'Intelligent Automation',   'desc' => 'Design AI-driven workflow automation — eliminating repetitive tasks, accelerating approvals, and reducing MTTR.' ],
-                    [ 'icon' => '📊', 'title' => 'AI-Ops & AIOps',           'desc' => 'Integrate AI into IT operations — intelligent event correlation, noise reduction, and proactive anomaly detection.' ],
+                    [ 'icon' => '💡', 'title' => 'Predictive Intelligence', 'desc' => 'Leverage ServiceNow ML to auto-classify incidents, predict SLA breaches, and surface patterns before they become problems.' ],
+                    [ 'icon' => '🤖', 'title' => 'Now Assist (GenAI)',       'desc' => 'Deploy generative AI — case summarization, resolution recommendations, and agent assist across ITSM and HRSD.' ],
+                    [ 'icon' => '⚙',  'title' => 'Intelligent Automation',   'desc' => 'AI-driven workflow automation — eliminating repetitive tasks, accelerating approvals, and reducing MTTR.' ],
+                    [ 'icon' => '📊', 'title' => 'AIOps & Event Management', 'desc' => 'Intelligent event correlation, noise reduction, and proactive anomaly detection integrated into your NOC.' ],
                 ],
             ],
             'dawn-simmons/services' => [
                 'eyebrow'  => 'What I Do',
-                'title'    => 'Expert-level services built on 20+ years',
-                'sub'      => 'From global AI-powered program management to hands-on ServiceNow implementation — end-to-end digital transformation for enterprise.',
+                'title'    => 'End-to-End <em>ServiceNow</em> Excellence',
+                'sub'      => 'From strategy through delivery — senior-level expertise across every phase of the ServiceNow lifecycle, backed by 20+ years of enterprise results.',
                 'services' => [
-                    [ 'num' => '01', 'title' => 'Global Program Director',        'desc' => 'Directed multi-million-dollar cloud implementations, aligning ServiceNow Cloud, ITAM, SCCM, GRC, and AI automation to organizational goals across global enterprises.',                                                                           'tags' => 'ServiceNow, AI Automation, ITAM, GRC'             ],
-                    [ 'num' => '02', 'title' => 'Enterprise IT & AI Consulting',   'desc' => 'ServiceNow and AI transformations in healthcare, pharma, higher education, and energy — delivering end-to-end ITSM, CMDB, SecOps, HRSD, and predictive intelligence solutions.',                                                                    'tags' => 'ITSM, CMDB, SecOps, HRSD, AI/ML'                 ],
-                    [ 'num' => '03', 'title' => 'Strategic Leadership & Advisory', 'desc' => 'Fortune 500 executive guidance — aligning AI and technology strategy with business goals, driving measurable cost savings, efficiency gains, and long-term digital roadmaps.',                                                                     'tags' => 'Executive Advisory, AI Strategy, Roadmapping'     ],
+                    [ 'num' => '01', 'title' => 'ServiceNow Implementation', 'desc' => 'Full-cycle ITSM, ITOM, and CSM implementations tailored to your industry and business processes, from discovery to go-live.', 'tags' => 'ITSM, ITOM, CSM, CMDB' ],
+                    [ 'num' => '02', 'title' => 'AI & Process Automation',   'desc' => 'Intelligent automation using Flow Designer, IntegrationHub, Now Assist (GenAI), and custom ML pipelines for maximum efficiency.', 'tags' => 'AI, ML, Flow Designer, GenAI' ],
+                    [ 'num' => '03', 'title' => 'Platform Architecture',     'desc' => 'Instance strategy, multi-instance design, and technical governance frameworks that scale with your enterprise.', 'tags' => 'Architecture, Governance, CMDB' ],
+                    [ 'num' => '04', 'title' => 'Executive Advisory',        'desc' => 'Strategic roadmapping, technology selection, and board-level digital transformation counsel for Fortune 500 leadership.', 'tags' => 'Strategy, Advisory, Roadmapping' ],
+                    [ 'num' => '05', 'title' => 'Training & Enablement',     'desc' => 'Custom training programmes, ServiceNow certification support, and internal CoE capability building.', 'tags' => 'Training, CoE, Enablement' ],
+                    [ 'num' => '06', 'title' => 'Managed Services',          'desc' => 'Ongoing platform optimisation, administration, and continuous improvement retainers to protect your investment.', 'tags' => 'Support, Optimisation, AMS' ],
                 ],
             ],
             'dawn-simmons/about' => [
                 'eyebrow' => 'About Me',
-                'title'   => 'Dynamic Leadership with Global Impact',
-                'bio1'    => 'Dawn C. Simmons is a transformative, visionary leader with over 20 years of executive experience in digital transformation, AI-powered business solutions, and ServiceNow implementations.',
-                'bio2'    => 'A recognized expert in enterprise AI integration and ServiceNow architecture, Dawn has delivered measurable results across Fortune 500 companies in healthcare, pharma, higher education, and energy — combining deep technical expertise with executive-level strategic vision.',
+                'title'   => 'Dynamic Leadership with <em>Global Impact</em>',
+                'bio1'    => 'Dawn C. Simmons is a transformative leader with over 20 years of executive experience in digital transformation, AI-powered enterprise solutions, and ServiceNow implementations across Fortune 500 companies.',
+                'bio2'    => 'A recognized expert in enterprise AI and ServiceNow architecture, Dawn has delivered measurable results in healthcare, pharma, higher education, and energy — combining deep technical depth with executive-level strategic vision.',
                 'skills'  => [
                     [ 'skill' => 'ServiceNow Platform',          'pct' => 100 ],
                     [ 'skill' => 'AI & Predictive Intelligence', 'pct' => 95  ],
@@ -307,20 +311,20 @@ class DS_Demo_Importer {
             ],
             'dawn-simmons/testimonials' => [
                 'eyebrow'      => 'Social Proof',
-                'title'        => 'What colleagues & clients say',
+                'title'        => 'What Colleagues & Clients <em>Say</em>',
                 'testimonials' => [
-                    [ 'text' => 'Dawn has demonstrated exemplary leadership in the Support Services industry through her incredible efforts. She is a seasoned management practitioner that understands service management concepts extremely well.',                                'name' => 'Steve West',             'role' => 'Board of Directors, Denver Metro HDI',                  'initial' => 'SW' ],
-                    [ 'text' => 'Very few people equal Dawn in persistence and dedication. I am continually impressed with her insight, intelligence, tenacity and ability to network across organizations.',                                                                    'name' => 'Lori Shaw',              'role' => 'Senior Consultant',                                    'initial' => 'LS' ],
-                    [ 'text' => '"Solution provider" — that can summarize how good she knows the business. She is one of the few people with excellent knowledge about Support Readiness. She is GREAT to work with.',                                                          'name' => 'Venkatesh Thiruvaipati', 'role' => 'Sun Microsystems',                                     'initial' => 'VT' ],
-                    [ 'text' => 'Dawn is able to quickly assess the needs of a project and break it into manageable, achievable parts. Her ability to network and work with all personalities facilitates the influencing of all key stakeholders.',                              'name' => 'Dale Avery',             'role' => 'Enterprise Network Services, Sun Microsystems',         'initial' => 'DA' ],
-                    [ 'text' => 'Dawn is one of the most passionate and driven people I know. Her background and experience makes her a very well rounded qualified candidate for any challenging opportunity.',                                                                  'name' => 'Frank Tawil',            'role' => 'Enterprise Network Services, Sun Microsystems Bay Area', 'initial' => 'FT' ],
-                    [ 'text' => 'Dawn is an excellent project and program manager, bringing diverse skills including effective teamwork, attention to detail, excellent facilitation, and strong leadership. Dawn produces results.',                                               'name' => 'Deepanker Baderia',      'role' => 'Solution Architect, Sun Microsystems',                  'initial' => 'DB' ],
+                    [ 'text' => 'Dawn has demonstrated exemplary leadership in the Support Services industry. She is a seasoned management practitioner that understands service management concepts extremely well.',   'name' => 'Steve West',             'role' => 'Board of Directors, Denver Metro HDI',                   'initial' => 'SW' ],
+                    [ 'text' => 'Very few people equal Dawn in persistence and dedication. I am continually impressed with her insight, intelligence, tenacity and ability to network across organizations.',          'name' => 'Lori Shaw',              'role' => 'Senior Consultant',                                     'initial' => 'LS' ],
+                    [ 'text' => 'Solution provider — that can summarize how good she knows the business. She has excellent knowledge of Support Readiness and is an absolute pleasure to work with.',                  'name' => 'Venkatesh Thiruvaipati', 'role' => 'Sun Microsystems',                                      'initial' => 'VT' ],
+                    [ 'text' => 'Dawn is able to quickly assess the needs of a project and break it into manageable parts. Her ability to work with all personalities facilitates influencing all key stakeholders.',  'name' => 'Dale Avery',             'role' => 'Enterprise Network Services, Sun Microsystems',          'initial' => 'DA' ],
+                    [ 'text' => 'Dawn is one of the most passionate and driven people I know. Her background and experience makes her a very well rounded and qualified candidate for any challenging opportunity.',   'name' => 'Frank Tawil',            'role' => 'Enterprise Network Services, Sun Microsystems Bay Area',  'initial' => 'FT' ],
+                    [ 'text' => 'Dawn is an excellent project and program manager — effective teamwork, attention to detail, excellent facilitation, and strong leadership. Dawn consistently produces results.',       'name' => 'Deepanker Baderia',      'role' => 'Solution Architect, Sun Microsystems',                   'initial' => 'DB' ],
                 ],
             ],
             'dawn-simmons/contact' => [
                 'eyebrow'      => 'Get in Touch',
-                'title'        => "Let's work together",
-                'sub'          => "Ready to transform your enterprise? I'd love to hear about your challenges and explore how we can work together.",
+                'title'        => "Let's Work <em>Together</em>",
+                'sub'          => "Ready to transform your enterprise? I would love to hear about your ServiceNow challenges and explore how we can build something remarkable.",
                 'email'        => 'dawnckhan@gmail.com',
                 'location'     => 'Chicago, IL USA',
                 'responseTime' => 'Within 24 hours',
@@ -352,18 +356,20 @@ class DS_Demo_Importer {
         // the JSON string (corrupting \" → " and \n → n). wp_slash() pre-doubles
         // all backslashes so wp_unslash() restores them to their intended value.
         update_post_meta( $page_id, '_elementor_data', wp_slash( $elementor_data ) );
-        update_post_meta( $page_id, '_elementor_edit_mode',     'builder'       );
-        update_post_meta( $page_id, '_elementor_template_type', 'wp-page'       );
-        update_post_meta( $page_id, '_elementor_version',       ELEMENTOR_VERSION );
+        update_post_meta( $page_id, '_elementor_edit_mode',     'builder'  );
+        update_post_meta( $page_id, '_elementor_template_type', 'wp-page'  );
+        update_post_meta( $page_id, '_elementor_version',       defined( 'ELEMENTOR_VERSION' ) ? ELEMENTOR_VERSION : '3.0.0' );
 
-        // Clear post content so Elementor is the sole renderer
+        // Delete stale per-post CSS so Elementor regenerates it on next load.
+        delete_post_meta( $page_id, '_elementor_css' );
+
+        // Clear post content so Elementor is the sole renderer.
         wp_update_post( [
             'ID'           => $page_id,
             'post_content' => '',
         ] );
 
-        // Flush Elementor CSS cache — wrapped in try/catch because the API
-        // differs across Elementor versions and must never crash the importer.
+        // Flush Elementor's global CSS cache — API differs across versions.
         try {
             if (
                 class_exists( '\Elementor\Plugin' )
@@ -371,10 +377,7 @@ class DS_Demo_Importer {
                 && method_exists( \Elementor\Plugin::$instance->files_manager, 'clear_cache' )
             ) {
                 \Elementor\Plugin::$instance->files_manager->clear_cache();
-            } elseif (
-                class_exists( '\Elementor\Core\Files\CSS\Post' )
-            ) {
-                // Older Elementor: regenerate per-post CSS
+            } elseif ( class_exists( '\Elementor\Core\Files\CSS\Post' ) ) {
                 $css = new \Elementor\Core\Files\CSS\Post( $page_id );
                 $css->update();
             }
@@ -450,14 +453,14 @@ class DS_Demo_Importer {
     private static function hero_settings(): array {
         return [
             'eyebrow'           => 'ServiceNow Expert · AI Transformation · Chicago, IL',
-            'heading'           => 'Transforming Business With AI & ServiceNow',
-            'subheading'        => 'Senior ServiceNow consultant and AI architect with 20+ years driving digital transformation for Fortune 500 enterprises.',
+            'heading'           => 'Transforming Business With <em>AI & ServiceNow</em>',
+            'subheading'        => 'Senior ServiceNow consultant and AI architect with 20+ years driving digital transformation for Fortune 500 enterprises in healthcare, finance, and energy.',
             'btn_primary_text'  => 'Start a Conversation',
             'btn_primary_url'   => [ 'url' => '#contact',  'is_external' => false, 'nofollow' => false ],
-            'btn_secondary_text'=> 'View Resume',
-            'btn_secondary_url' => [ 'url' => '#about',    'is_external' => false, 'nofollow' => false ],
+            'btn_secondary_text'=> 'View My Work',
+            'btn_secondary_url' => [ 'url' => '#services', 'is_external' => false, 'nofollow' => false ],
             'photo'             => [ 'id' => 0, 'url' => '' ],
-            'roles'             => "ServiceNow Consultant & AI Architect\nDigital Transformation & Business Agent\nEnterprise AI & ITSM Solution Architect",
+            'roles'             => "ServiceNow Consultant & AI Architect\nDigital Transformation Leader\nEnterprise AI & ITSM Solution Architect",
             'stats'             => [
                 [ 'num' => 20, 'suffix' => '+', 'label' => 'Years Experience'    ],
                 [ 'num' => 94, 'suffix' => '%', 'label' => 'Client Satisfaction' ],
@@ -469,20 +472,20 @@ class DS_Demo_Importer {
     private static function ai_settings(): array {
         return [
             'eyebrow'    => 'AI + ServiceNow + Business',
-            'headline'   => 'Unlocking AI-Powered Business Intelligence',
-            'lead'       => 'Dawn bridges the gap between cutting-edge artificial intelligence and real-world enterprise operations — embedding AI capabilities directly into ServiceNow workflows to automate, predict, and accelerate business outcomes.',
-            'pills'      => "Predictive Intelligence\nAI Automation\nNow Assist (GenAI)\nML Classification\nNLP & Virtual Agent\nAI-Ops\nProcess Mining\nIntelligent Workflows",
+            'headline'   => 'Powering the Future with <em>Intelligent Automation</em>',
+            'lead'       => 'From AI-powered ITSM to predictive analytics, I design automation frameworks that eliminate toil, reduce MTTR, and unlock strategic capacity across your enterprise.',
+            'pills'      => "Predictive Intelligence\nNow Assist (GenAI)\nML Classification\nNLP & Virtual Agent\nAI-Ops\nProcess Mining\nIntelligent Workflows\nAI Governance",
             'flow_steps' => [
-                [ 'icon_char' => '📡', 'name' => 'Data Ingestion & Signal Detection', 'desc' => 'CMDB, incidents, events, HRSD records'       ],
-                [ 'icon_char' => '🧠', 'name' => 'AI & ML Processing Layer',          'desc' => 'Predictive Intelligence, NLP, classification' ],
-                [ 'icon_char' => '⚡', 'name' => 'Intelligent Automation',            'desc' => 'Auto-routing, resolution, virtual agent'      ],
-                [ 'icon_char' => '📈', 'name' => 'Business Outcomes & KPIs',          'desc' => 'Cost savings, SLA improvement, ROI'          ],
+                [ 'icon_char' => '📡', 'name' => 'Data Ingestion & Signal Detection', 'desc' => 'CMDB, incidents, events, HRSD records'        ],
+                [ 'icon_char' => '🧠', 'name' => 'AI & ML Processing Layer',          'desc' => 'Predictive Intelligence, NLP, classification'  ],
+                [ 'icon_char' => '⚡', 'name' => 'Intelligent Automation',            'desc' => 'Auto-routing, resolution, virtual agent'       ],
+                [ 'icon_char' => '📈', 'name' => 'Business Outcomes & KPIs',          'desc' => 'Cost savings, SLA improvement, measurable ROI' ],
             ],
             'cards'      => [
-                [ 'icon' => '💡', 'title' => 'Predictive Intelligence', 'desc' => "Leverage ServiceNow's built-in ML to auto-classify incidents, predict SLA breaches, and surface patterns before they become problems." ],
-                [ 'icon' => '🤖', 'title' => 'Now Assist (GenAI)',       'desc' => 'Deploy generative AI capabilities — AI-powered case summarization, resolution recommendations, and agent assist across ITSM and HRSD.' ],
-                [ 'icon' => '⚙',  'title' => 'Intelligent Automation',   'desc' => 'Design AI-driven workflow automation — eliminating repetitive tasks, accelerating approvals, and reducing MTTR.' ],
-                [ 'icon' => '📊', 'title' => 'AI-Ops & AIOps',           'desc' => 'Integrate AI into IT operations — intelligent event correlation, noise reduction, and proactive anomaly detection.' ],
+                [ 'icon' => '💡', 'title' => 'Predictive Intelligence', 'desc' => 'Leverage ServiceNow ML to auto-classify incidents, predict SLA breaches, and surface patterns before they become problems.' ],
+                [ 'icon' => '🤖', 'title' => 'Now Assist (GenAI)',       'desc' => 'Deploy generative AI — case summarization, resolution recommendations, and agent assist across ITSM and HRSD.' ],
+                [ 'icon' => '⚙',  'title' => 'Intelligent Automation',   'desc' => 'AI-driven workflow automation — eliminating repetitive tasks, accelerating approvals, and reducing MTTR.' ],
+                [ 'icon' => '📊', 'title' => 'AIOps & Event Management', 'desc' => 'Intelligent event correlation, noise reduction, and proactive anomaly detection integrated into your NOC.' ],
             ],
         ];
     }
@@ -490,12 +493,12 @@ class DS_Demo_Importer {
     private static function services_settings(): array {
         return [
             'eyebrow'  => 'What I Do',
-            'title'    => 'Expert-level services built on 20+ years',
-            'sub'      => 'From global AI-powered program management to hands-on ServiceNow implementation — end-to-end digital transformation for enterprise.',
+            'title'    => 'End-to-End <em>ServiceNow</em> Excellence',
+            'sub'      => 'From strategy through delivery — senior-level expertise across every phase of the ServiceNow lifecycle, backed by 20+ years of enterprise results.',
             'services' => [
-                [ 'num' => '01', 'title' => 'Global Program Director',        'desc' => 'Directed multi-million-dollar cloud implementations, aligning ServiceNow Cloud, ITAM, SCCM, GRC, and AI automation to organizational goals across global enterprises.',                 'tags' => 'ServiceNow, AI Automation, ITAM, GRC'         ],
-                [ 'num' => '02', 'title' => 'Enterprise IT & AI Consulting',   'desc' => 'ServiceNow and AI transformations in healthcare, pharma, higher education, and energy — delivering end-to-end ITSM, CMDB, SecOps, HRSD, and predictive intelligence solutions.',          'tags' => 'ITSM, CMDB, SecOps, HRSD, AI/ML'             ],
-                [ 'num' => '03', 'title' => 'Strategic Leadership & Advisory', 'desc' => 'Fortune 500 executive guidance — aligning AI and technology strategy with business goals, driving measurable cost savings, efficiency gains, and long-term digital roadmaps.',             'tags' => 'Executive Advisory, AI Strategy, Roadmapping' ],
+                [ 'num' => '01', 'title' => 'ServiceNow Implementation', 'desc' => 'Full-cycle ITSM, ITOM, and CSM implementations tailored to your industry and business processes, from discovery to go-live.', 'tags' => 'ITSM, ITOM, CSM, CMDB' ],
+                [ 'num' => '02', 'title' => 'AI & Process Automation',   'desc' => 'Intelligent automation using Flow Designer, IntegrationHub, Now Assist (GenAI), and custom ML pipelines for maximum efficiency.', 'tags' => 'AI, ML, Flow Designer, GenAI' ],
+                [ 'num' => '03', 'title' => 'Platform Architecture',     'desc' => 'Instance strategy, multi-instance design, and technical governance frameworks that scale with your enterprise.', 'tags' => 'Architecture, Governance, CMDB' ],
             ],
         ];
     }
@@ -503,9 +506,9 @@ class DS_Demo_Importer {
     private static function about_settings(): array {
         return [
             'eyebrow' => 'About Me',
-            'title'   => 'Dynamic Leadership with Global Impact',
-            'bio_1'   => 'Dawn C. Simmons is a transformative, visionary leader with over 20 years of executive experience in digital transformation, AI-powered business solutions, and ServiceNow implementations.',
-            'bio_2'   => 'A recognized expert in enterprise AI integration and ServiceNow architecture, Dawn has delivered measurable results across Fortune 500 companies in healthcare, pharma, higher education, and energy.',
+            'title'   => 'Dynamic Leadership with <em>Global Impact</em>',
+            'bio_1'   => 'Dawn C. Simmons is a transformative leader with over 20 years of executive experience in digital transformation, AI-powered enterprise solutions, and ServiceNow implementations across Fortune 500 companies.',
+            'bio_2'   => 'A recognized expert in enterprise AI and ServiceNow architecture, Dawn has delivered measurable results in healthcare, pharma, higher education, and energy — combining deep technical depth with executive-level strategic vision.',
             'photo'   => [ 'id' => 0, 'url' => '' ],
             'skills'  => [
                 [ 'skill' => 'ServiceNow Platform',          'pct' => 100 ],
@@ -526,14 +529,14 @@ class DS_Demo_Importer {
     private static function testimonials_settings(): array {
         return [
             'eyebrow'      => 'Social Proof',
-            'title'        => 'What colleagues & clients say',
+            'title'        => 'What Colleagues & Clients <em>Say</em>',
             'testimonials' => [
-                [ 'text' => 'Dawn has demonstrated exemplary leadership in the Support Services industry through her incredible efforts. She is a seasoned management practitioner that understands service management concepts extremely well.',                 'name' => 'Steve West',             'role' => 'Board of Directors, Denver Metro HDI',                  'initial' => 'SW' ],
-                [ 'text' => 'Very few people equal Dawn in persistence and dedication. I am continually impressed with her insight, intelligence, tenacity and ability to network across organizations.',                                                    'name' => 'Lori Shaw',              'role' => 'Senior Consultant',                                    'initial' => 'LS' ],
-                [ 'text' => '"Solution provider" — that can summarize how good she knows the business. She is one of the few people with excellent knowledge about Support Readiness. She is GREAT to work with.',                                           'name' => 'Venkatesh Thiruvaipati', 'role' => 'Sun Microsystems',                                     'initial' => 'VT' ],
-                [ 'text' => 'Dawn is able to quickly assess the needs of a project and break it into manageable, achievable parts. Her ability to network and work with all personalities facilitates the influencing of all key stakeholders.',              'name' => 'Dale Avery',             'role' => 'Enterprise Network Services, Sun Microsystems',         'initial' => 'DA' ],
-                [ 'text' => 'Dawn is one of the most passionate and driven people I know. Her background and experience makes her a very well rounded qualified candidate for any challenging opportunity.',                                                  'name' => 'Frank Tawil',            'role' => 'Enterprise Network Services, Sun Microsystems Bay Area', 'initial' => 'FT' ],
-                [ 'text' => 'Dawn is an excellent project and program manager, bringing diverse skills including effective teamwork, attention to detail, excellent facilitation, and strong leadership. Dawn produces results.',                               'name' => 'Deepanker Baderia',      'role' => 'Solution Architect, Sun Microsystems',                  'initial' => 'DB' ],
+                [ 'text' => 'Dawn has demonstrated exemplary leadership in the Support Services industry. She is a seasoned management practitioner that understands service management concepts extremely well.',  'name' => 'Steve West',             'role' => 'Board of Directors, Denver Metro HDI',                   'initial' => 'SW' ],
+                [ 'text' => 'Very few people equal Dawn in persistence and dedication. I am continually impressed with her insight, intelligence, tenacity and ability to network across organizations.',         'name' => 'Lori Shaw',              'role' => 'Senior Consultant',                                     'initial' => 'LS' ],
+                [ 'text' => 'Solution provider — that can summarize how good she knows the business. She has excellent knowledge of Support Readiness and is an absolute pleasure to work with.',                 'name' => 'Venkatesh Thiruvaipati', 'role' => 'Sun Microsystems',                                      'initial' => 'VT' ],
+                [ 'text' => 'Dawn is able to quickly assess the needs of a project and break it into manageable parts. Her ability to work with all personalities facilitates influencing all key stakeholders.', 'name' => 'Dale Avery',             'role' => 'Enterprise Network Services, Sun Microsystems',          'initial' => 'DA' ],
+                [ 'text' => 'Dawn is one of the most passionate and driven people I know. Her background and experience makes her a very well rounded and qualified candidate for any challenging opportunity.',  'name' => 'Frank Tawil',            'role' => 'Enterprise Network Services, Sun Microsystems Bay Area',  'initial' => 'FT' ],
+                [ 'text' => 'Dawn is an excellent project and program manager — effective teamwork, attention to detail, excellent facilitation, and strong leadership. Dawn consistently produces results.',      'name' => 'Deepanker Baderia',      'role' => 'Solution Architect, Sun Microsystems',                   'initial' => 'DB' ],
             ],
         ];
     }
@@ -541,8 +544,8 @@ class DS_Demo_Importer {
     private static function contact_settings(): array {
         return [
             'eyebrow'       => 'Get in Touch',
-            'title'         => "Let's work together",
-            'sub'           => "Ready to transform your enterprise? I'd love to hear about your challenges and explore how we can work together.",
+            'title'         => "Let's Work <em>Together</em>",
+            'sub'           => "Ready to transform your enterprise? I would love to hear about your ServiceNow challenges and explore how we can build something remarkable.",
             'email'         => 'dawnckhan@gmail.com',
             'location'      => 'Chicago, IL USA',
             'response_time' => 'Within 24 hours',
