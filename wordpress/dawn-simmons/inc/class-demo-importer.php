@@ -290,10 +290,10 @@ class DS_Demo_Importer {
                 'lead'      => 'From AI-powered ITSM to predictive analytics, I design automation frameworks that eliminate toil, reduce MTTR, and unlock strategic capacity across your enterprise.',
                 'pills'     => "Predictive Intelligence\nNow Assist (GenAI)\nML Classification\nNLP & Virtual Agent\nAI-Ops\nProcess Mining\nIntelligent Workflows\nAI Governance",
                 'flowSteps' => [
-                    [ 'icon' => '📡', 'name' => 'Data Ingestion & Signal Detection', 'desc' => 'CMDB, incidents, events, HRSD records'         ],
-                    [ 'icon' => '🧠', 'name' => 'AI & ML Processing Layer',          'desc' => 'Predictive Intelligence, NLP, classification'   ],
-                    [ 'icon' => '⚡', 'name' => 'Intelligent Automation',            'desc' => 'Auto-routing, resolution, virtual agent'        ],
-                    [ 'icon' => '📈', 'name' => 'Business Outcomes & KPIs',          'desc' => 'Cost savings, SLA improvement, measurable ROI'  ],
+                    [ 'icon' => '📡', 'name' => 'Data Ingestion & Signal Detection', 'desc' => 'CMDB, incidents, events, HRSD records'        ],
+                    [ 'icon' => '🧠', 'name' => 'AI & ML Processing Layer',          'desc' => 'Predictive Intelligence, NLP, classification'  ],
+                    [ 'icon' => '⚡', 'name' => 'Intelligent Automation',            'desc' => 'Auto-routing, resolution, virtual agent'       ],
+                    [ 'icon' => '📈', 'name' => 'Business Outcomes & KPIs',          'desc' => 'Cost savings, SLA improvement, measurable ROI' ],
                 ],
                 'cards' => [
                     [ 'icon' => '💡', 'title' => 'Predictive Intelligence', 'desc' => 'Leverage ServiceNow ML to auto-classify incidents, predict SLA breaches, and surface patterns before they become problems.' ],

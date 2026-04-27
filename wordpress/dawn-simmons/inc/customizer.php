@@ -17,7 +17,7 @@ add_action( 'customize_register', function ( WP_Customize_Manager $wp_customize 
 
     $wp_customize->add_setting( 'ds_accent_color', [
         'default'           => 'teal',
-        'sanitize_callback' => function( $v ) { return in_array($v,['teal','violet','gold','coral'],$v) ? $v : 'teal'; },
+        'sanitize_callback' => function( $v ) { return in_array( $v, [ 'teal', 'violet', 'gold', 'coral' ], true ) ? $v : 'teal'; },
         'transport'         => 'postMessage',
     ] );
     $wp_customize->add_control( 'ds_accent_color', [
@@ -34,7 +34,7 @@ add_action( 'customize_register', function ( WP_Customize_Manager $wp_customize 
 
     $wp_customize->add_setting( 'ds_bg_theme', [
         'default'           => 'dark',
-        'sanitize_callback' => function( $v ) { return in_array($v,['dark','midnight','warm'],$v) ? $v : 'dark'; },
+        'sanitize_callback' => function( $v ) { return in_array( $v, [ 'dark', 'midnight', 'warm' ], true ) ? $v : 'dark'; },
         'transport'         => 'postMessage',
     ] );
     $wp_customize->add_control( 'ds_bg_theme', [
@@ -56,7 +56,7 @@ add_action( 'customize_register', function ( WP_Customize_Manager $wp_customize 
 
     $wp_customize->add_setting( 'ds_font_pair', [
         'default'           => 'playfair',
-        'sanitize_callback' => function( $v ) { return in_array($v,['playfair','geo','editorial'],$v) ? $v : 'playfair'; },
+        'sanitize_callback' => function( $v ) { return in_array( $v, [ 'playfair', 'geo', 'editorial' ], true ) ? $v : 'playfair'; },
         'transport'         => 'postMessage',
     ] );
     $wp_customize->add_control( 'ds_font_pair', [

@@ -62,11 +62,11 @@ function ds_fallback_menu(): void {
  * Output the footer.
  */
 function ds_footer(): void {
-    $copy = get_theme_mod( 'ds_footer_copy', '© ' . date('Y') . ' Dawn Christine Simmons — ServiceNow Consultant &amp; AI Transformation Expert' );
+    $copy = get_theme_mod( 'ds_footer_copy', '© ' . gmdate( 'Y' ) . ' Dawn Christine Simmons — ServiceNow Consultant &amp; AI Transformation Expert' );
     ?>
     <footer role="contentinfo">
         <a href="<?php echo esc_url( home_url('/') ); ?>" class="footer-logo">
-            <?php echo esc_html( get_theme_mod( 'ds_logo_text', 'Dawn.' ) ); ?>C.Simmons
+            <?php echo esc_html( get_theme_mod( 'ds_logo_text', 'Dawn.' ) ); ?>
         </a>
         <div class="footer-copy"><?php echo wp_kses_post( $copy ); ?></div>
         <nav class="footer-links" aria-label="<?php esc_attr_e( 'Footer navigation', 'dawn-simmons' ); ?>">

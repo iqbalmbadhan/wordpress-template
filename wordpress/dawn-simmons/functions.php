@@ -162,7 +162,7 @@ add_action( 'after_switch_theme', function () {
 add_action( 'admin_init', function () {
     if ( get_transient( 'ds_redirect_wizard' ) ) {
         delete_transient( 'ds_redirect_wizard' );
-        wp_safe_redirect( admin_url( 'admin.php?page=ds-setup-wizard' ) );
+        wp_safe_redirect( admin_url( 'index.php?page=ds-setup-wizard' ) );
         exit;
     }
 } );

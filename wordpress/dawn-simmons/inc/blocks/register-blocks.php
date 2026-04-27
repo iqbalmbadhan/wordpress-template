@@ -348,7 +348,7 @@ function ds_render_contact( array $attrs ): string {
                         <div class="contact-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div>
                         <div>
                             <div class="contact-label"><?php esc_html_e( 'Email', 'dawn-simmons' ); ?></div>
-                            <div class="contact-val"><a href="mailto:<?php echo $email; ?>"><?php echo $email; ?></a></div>
+                            <div class="contact-val"><a href="mailto:<?php echo esc_attr( $email ); ?>"><?php echo esc_html( $email ); ?></a></div>
                         </div>
                     </div>
                     <div class="contact-item">
@@ -376,18 +376,25 @@ function ds_render_contact( array $attrs ): string {
                         <div class="form-row">
                             <div class="form-group">
                                 <label for="ds-name"><?php esc_html_e( 'Name', 'dawn-simmons' ); ?></label>
-                                <input type="text" id="ds-name" name="ds_name" required>
+                                <input type="text" id="ds-name" name="ds_name" required placeholder="<?php esc_attr_e( 'Jane Smith', 'dawn-simmons' ); ?>">
                             </div>
                             <div class="form-group">
                                 <label for="ds-email"><?php esc_html_e( 'Email', 'dawn-simmons' ); ?></label>
-                                <input type="email" id="ds-email" name="ds_email" required>
+                                <input type="email" id="ds-email" name="ds_email" required placeholder="<?php esc_attr_e( 'jane@company.com', 'dawn-simmons' ); ?>">
                             </div>
                         </div>
                         <div class="form-group">
+                            <label for="ds-subject"><?php esc_html_e( 'Subject', 'dawn-simmons' ); ?></label>
+                            <input type="text" id="ds-subject" name="ds_subject" placeholder="<?php esc_attr_e( 'ServiceNow Consulting Enquiry', 'dawn-simmons' ); ?>">
+                        </div>
+                        <div class="form-group">
                             <label for="ds-message"><?php esc_html_e( 'Message', 'dawn-simmons' ); ?></label>
-                            <textarea id="ds-message" name="ds_message" rows="5" required></textarea>
+                            <textarea id="ds-message" name="ds_message" rows="5" required placeholder="<?php esc_attr_e( 'Tell me about your project…', 'dawn-simmons' ); ?>"></textarea>
                         </div>
                         <button type="submit" class="btn-primary form-submit"><?php esc_html_e( 'Send Message', 'dawn-simmons' ); ?></button>
+                        <div class="form-success" id="formSuccess" role="alert" style="display:none">
+                            <?php esc_html_e( '✓ Message sent! I\'ll be in touch shortly.', 'dawn-simmons' ); ?>
+                        </div>
                     </form>
                     <?php endif; ?>
                 </div>
