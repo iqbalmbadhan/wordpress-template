@@ -233,11 +233,36 @@ class DS_Demo_Importer {
 
         $pref = get_option( 'ds_editor_preference', 'gutenberg' );
 
-        if ( $pref === 'elementor' && defined( 'ELEMENTOR_VERSION' ) ) {
-            self::create_elementor_homepage( $home_id );
-        } else {
-            self::create_gutenberg_homepage( $home_id );
+        // Always write Gutenberg blocks (used when Elementor is not active or not preferred).
+        self::create_gutenberg_homepage( $home_id );
+
+        // Always write Elementor data when Elementor is active so that switching
+        // editor preference later never requires a full re-import.
+        if ( defined( 'ELEMENTOR_VERSION' ) ) {
+            self::create_elementor_homepage( $home_id, $pref === 'elementor' );
         }
+    }
+
+    // ── Rebuild Elementor content only (callable via AJAX without full re-import) ──
+    public static function rebuild_elementor_homepage(): array {
+        self::$log = [];
+        $home_id   = (int) get_option( 'ds_page_home' );
+
+        if ( ! $home_id ) {
+            self::$log[] = '✗ Home page not found. Please run the full demo import first.';
+            return [ 'log' => self::$log ];
+        }
+
+        if ( ! defined( 'ELEMENTOR_VERSION' ) ) {
+            self::$log[] = '✗ Elementor is not active. Please install and activate Elementor first.';
+            return [ 'log' => self::$log ];
+        }
+
+        // Force the preference to elementor for this rebuild.
+        update_option( 'ds_editor_preference', 'elementor' );
+        self::create_elementor_homepage( $home_id, true );
+        self::$log[] = '✓ Elementor homepage rebuilt. Open the page in Elementor to confirm.';
+        return [ 'log' => self::$log ];
     }
 
     // ── Gutenberg homepage ───────────────────────────────────────────────────
@@ -349,25 +374,26 @@ class DS_Demo_Importer {
     }
 
     // ── Elementor homepage ───────────────────────────────────────────────────
-    private static function create_elementor_homepage( int $page_id ): void {
+    // $set_active = true  → set _elementor_edit_mode = 'builder' (Elementor renders the page)
+    // $set_active = false → write data only; edit mode left as-is (Gutenberg still renders)
+    private static function create_elementor_homepage( int $page_id, bool $set_active = true ): void {
         $elementor_data = wp_json_encode( self::build_elementor_data(), JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES );
 
         // update_post_meta() calls wp_unslash() internally, stripping backslashes from
         // the JSON string (corrupting \" → " and \n → n). wp_slash() pre-doubles
         // all backslashes so wp_unslash() restores them to their intended value.
         update_post_meta( $page_id, '_elementor_data', wp_slash( $elementor_data ) );
-        update_post_meta( $page_id, '_elementor_edit_mode',     'builder'  );
         update_post_meta( $page_id, '_elementor_template_type', 'wp-page'  );
-        update_post_meta( $page_id, '_elementor_version',       defined( 'ELEMENTOR_VERSION' ) ? ELEMENTOR_VERSION : '3.0.0' );
+        update_post_meta( $page_id, '_elementor_version',       ELEMENTOR_VERSION );
+
+        if ( $set_active ) {
+            update_post_meta( $page_id, '_elementor_edit_mode', 'builder' );
+            // Clear post content so Elementor is the sole renderer.
+            wp_update_post( [ 'ID' => $page_id, 'post_content' => '' ] );
+        }
 
         // Delete stale per-post CSS so Elementor regenerates it on next load.
         delete_post_meta( $page_id, '_elementor_css' );
-
-        // Clear post content so Elementor is the sole renderer.
-        wp_update_post( [
-            'ID'           => $page_id,
-            'post_content' => '',
-        ] );
 
         // Flush Elementor's global CSS cache — API differs across versions.
         try {
@@ -385,7 +411,7 @@ class DS_Demo_Importer {
             self::$log[] = '→ Elementor cache clear skipped: ' . $e->getMessage();
         }
 
-        self::$log[] = '✓ Elementor page data written to homepage.';
+        self::$log[] = '✓ Elementor page data written to homepage (edit_mode: ' . ( $set_active ? 'builder' : 'unchanged' ) . ').';
     }
 
     private static function build_elementor_data(): array {
@@ -414,7 +440,6 @@ class DS_Demo_Importer {
     }
 
     private static function el_section( string $id, string $widget_type, array $settings ): array {
-        $col_id    = substr( md5( $id . 'col' ), 0, 8 );
         $widget_id = substr( md5( $id . 'wid' ), 0, 8 );
 
         // Add _id to all repeater fields (Elementor requirement for repeater items).
@@ -424,28 +449,49 @@ class DS_Demo_Importer {
             }
         }
 
+        $widget = [
+            'id'         => $widget_id,
+            'elType'     => 'widget',
+            'isInner'    => false,
+            'widgetType' => $widget_type,
+            'settings'   => $settings,
+            'elements'   => [],
+        ];
+
+        // Elementor 3.16+ made Flexbox Containers the default and deprecated section/column.
+        // Use the container structure for 3.16+ and the classic section/column for older versions.
+        if ( defined( 'ELEMENTOR_VERSION' ) && version_compare( ELEMENTOR_VERSION, '3.16.0', '>=' ) ) {
+            return [
+                'id'       => $id,
+                'elType'   => 'container',
+                'isInner'  => false,
+                'settings' => [
+                    '_element_width' => 'full',
+                    'content_width'  => [ 'unit' => '%', 'size' => 100, 'sizes' => [] ],
+                    'flex_direction' => 'column',
+                    'padding'        => [ 'unit' => 'px', 'top' => '0', 'right' => '0', 'bottom' => '0', 'left' => '0', 'isLinked' => true ],
+                ],
+                'elements' => [ $widget ],
+            ];
+        }
+
+        // Classic section → column → widget (Elementor < 3.16).
+        $col_id = substr( md5( $id . 'col' ), 0, 8 );
         return [
-            'id'          => $id,
-            'elType'      => 'section',
-            'isInner'     => false,
-            'settings'    => [
-                'layout'          => 'full_width',
-                '_element_width'  => '',
-                'content_width'   => [ 'unit' => 'px', 'size' => 1200, 'sizes' => [] ],
+            'id'       => $id,
+            'elType'   => 'section',
+            'isInner'  => false,
+            'settings' => [
+                'layout'         => 'full_width',
+                '_element_width' => '',
+                'content_width'  => [ 'unit' => 'px', 'size' => 1200, 'sizes' => [] ],
             ],
-            'elements'    => [[
+            'elements' => [[
                 'id'       => $col_id,
                 'elType'   => 'column',
                 'isInner'  => false,
                 'settings' => [ '_column_size' => 100, '_inline_size' => null ],
-                'elements' => [[
-                    'id'         => $widget_id,
-                    'elType'     => 'widget',
-                    'isInner'    => false,
-                    'widgetType' => $widget_type,
-                    'settings'   => $settings,
-                    'elements'   => [],
-                ]],
+                'elements' => [ $widget ],
             ]],
         ];
     }
