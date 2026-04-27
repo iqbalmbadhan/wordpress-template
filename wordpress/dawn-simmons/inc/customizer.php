@@ -98,6 +98,18 @@ add_action( 'customize_register', function ( WP_Customize_Manager $wp_customize 
         'type'    => 'text',
     ] );
 
+    $wp_customize->add_setting( 'ds_cta_url', [
+        'default'           => '#contact',
+        'sanitize_callback' => 'esc_url_raw',
+        'transport'         => 'postMessage',
+    ] );
+    $wp_customize->add_control( 'ds_cta_url', [
+        'label'       => __( 'Nav CTA Button URL', 'dawn-simmons' ),
+        'description' => __( 'e.g. #contact, /contact, or a full URL', 'dawn-simmons' ),
+        'section'     => 'ds_header',
+        'type'        => 'text',
+    ] );
+
     $wp_customize->add_setting( 'ds_footer_copy', [
         'default'           => '© 2026 Dawn Christine Simmons — ServiceNow Consultant & AI Transformation Expert',
         'sanitize_callback' => 'wp_kses_post',

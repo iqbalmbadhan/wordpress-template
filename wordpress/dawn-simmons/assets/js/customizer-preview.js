@@ -65,8 +65,18 @@
     /* Nav CTA text */
     wp.customize('ds_cta_text', function (value) {
         value.bind(function (v) {
-            var cta = document.querySelector('.nav-cta');
-            if (cta) cta.textContent = v;
+            document.querySelectorAll('.nav-cta, .nav-mobile-cta').forEach(function (el) {
+                el.textContent = v;
+            });
+        });
+    });
+
+    /* Nav CTA URL */
+    wp.customize('ds_cta_url', function (value) {
+        value.bind(function (v) {
+            document.querySelectorAll('.nav-cta, .nav-mobile-cta').forEach(function (el) {
+                el.setAttribute('href', v);
+            });
         });
     });
 

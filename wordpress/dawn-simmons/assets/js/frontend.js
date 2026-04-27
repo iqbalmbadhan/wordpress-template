@@ -131,17 +131,42 @@
         });
     }
 
-    /* ── Contact form (CF7 fallback) ── */
+    /* ── Contact form (native fallback, real AJAX submission) ── */
     function initContactForm() {
         var form = document.querySelector('.contact-form:not(.wpcf7-form)');
         if (!form) return;
         form.addEventListener('submit', function (e) {
             e.preventDefault();
+            var btn     = form.querySelector('.form-submit');
             var success = document.getElementById('formSuccess');
-            if (success) success.style.display = 'block';
-            var btn = form.querySelector('.form-submit');
-            if (btn) { btn.textContent = 'Sent'; btn.style.opacity = '0.6'; }
-            setTimeout(function () { if (success) success.style.display = 'none'; }, 5000);
+            var origTxt = btn ? btn.textContent : '';
+
+            if (btn) { btn.disabled = true; btn.textContent = 'Sending…'; }
+
+            fetch(form.action || window.location.href, {
+                method:  'POST',
+                body:    new FormData(form),
+                headers: { 'X-Requested-With': 'XMLHttpRequest' }
+            })
+            .then(function (r) { return r.json(); })
+            .then(function (json) {
+                if (!json.success) throw new Error(json.data || 'error');
+                if (success) success.style.display = 'block';
+                if (btn) { btn.textContent = 'Sent ✓'; btn.style.opacity = '0.6'; }
+                form.reset();
+                setTimeout(function () {
+                    if (success) success.style.display = 'none';
+                    if (btn) { btn.disabled = false; btn.textContent = origTxt; btn.style.opacity = ''; }
+                }, 6000);
+            })
+            .catch(function () {
+                if (btn) { btn.disabled = false; btn.textContent = origTxt; }
+                if (success) {
+                    success.textContent = 'Could not send — please email directly.';
+                    success.style.display = 'block';
+                    setTimeout(function () { success.style.display = 'none'; }, 5000);
+                }
+            });
         });
     }
 

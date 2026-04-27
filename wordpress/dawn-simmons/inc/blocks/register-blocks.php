@@ -404,15 +404,35 @@ add_action( 'admin_post_ds_contact_submit',        'ds_handle_contact_form' );
 
 function ds_handle_contact_form(): void {
     if ( ! wp_verify_nonce( $_POST['ds_contact_nonce'] ?? '', 'ds_contact' ) ) {
-        wp_die( esc_html__( 'Security check failed.', 'dawn-simmons' ) );
+        if ( ! empty( $_SERVER['HTTP_X_REQUESTED_WITH'] ) ) {
+            wp_send_json_error( 'Security check failed.', 403 );
+        }
+        wp_die( esc_html__( 'Security check failed.', 'dawn-simmons' ), '', [ 'response' => 403 ] );
     }
+
     $name    = sanitize_text_field( $_POST['ds_name']    ?? '' );
     $email   = sanitize_email( $_POST['ds_email']        ?? '' );
+    $subject = sanitize_text_field( $_POST['ds_subject'] ?? '' );
     $message = sanitize_textarea_field( $_POST['ds_message'] ?? '' );
+
+    if ( ! $email ) {
+        if ( ! empty( $_SERVER['HTTP_X_REQUESTED_WITH'] ) ) {
+            wp_send_json_error( 'Invalid email address.', 400 );
+        }
+        wp_safe_redirect( add_query_arg( 'ds_sent', 'error', wp_get_referer() ?: home_url() ) );
+        exit;
+    }
+
     $to      = get_option( 'admin_email' );
-    $subject = sprintf( __( 'New contact from %s', 'dawn-simmons' ), $name );
+    $subject = $subject ?: sprintf( __( 'New contact from %s', 'dawn-simmons' ), $name );
     $body    = "Name: {$name}\nEmail: {$email}\n\n{$message}";
-    wp_mail( $to, $subject, $body, [ "Reply-To: {$email}" ] );
-    wp_safe_redirect( add_query_arg( 'ds_sent', '1', wp_get_referer() ) );
+    $sent    = wp_mail( $to, $subject, $body, [ "Reply-To: {$email}" ] );
+
+    if ( ! empty( $_SERVER['HTTP_X_REQUESTED_WITH'] ) ) {
+        $sent ? wp_send_json_success() : wp_send_json_error( 'Mail delivery failed.', 500 );
+    }
+
+    $referer = wp_get_referer() ?: home_url();
+    wp_safe_redirect( add_query_arg( 'ds_sent', $sent ? '1' : 'error', $referer ) );
     exit;
 }
