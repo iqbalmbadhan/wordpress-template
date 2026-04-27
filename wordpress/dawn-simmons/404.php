@@ -14,7 +14,7 @@
                 <a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="btn-primary">
                     <?php esc_html_e( '← Back to Home', 'dawn-simmons' ); ?>
                 </a>
-                <a href="<?php echo esc_url( get_permalink( get_option( 'ds_page_blog' ) ) ); ?>" class="btn-outline">
+                <a href="<?php echo esc_url( get_permalink( get_option( 'ds_page_blog' ) ) ?: home_url( '/blog/' ) ); ?>" class="btn-outline">
                     <?php esc_html_e( 'Read the Blog', 'dawn-simmons' ); ?>
                 </a>
             </div>

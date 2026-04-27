@@ -17,7 +17,7 @@
                 elseif ( is_author() ) :
                     the_author();
                 elseif ( is_search() ) :
-                    printf( esc_html__( 'Search Results for: %s', 'dawn-simmons' ), get_search_query() );
+                    printf( esc_html__( 'Search Results for: %s', 'dawn-simmons' ), esc_html( get_search_query() ) );
                 else :
                     esc_html_e( 'Insights & Ideas', 'dawn-simmons' );
                 endif;

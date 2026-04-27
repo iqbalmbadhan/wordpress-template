@@ -11,11 +11,12 @@ class DS_Setup_Wizard {
     public static function init(): void {
         add_action( 'admin_menu',        [ __CLASS__, 'register_page'     ] );
         add_action( 'admin_enqueue_scripts', [ __CLASS__, 'enqueue'       ] );
-        add_action( 'wp_ajax_ds_save_editor_pref',   [ __CLASS__, 'ajax_save_editor'   ] );
-        add_action( 'wp_ajax_ds_run_demo_import',    [ __CLASS__, 'ajax_demo_import'   ] );
-        add_action( 'wp_ajax_ds_finish_wizard',      [ __CLASS__, 'ajax_finish'        ] );
-        add_action( 'wp_ajax_ds_install_plugin',     [ __CLASS__, 'ajax_install_plugin' ] );
-        add_action( 'wp_ajax_ds_activate_plugin',    [ __CLASS__, 'ajax_activate_plugin' ] );
+        add_action( 'wp_ajax_ds_save_editor_pref',        [ __CLASS__, 'ajax_save_editor'          ] );
+        add_action( 'wp_ajax_ds_run_demo_import',         [ __CLASS__, 'ajax_demo_import'          ] );
+        add_action( 'wp_ajax_ds_rebuild_elementor',       [ __CLASS__, 'ajax_rebuild_elementor'    ] );
+        add_action( 'wp_ajax_ds_finish_wizard',           [ __CLASS__, 'ajax_finish'               ] );
+        add_action( 'wp_ajax_ds_install_plugin',          [ __CLASS__, 'ajax_install_plugin'       ] );
+        add_action( 'wp_ajax_ds_activate_plugin',         [ __CLASS__, 'ajax_activate_plugin'      ] );
     }
 
     public static function register_page(): void {
@@ -62,6 +63,16 @@ class DS_Setup_Wizard {
             wp_send_json_error( 'Unauthorized', 403 );
         }
         $result = DS_Demo_Importer::run();
+        wp_send_json_success( $result );
+    }
+
+    // ── AJAX: rebuild only the Elementor homepage data ───────────────────────
+    public static function ajax_rebuild_elementor(): void {
+        check_ajax_referer( 'ds_wizard_nonce', 'nonce' );
+        if ( ! current_user_can( 'manage_options' ) ) {
+            wp_send_json_error( 'Unauthorized', 403 );
+        }
+        $result = DS_Demo_Importer::rebuild_elementor_homepage();
         wp_send_json_success( $result );
     }
 
@@ -302,6 +313,17 @@ class DS_Setup_Wizard {
                         <a href="<?php echo esc_url( home_url( '/' ) ); ?>" target="_blank" class="btn btn-primary">View Site →</a>
                         <a href="<?php echo esc_url( admin_url() ); ?>" class="btn btn-outline">Go to Dashboard</a>
                     </div>
+                    <?php if ( defined( 'ELEMENTOR_VERSION' ) ) : ?>
+                    <div style="margin-top:28px;padding-top:24px;border-top:1px solid #2a2d3e">
+                        <p style="text-align:center;color:#9ca3af;font-size:13px;margin-bottom:12px"><?php esc_html_e( 'Elementor homepage showing empty? Rebuild its content in one click:', 'dawn-simmons' ); ?></p>
+                        <div style="display:flex;justify-content:center">
+                            <button class="btn btn-outline btn-sm" id="btn-rebuild-elementor">
+                                ⚡ <?php esc_html_e( 'Rebuild Elementor Homepage', 'dawn-simmons' ); ?>
+                            </button>
+                        </div>
+                        <div class="log" id="rebuild-log" style="display:none;margin-top:14px"></div>
+                    </div>
+                    <?php endif; ?>
                 </div>
 
             </div><!-- /.wizard-body -->
@@ -457,6 +479,37 @@ class DS_Setup_Wizard {
                     btn.textContent = action === 'install' ? 'Install' : 'Activate';
                 }
             });
+
+            // Rebuild Elementor homepage button
+            const rebuildBtn = document.getElementById('btn-rebuild-elementor');
+            if (rebuildBtn) {
+                rebuildBtn.addEventListener('click', async function() {
+                    const log = document.getElementById('rebuild-log');
+                    log.style.display = 'block';
+                    log.textContent = 'Rebuilding Elementor homepage…\n';
+                    rebuildBtn.disabled = true;
+                    rebuildBtn.innerHTML = '<span class="spinner"></span> Rebuilding…';
+                    const fd = new FormData();
+                    fd.append('action', 'ds_rebuild_elementor');
+                    fd.append('nonce', nonce);
+                    try {
+                        const res  = await fetch(ajaxUrl, { method: 'POST', body: fd });
+                        const json = await res.json();
+                        if (json.success) {
+                            (json.data.log || []).forEach(l => { log.textContent += l + '\n'; });
+                            rebuildBtn.textContent = '✓ Done — open homepage in Elementor';
+                        } else {
+                            log.textContent += 'Error: ' + (json.data || 'Unknown error');
+                            rebuildBtn.disabled = false;
+                            rebuildBtn.textContent = '⚡ Rebuild Elementor Homepage';
+                        }
+                    } catch(err) {
+                        log.textContent += 'Network error. Please try again.';
+                        rebuildBtn.disabled = false;
+                        rebuildBtn.textContent = '⚡ Rebuild Elementor Homepage';
+                    }
+                });
+            }
 
             goTo(1);
         })();
