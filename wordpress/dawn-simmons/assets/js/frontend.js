@@ -29,11 +29,12 @@
     /* ── Scroll: sticky nav + active link ── */
     function initScroll() {
         var navbar = document.getElementById('navbar');
-        var sections = document.querySelectorAll('section[id]');
         if (!navbar) return;
 
         window.addEventListener('scroll', function () {
             navbar.classList.toggle('scrolled', window.scrollY > 60);
+            /* Query sections fresh so this works after AJAX content swaps */
+            var sections = document.querySelectorAll('section[id]');
             if (!sections.length) return;
             var navLinks = document.querySelectorAll('.nav-links a');
             var current = '';
@@ -272,11 +273,16 @@
             progressStart();
 
             fetch(url, { headers: { 'X-DS-Ajax-Nav': '1' } })
-                .then(function (r) { return r.text(); })
-                .then(function (html) {
-                    history.pushState({ dsAjax: true }, '', url);
-                    swapContent(html, url);
-                    progressDone();
+                .then(function (r) {
+                    /* Use the actual response URL (after any WP redirects like
+                       trailing-slash normalisation) so pushState and the address
+                       bar always reflect the canonical URL of the page shown. */
+                    var finalUrl = r.url || url;
+                    return r.text().then(function (html) {
+                        history.pushState({ dsAjax: true }, '', finalUrl);
+                        swapContent(html, finalUrl);
+                        progressDone();
+                    });
                 })
                 .catch(function () {
                     window.location.href = url;
@@ -287,6 +293,14 @@
         function init() {
             /* skip AJAX nav inside the Customizer preview iframe */
             if (window.location.search.indexOf('wp-customize=on') !== -1) return;
+
+            /*
+             * Tag the initial page-load state so that browser Back/Forward
+             * always has a dsAjax marker to navigate back to. Without this,
+             * hitting Back from an AJAX page to the direct-loaded page produces
+             * a null state and the content never updates.
+             */
+            history.replaceState({ dsAjax: true }, '', window.location.href);
 
             /* intercept link clicks */
             document.addEventListener('click', function (e) {
@@ -300,17 +314,24 @@
                 if (!isInternal(href)) return;
                 if (a.target && a.target !== '_self') return;
                 if (a.hasAttribute('download')) return;
-                /* skip admin / login / wp-content links */
+                /* skip admin / login / cron links */
                 var full = new URL(href, origin).pathname;
                 if (/\/(wp-admin|wp-login\.php|wp-cron\.php)/.test(full)) return;
+                /* skip WordPress action/nonce URLs — let the server handle them */
+                if (/[?&](_wpnonce|add-to-cart|wc-ajax|action=|remove_item=)/.test(href)) return;
                 e.preventDefault();
-                navigate(new URL(href, origin).href);
+                navigate(new URL(href, window.location.href).href);
             });
 
-            /* handle back/forward — ignore hash-only changes (anchor nav within same page) */
+            /* handle browser back/forward */
             window.addEventListener('popstate', function (e) {
-                if (!e.state || !e.state.dsAjax) return;
-                navigate(window.location.href);
+                if (e.state && e.state.dsAjax) {
+                    navigate(window.location.href);
+                } else {
+                    /* Non-AJAX state (e.g. external history entry) — hard reload
+                       to guarantee the correct page content is shown. */
+                    window.location.reload();
+                }
             });
         }
 
