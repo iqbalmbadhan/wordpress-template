@@ -122,7 +122,7 @@ function ds_css_variables(): void {
     echo '--ff-body:'    . $f[1] . ';';
     echo '}</style>' . "\n";
 }
-add_action( 'wp_head', 'ds_css_variables', 5 );
+add_action( 'wp_head', 'ds_css_variables', 50 );
 
 /**
  * Post thumbnail with fallback.

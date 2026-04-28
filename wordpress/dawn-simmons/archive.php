@@ -75,35 +75,14 @@ if ( $filter_cats ) :
 
             <?php
             /*
-             * Featured post slot: prefer a sticky post (editors mark it via
-             * Post Settings → "Stick to the top of the blog"). Fall back to
-             * the first post in the current query when no sticky exists.
+             * Featured post slot. WordPress automatically puts sticky posts
+             * first in the query results on page 1, so calling the_post()
+             * gives us the sticky post when one exists. The remaining posts
+             * (the regular grid) come from continuing the same loop.
              */
-            $sticky_ids = get_option( 'sticky_posts', [] );
-            $fp_is_sticky = false;
-
-            if ( ! empty( $sticky_ids ) && is_home() && ! is_paged() ) {
-                // Pull the most-recently-published sticky post for the featured slot.
-                $sticky_q = new WP_Query( [
-                    'post__in'       => $sticky_ids,
-                    'posts_per_page' => 1,
-                    'orderby'        => 'date',
-                    'order'          => 'DESC',
-                    'ignore_sticky_posts' => 1,
-                ] );
-                if ( $sticky_q->have_posts() ) {
-                    $sticky_q->the_post();
-                    $fp_is_sticky = true;
-                } else {
-                    wp_reset_postdata();
-                    the_post();
-                }
-            } else {
-                the_post();
-                $fp_is_sticky = is_sticky();
-            }
-
-            $fp_cats = get_the_category();
+            the_post();
+            $fp_is_sticky = is_sticky();
+            $fp_cats      = get_the_category();
             $fp_cat_str = $fp_cats
                 ? esc_html( implode( ' · ', array_map( fn( $c ) => $c->name, $fp_cats ) ) )
                 : '';
