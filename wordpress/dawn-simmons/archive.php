@@ -74,8 +74,35 @@ if ( $filter_cats ) :
             <?php if ( have_posts() ) : ?>
 
             <?php
-            /* ── Featured post: first post in main loop ── */
-            the_post();
+            /*
+             * Featured post slot: prefer a sticky post (editors mark it via
+             * Post Settings → "Stick to the top of the blog"). Fall back to
+             * the first post in the current query when no sticky exists.
+             */
+            $sticky_ids = get_option( 'sticky_posts', [] );
+            $fp_is_sticky = false;
+
+            if ( ! empty( $sticky_ids ) && is_home() && ! is_paged() ) {
+                // Pull the most-recently-published sticky post for the featured slot.
+                $sticky_q = new WP_Query( [
+                    'post__in'       => $sticky_ids,
+                    'posts_per_page' => 1,
+                    'orderby'        => 'date',
+                    'order'          => 'DESC',
+                    'ignore_sticky_posts' => 1,
+                ] );
+                if ( $sticky_q->have_posts() ) {
+                    $sticky_q->the_post();
+                    $fp_is_sticky = true;
+                } else {
+                    wp_reset_postdata();
+                    the_post();
+                }
+            } else {
+                the_post();
+                $fp_is_sticky = is_sticky();
+            }
+
             $fp_cats = get_the_category();
             $fp_cat_str = $fp_cats
                 ? esc_html( implode( ' · ', array_map( fn( $c ) => $c->name, $fp_cats ) ) )
@@ -94,7 +121,9 @@ if ( $filter_cats ) :
                 </div>
                 <div class="fp-body">
                     <div class="fp-eyebrow">
-                        <span class="fp-badge"><?php esc_html_e( 'Featured', 'dawn-simmons' ); ?></span>
+                        <span class="fp-badge<?php echo $fp_is_sticky ? ' fp-badge-pinned' : ''; ?>">
+                            <?php echo $fp_is_sticky ? esc_html__( '★ Pinned', 'dawn-simmons' ) : esc_html__( 'Featured', 'dawn-simmons' ); ?>
+                        </span>
                         <span class="fp-cat"><?php echo $fp_cat_str; ?></span>
                     </div>
                     <h2 class="fp-title"><?php the_title(); ?></h2>

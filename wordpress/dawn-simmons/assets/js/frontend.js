@@ -285,6 +285,9 @@
         }
 
         function init() {
+            /* skip AJAX nav inside the Customizer preview iframe */
+            if (window.location.search.indexOf('wp-customize=on') !== -1) return;
+
             /* intercept link clicks */
             document.addEventListener('click', function (e) {
                 var a = e.target.closest('a[href]');
@@ -304,8 +307,9 @@
                 navigate(new URL(href, origin).href);
             });
 
-            /* handle back/forward */
+            /* handle back/forward — ignore hash-only changes (anchor nav within same page) */
             window.addEventListener('popstate', function (e) {
+                if (!e.state || !e.state.dsAjax) return;
                 navigate(window.location.href);
             });
         }
