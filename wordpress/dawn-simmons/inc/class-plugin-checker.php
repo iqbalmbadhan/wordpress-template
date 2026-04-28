@@ -11,13 +11,6 @@ class DS_Plugin_Checker {
 
     const RECOMMENDED = [
         [
-            'name'     => 'Elementor',
-            'slug'     => 'elementor',
-            'file'     => 'elementor/elementor.php',
-            'required' => false,
-            'desc'     => 'Drag-and-drop visual page builder. Choose during setup.',
-        ],
-        [
             'name'     => 'Contact Form 7',
             'slug'     => 'contact-form-7',
             'file'     => 'contact-form-7/wp-contact-form-7.php',
@@ -81,6 +74,9 @@ class DS_Plugin_Checker {
 
     public static function dismiss_notice(): void {
         check_ajax_referer( 'ds_nonce', 'nonce' );
+        if ( ! current_user_can( 'manage_options' ) ) {
+            wp_send_json_error( 'Unauthorized', 403 );
+        }
         update_option( 'ds_plugin_notices_dismissed', true );
         wp_send_json_success();
     }

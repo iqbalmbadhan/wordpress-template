@@ -1,5 +1,5 @@
 /* Dawn Simmons — Customizer live preview (postMessage) */
-(function ($) {
+(function () {
     'use strict';
 
     var accentMap = {
@@ -88,4 +88,4 @@
         });
     });
 
-}(jQuery));
+}());

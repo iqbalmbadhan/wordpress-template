@@ -157,8 +157,12 @@ class DS_Demo_Importer {
         ];
 
         foreach ( $posts as $p ) {
-            // Avoid duplicates
-            $existing = get_page_by_title( $p['title'], OBJECT, 'post' );
+            // Avoid duplicates — get_page_by_title() is deprecated since WP 6.2.
+            global $wpdb;
+            $existing = $wpdb->get_var( $wpdb->prepare(
+                "SELECT ID FROM {$wpdb->posts} WHERE post_title = %s AND post_type = 'post' AND post_status != 'trash' LIMIT 1",
+                $p['title']
+            ) );
             if ( $existing ) {
                 self::$log[] = "→ Post '{$p['title']}' already exists, skipping.";
                 continue;

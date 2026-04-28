@@ -113,13 +113,13 @@ function ds_css_variables(): void {
     $f = $font_map[ $font ]     ?? $font_map['playfair'];
 
     echo '<style id="ds-css-vars">:root{';
-    echo '--accent:'     . esc_attr( $a[0] ) . ';';
-    echo '--accent2:'    . esc_attr( $a[1] ) . ';';
-    echo '--bg:'         . esc_attr( $b[0] ) . ';';
-    echo '--bg2:'        . esc_attr( $b[1] ) . ';';
-    echo '--bg3:'        . esc_attr( $b[2] ) . ';';
-    echo '--ff-display:' . esc_attr( $f[0] ) . ';';
-    echo '--ff-body:'    . esc_attr( $f[1] ) . ';';
+    echo '--accent:'     . $a[0] . ';';
+    echo '--accent2:'    . $a[1] . ';';
+    echo '--bg:'         . $b[0] . ';';
+    echo '--bg2:'        . $b[1] . ';';
+    echo '--bg3:'        . $b[2] . ';';
+    echo '--ff-display:' . $f[0] . ';';
+    echo '--ff-body:'    . $f[1] . ';';
     echo '}</style>' . "\n";
 }
 add_action( 'wp_head', 'ds_css_variables', 5 );

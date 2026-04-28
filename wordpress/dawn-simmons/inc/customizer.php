@@ -125,5 +125,5 @@ add_action( 'customize_register', function ( WP_Customize_Manager $wp_customize 
 
 // ── Customizer live preview (postMessage JS) ──────────────────────────────
 add_action( 'customize_preview_init', function () {
-    wp_enqueue_script( 'ds-customizer-preview', DS_ASSETS . '/js/customizer-preview.js', [ 'customize-preview', 'jquery' ], DS_VERSION, true );
+    wp_enqueue_script( 'ds-customizer-preview', DS_ASSETS . '/js/customizer-preview.js', [ 'customize-preview' ], DS_VERSION, true );
 } );

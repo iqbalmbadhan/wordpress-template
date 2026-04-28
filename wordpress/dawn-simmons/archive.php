@@ -173,9 +173,9 @@ if ( $filter_cats ) :
                     ] );
                     if ( $page_links ) :
                         foreach ( $page_links as $link ) :
-                            $is_current = strpos( $link, 'current' ) !== false;
-                            $is_dots    = strpos( $link, 'dots' )    !== false;
-                            $is_wide    = strpos( $link, 'prev' )    !== false || strpos( $link, 'next' ) !== false;
+                            $is_current = (bool) preg_match( '/\bclass="[^"]*\bcurrent\b/', $link );
+                            $is_dots    = (bool) preg_match( '/\bclass="[^"]*\bdots\b/',    $link );
+                            $is_wide    = (bool) preg_match( '/\bclass="[^"]*\b(prev|next)\b/', $link );
                             if ( $is_dots ) {
                                 echo '<span class="page-btn dots">…</span>';
                             } elseif ( $is_current ) {
