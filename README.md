@@ -1,6 +1,6 @@
 # Dawn Simmons — WordPress Portfolio Theme
 
-A professional, dark-mode WordPress theme for ServiceNow consultants and AI transformation experts. Fully editable via the **Block Editor (Gutenberg)** or **Elementor**, with WooCommerce support, a first-run setup wizard, and React-powered Gutenberg blocks.
+A professional, dark-mode WordPress theme for ServiceNow consultants and AI transformation experts. Editable via the **Block Editor (Gutenberg)** with live Customizer controls, a 3-step setup wizard, and WooCommerce support.
 
 ---
 
@@ -9,53 +9,46 @@ A professional, dark-mode WordPress theme for ServiceNow consultants and AI tran
 ```
 wordpress-template/
 ├── wordpress/
-│   └── dawn-simmons/        ← Install this as your WordPress theme
-│       ├── style.css            Theme header & identity
-│       ├── theme.json           Block editor design tokens
-│       ├── functions.php        Core bootstrap
+│   └── dawn-simmons/           ← Install this as your WordPress theme
+│       ├── style.css               Theme header & identity
+│       ├── theme.json              Block editor design tokens
+│       ├── functions.php           Core bootstrap
 │       ├── header.php / footer.php
-│       ├── front-page.php       Homepage template
-│       ├── page.php             Default page template
-│       ├── single.php           Single post template
-│       ├── archive.php          Blog archive template
-│       ├── 404.php              404 template
+│       ├── front-page.php          Homepage template
+│       ├── page.php                Default page template
+│       ├── page-fullwidth.php      Full-width template (for Services)
+│       ├── single.php              Single post template
+│       ├── archive.php             Blog archive template
+│       ├── 404.php                 404 template
 │       ├── assets/
 │       │   ├── css/
-│       │   │   ├── main.css         Full theme stylesheet
-│       │   │   ├── editor.css       Block editor styles
-│       │   │   └── woocommerce.css  WooCommerce overrides
+│       │   │   ├── main.css            Full theme stylesheet
+│       │   │   ├── editor.css          Block editor styles
+│       │   │   └── woocommerce.css     WooCommerce overrides
 │       │   └── js/
-│       │       ├── frontend.js      Nav, animations, TOC, filters
-│       │       └── blocks/          ← Output of `npm run build` (see below)
+│       │       ├── frontend.js         Nav, animations, AJAX nav, contact form
+│       │       ├── customizer-preview.js  Live Customizer postMessage handler
+│       │       └── blocks/             ← Output of `npm run build` (see below)
 │       ├── inc/
-│       │   ├── class-plugin-checker.php   Plugin notice system
-│       │   ├── class-setup-wizard.php     First-run wizard
-│       │   ├── class-demo-importer.php    Demo content creator
-│       │   ├── enqueue.php                Asset enqueuing
-│       │   ├── customizer.php             Theme options
-│       │   ├── template-functions.php     Helper functions
-│       │   ├── blocks/                    Gutenberg block registration + PHP renderers
-│       │   │   ├── register-blocks.php
-│       │   │   ├── hero/block.json
-│       │   │   ├── services/block.json
-│       │   │   ├── ai-section/block.json
-│       │   │   ├── about/block.json
-│       │   │   ├── testimonials/block.json
-│       │   │   └── contact/block.json
-│       │   └── elementor/
-│       │       ├── class-elementor-manager.php
-│       │       └── widgets/
-│       │           ├── class-widget-hero.php
-│       │           ├── class-widget-ai-section.php
-│       │           ├── class-widget-services.php
-│       │           ├── class-widget-about.php
-│       │           ├── class-widget-testimonials.php
-│       │           └── class-widget-contact.php
+│       │   ├── class-plugin-checker.php    Plugin notice system
+│       │   ├── class-setup-wizard.php      First-run wizard (3 steps)
+│       │   ├── class-demo-importer.php     Demo content creator
+│       │   ├── enqueue.php                 Asset enqueuing
+│       │   ├── customizer.php              Theme Customizer options
+│       │   ├── template-functions.php      Helper functions + CSS variable output
+│       │   └── blocks/                     Gutenberg block registration + PHP renderers
+│       │       ├── register-blocks.php
+│       │       ├── hero/block.json
+│       │       ├── services/block.json
+│       │       ├── ai-section/block.json
+│       │       ├── about/block.json
+│       │       ├── testimonials/block.json
+│       │       └── contact/block.json
 │       └── woocommerce/
-│           ├── archive-product.php   Shop page template
-│           └── single-product.php    Product page template
+│           ├── archive-product.php     Shop page template
+│           └── single-product.php      Product page template
 │
-├── blocks/                  ← React source for Gutenberg block editor UI
+├── blocks/                     ← React source for Gutenberg block editor UI
 │   ├── package.json
 │   └── src/
 │       ├── index.js
@@ -67,7 +60,7 @@ wordpress-template/
 │           ├── testimonials/index.js
 │           └── contact/index.js
 │
-└── src/                     ← React + Vite standalone demo app
+└── src/                        ← React + Vite standalone demo app
 ```
 
 ---
@@ -94,55 +87,50 @@ Copy the `wordpress/dawn-simmons/` folder into your WordPress installation:
 wp-content/themes/dawn-simmons/
 ```
 
-In WordPress Admin → **Appearance → Themes**, activate **Dawn Simmons Portfolio**.
+Go to **WordPress Admin → Appearance → Themes** and activate **Dawn Simmons Portfolio**.
 
 ---
 
 ### Step 2 — First-Run Setup Wizard
 
-After activation, WordPress automatically redirects to the **Setup Wizard**:
+After activation, WordPress redirects automatically to the **Setup Wizard**:
 
 ```
 WP Admin → Dashboard → Theme Setup
 ```
 
-#### Wizard Step 1 — Install Plugins
+The wizard has three steps:
+
+#### Step 1 — Install Plugins
 
 | Plugin | Type | Purpose |
 |---|---|---|
-| WooCommerce | Required | Shop, cart, checkout, product pages |
-| Elementor | Recommended | Drag-and-drop visual builder |
-| Contact Form 7 | Recommended | Contact section forms |
+| WooCommerce | Recommended | Shop, cart, checkout, product pages |
+| Contact Form 7 | Recommended | Contact section form handling |
 
-Click **Install** or **Activate** next to each plugin directly from the wizard page.
+Click **Install** or **Activate** next to each plugin from within the wizard. Both are optional — the theme works without them.
 
-#### Wizard Step 2 — Choose Your Editor
+#### Step 2 — Import Demo Content
 
-- **Block Editor (Gutenberg)** — WordPress's native editor. No plugins needed. All 6 sections are custom blocks with full inspector controls.
-- **Elementor** — Visual drag-and-drop builder. Requires the Elementor plugin (free). All sections appear in a dedicated **Dawn Simmons** widget category.
+Creates everything in one click:
 
-> You can change this preference later at **Appearance → Customize → Editor Settings**.
-
-#### Wizard Step 3 — Import Demo Content
-
-Auto-creates everything in one click:
 - Pages: Home, Blog, About, Services, Contact
 - Primary and footer navigation menus
-- 3 sample blog posts with categories
+- 3 sample blog posts with categories and tags
 - WooCommerce shop pages (if WooCommerce is active)
-- Full homepage content — blocks or Elementor layout, matching the wizard's editor choice
+- Full homepage content using Gutenberg blocks
 
-#### Wizard Step 4 — Done
+#### Step 3 — Done
 
-Links to view your live site and return to the dashboard.
+Links to your live site and back to the WordPress dashboard.
 
 ---
 
 ### Step 3 — Build Block Editor Controls (Optional)
 
-The theme renders entirely via **PHP** — no build step is required for the frontend. Pages look correct from install.
+The theme renders entirely via **PHP** — no build step is needed to see your site. Pages display correctly from the moment you activate the theme.
 
-The build step adds **sidebar inspector panels** in the Block Editor (text, image, and settings controls visible in the right-hand panel while editing).
+The build step enables **sidebar inspector panels** in the Block Editor — the text and image controls visible in the right-hand panel when you select a block on the homepage.
 
 ```bash
 cd blocks
@@ -150,9 +138,9 @@ npm install
 npm run build
 ```
 
-Output goes to `wordpress/dawn-simmons/assets/js/blocks/index.js`. The theme loads it automatically when the file is present.
+Output is written to `wordpress/dawn-simmons/assets/js/blocks/index.js`. The theme loads it automatically when the file is present.
 
-Watch mode for development:
+For development (watch mode):
 
 ```bash
 npm run start
@@ -164,18 +152,21 @@ npm run start
 
 ### WordPress Customizer
 
-**Appearance → Customize** exposes:
+**Appearance → Customize** exposes real-time controls:
 
 | Control | Options |
 |---|---|
 | Accent Color | Teal (default) · Violet · Gold · Coral |
 | Background Theme | Dark (default) · Midnight · Warm |
-| Font Pair | Playfair + DM Sans (default) · Geometric · Editorial |
-| Logo Text | Text shown in the navbar logo area |
-| CTA Button Text | Navbar call-to-action button label |
+| Font Pair | Playfair Display + DM Sans · Geometric (DM Sans only) · Editorial |
+| Logo Text | Text in the navbar logo area |
+| CTA Button Text | Navbar call-to-action label |
+| CTA Button URL | Link target for the navbar CTA |
 | Footer Copyright | Footer copy line |
 
-Changes apply instantly via CSS custom properties in `<head>` — no cache clearing needed.
+Changes apply instantly via CSS custom properties. Click **Save & Publish** to persist them.
+
+> **Note:** The Customizer preview pane disables AJAX navigation to avoid interfering with live-preview postMessage communication.
 
 ---
 
@@ -186,19 +177,11 @@ Each homepage block has a full **Settings panel** in the right sidebar:
 | Block | Editable Fields |
 |---|---|
 | **Hero** | Eyebrow, heading, subheading, role bullets, stats (number/suffix/label), CTA buttons, profile photo |
-| **AI Section** | Headline, lead text, capability pills (one per line), flow steps, feature cards |
-| **Services** | Eyebrow, title, 6 service cards (number, title, description, tags) |
+| **AI Section** | Headline, lead text, capability pills, flow steps, feature cards |
+| **Services** | Eyebrow, title, up to 6 service cards (number, title, description, tags) |
 | **About** | Bio paragraphs, profile photo, skill bars (name + %), details grid |
-| **Testimonials** | Eyebrow, title, up to N testimonial cards (quote, name, role) |
-| **Contact** | Eyebrow, title, subtitle, email, location, response time, Contact Form 7 ID |
-
----
-
-### Elementor
-
-After activating Elementor, find all sections in the widget panel under **Dawn Simmons**. Every widget has the same controls listed above, plus Elementor's full styling options (margin, padding, typography, color overrides).
-
-The homepage demo data is imported as a complete Elementor page layout — open the page in Elementor to edit any section visually.
+| **Testimonials** | Eyebrow, title, testimonial cards (quote, name, role) |
+| **Contact** | Eyebrow, title, subtitle, email, location, response time, CF7 form ID |
 
 ---
 
@@ -206,26 +189,50 @@ The homepage demo data is imported as a complete Elementor page layout — open 
 
 | Template File | Used For |
 |---|---|
-| `front-page.php` | Static homepage (Gutenberg blocks or Elementor layout) |
-| `page.php` | Standard pages (About, Services, Contact) |
-| `single.php` | Blog posts — breadcrumb, reading time, TOC, author, share, related posts |
-| `archive.php` | Blog archive — post grid with sidebar and category filter |
-| `404.php` | Custom 404 page with links to Home and Blog |
+| `front-page.php` | Static homepage (Gutenberg blocks) |
+| `page.php` | Standard pages (About, Contact) |
+| `page-fullwidth.php` | Full-width pages with no header/sidebar — assign to the Services page |
+| `single.php` | Blog posts — breadcrumb, reading time, TOC, author box, share, related posts |
+| `archive.php` | Blog archive — featured post + post grid with sidebar and category filter |
+| `404.php` | Custom 404 with links to Home and Blog |
 | `woocommerce/archive-product.php` | Shop / product grid |
 | `woocommerce/single-product.php` | Single product page |
+
+### Assigning the Full-Width Template to the Services Page
+
+1. Go to **WordPress Admin → Pages → Services → Edit**
+2. In the right-hand **Page** panel, find **Template**
+3. Select **Full Width Page**
+4. Click **Update**
+
+The Services page will render edge-to-edge with no page-hero header or padding container.
+
+---
+
+## Blog — Pinning a Featured Post
+
+The blog archive always shows the most recent post in the **featured slot** at the top. To pin a specific post there permanently:
+
+1. Open the post in the WordPress Editor
+2. In the right-hand **Post** panel, scroll down to **Discussion** or look under the panel menu for **Stick to the top of the blog**
+3. Check that option and click **Update**
+
+The post will appear in the featured slot with a **★ Pinned** badge regardless of its publish date. The regular posts grid below continues to show the remaining posts in date order.
+
+To unpin it, uncheck the same option.
 
 ---
 
 ## WooCommerce
 
-Full WooCommerce support is declared out of the box:
+Full WooCommerce support out of the box:
 
 - Product gallery zoom, lightbox, and slider
-- Dark-mode product grid (3 columns → 2 → 1 at breakpoints)
-- Styled cart table, checkout form, notices, and breadcrumbs
+- Dark-mode product grid (3 → 2 → 1 column at breakpoints)
+- Styled cart table, checkout form, order notices, and breadcrumbs
 - All WooCommerce pages created automatically by the setup wizard
 
-The WooCommerce stylesheet loads only when WooCommerce is active — no conflicts on non-shop installs.
+The WooCommerce stylesheet loads only when WooCommerce is active — no extra CSS on non-shop installs.
 
 ---
 
@@ -238,7 +245,7 @@ Two menu locations:
 | Primary Navigation | `primary` | Home, Services, About, Blog, Shop, Contact |
 | Footer Navigation | `footer` | Blog, About, Contact |
 
-Assign menus at **Appearance → Menus**. The demo importer assigns them automatically.
+Assign menus at **Appearance → Menus**. The demo importer sets them automatically.
 
 ---
 
@@ -257,25 +264,32 @@ Add widgets at **Appearance → Widgets**.
 
 ## Frontend JavaScript
 
-`assets/js/frontend.js` — zero dependencies, vanilla JS:
+`assets/js/frontend.js` — zero runtime dependencies, vanilla JS:
 
 | Feature | How it works |
 |---|---|
 | Mobile nav drawer | Hamburger toggle with `aria-expanded` |
-| Sticky navbar | `scrolled` class after 60px scroll |
+| Sticky navbar | `scrolled` class applied after 60 px of scroll |
 | Active nav link | Scroll-spy on `section[id]` elements |
 | Fade-in on scroll | `IntersectionObserver` on `.fade-in` elements |
 | Counter animation | `IntersectionObserver` on `.counter[data-target]` |
 | Skill bar fill | `IntersectionObserver` on `.skill-fill[data-width]` |
 | Table of contents | Scroll-spy + smooth scroll for `.toc-item a` |
-| Archive category filter | Click on `.filter-pill[data-cat]` |
-| Contact form fallback | Native form submit handler (when CF7 not active) |
+| Contact form fallback | Native form submit handler (used when CF7 is not active) |
+| AJAX page navigation | `fetch()` + `history.pushState()` for smooth page transitions |
+
+### AJAX Navigation Notes
+
+- Admin bar links (Customize, Edit, etc.) are excluded — they always do a full load.
+- Hash anchor links (`#contact`, `#services`) are excluded — they scroll smoothly without any page fetch.
+- The Customizer preview pane is excluded to preserve postMessage communication.
+- Browser back/forward only triggers AJAX navigation for states pushed by this system — hash changes never cause a page reload.
 
 ---
 
 ## Design Tokens (CSS Variables)
 
-All component styles reference these variables — change theme settings in the Customizer and they update automatically:
+All component styles reference these variables. The Customizer updates them at runtime:
 
 ```css
 :root {
@@ -296,22 +310,16 @@ All component styles reference these variables — change theme settings in the 
 
 ---
 
-## React Usage
+## React — Gutenberg Block Editor UI (`blocks/`)
 
-There are **two separate React projects** in this repository. They are independent — use one, both, or neither depending on your workflow.
+A **WordPress-native React build** using `@wordpress/scripts` that adds sidebar inspector panels to the six custom blocks. The frontend always renders via PHP — this build only affects the editing experience inside the WordPress Block Editor.
 
----
+### When you need it
 
-### Project 1 — Gutenberg Block Editor UI (`blocks/`)
-
-This is a **WordPress-native React build** using `@wordpress/scripts`. It adds sidebar inspector panels to the six custom blocks inside the WordPress Block Editor. The frontend (what visitors see) always renders via PHP — this build only affects the editing experience inside WordPress Admin.
-
-#### When you need it
-
-- You want to edit homepage section content (text, images, stats, testimonials, etc.) through the WordPress Block Editor sidebar instead of directly modifying PHP or re-running the demo importer.
+- You want to edit homepage content (text, images, stats, testimonials) through the Block Editor sidebar.
 - You see blocks on the homepage but no controls appear in the right-hand panel when you select one.
 
-#### Setup
+### Setup
 
 ```bash
 cd blocks
@@ -319,32 +327,23 @@ npm install
 npm run build
 ```
 
-The compiled file is written to:
+Output: `wordpress/dawn-simmons/assets/js/blocks/index.js` — loaded automatically by the theme.
 
-```
-wordpress/dawn-simmons/assets/js/blocks/index.js
-```
-
-The theme loads it automatically when the file exists. **No changes to WordPress or PHP are needed.**
-
-#### Development (watch mode)
+### Development
 
 ```bash
 cd blocks
-npm run start
+npm run start    # watch mode
+npm run lint:js  # lint
 ```
 
-Watches `blocks/src/` and rebuilds on every save. Keep this running while editing block controls.
+### How blocks are structured
 
-#### How it works
+Each block at `blocks/src/blocks/{name}/index.js` calls `registerBlockType()` with:
 
-Each block has its own file at `blocks/src/blocks/{block-name}/index.js`. The file calls `registerBlockType()` with:
-
-- **`metadata`** — imported directly from the corresponding `block.json` (attributes, name, category, icon)
-- **`edit()`** — a React component using `@wordpress/components` (`TextControl`, `TextareaControl`, `PanelBody`, etc.) that renders the inspector sidebar UI. Changes call `setAttributes()` to update block data.
-- **`save()`** — returns `null` because all frontend HTML is produced by the PHP render callback in `inc/blocks/register-blocks.php`
-
-Example structure of a block file:
+- **`metadata`** — imported from the corresponding `block.json`
+- **`edit()`** — React component with `InspectorControls` sidebar UI
+- **`save()`** — returns `null`; PHP renders all frontend HTML
 
 ```js
 import { registerBlockType } from '@wordpress/blocks';
@@ -365,143 +364,96 @@ registerBlockType(metadata.name, {
                             value={attributes.eyebrow}
                             onChange={v => setAttributes({ eyebrow: v })}
                         />
-                        {/* more controls… */}
                     </PanelBody>
                 </InspectorControls>
-                {/* optional canvas preview */}
             </>
         );
     },
 
-    save: () => null,   // PHP renders the frontend
+    save: () => null,
 });
 ```
 
-#### Adding a control to an existing block
+### Adding a new editable field
 
-1. Open `blocks/src/blocks/{block-name}/index.js`
-2. Destructure the new attribute from `attributes`
-3. Add a `TextControl` / `TextareaControl` / `ToggleControl` inside `<InspectorControls>`
-4. Add the attribute to the matching `block.json` with a `type` and `default`
-5. Read it in the PHP render callback in `inc/blocks/register-blocks.php`
-6. Run `npm run build` (or keep `npm run start` running)
-
-#### Linting
-
-```bash
-cd blocks
-npm run lint:js
-```
+1. Open `blocks/src/blocks/{name}/index.js`
+2. Add a control inside `<InspectorControls>` and wire it to `setAttributes()`
+3. Add the attribute to `inc/blocks/{name}/block.json`
+4. Read `$attrs['your_attr']` in the PHP render callback in `inc/blocks/register-blocks.php`
+5. Run `npm run build`
 
 ---
 
-### Project 2 — Standalone React + Vite App (`src/`)
+## React — Standalone Demo App (`src/`)
 
-This is a **fully self-contained React application** that reproduces the entire Dawn Simmons portfolio site — no WordPress required. It is useful for:
+A **self-contained React + Vite application** that reproduces the full portfolio site with no WordPress dependency. Useful for:
 
-- Live previewing the design and content before importing into WordPress
-- Sharing a static demo with clients (deploy to Netlify, Vercel, GitHub Pages, etc.)
-- Rapidly prototyping layout changes without touching WordPress
+- Live-previewing the design before importing to WordPress
+- Sharing a static demo with clients
+- Deploying a static portfolio to Netlify / Vercel / GitHub Pages
 
-#### Tech stack
+### Tech stack
 
 | Package | Purpose |
 |---|---|
 | `react` + `react-dom` 18 | UI rendering |
 | `react-router-dom` 6 | Client-side routing (HashRouter) |
 | `vite` 6 | Dev server and bundler |
-| `@vitejs/plugin-react` | JSX transform + fast refresh |
+| `@vitejs/plugin-react` | JSX transform + Fast Refresh |
 
-#### Setup
+### Commands
 
 ```bash
-# from the repo root
+# from repo root
 npm install
-npm run dev
+npm run dev      # http://localhost:5173
+npm run build    # output → dist/
+npm run preview  # serve dist/ locally
 ```
 
-Open `http://localhost:5173` in your browser.
+### Routes
 
-#### Available commands
-
-| Command | What it does |
+| URL | Component |
 |---|---|
-| `npm run dev` | Start local dev server with hot module reload |
-| `npm run build` | Production build → `dist/` |
-| `npm run preview` | Serve the `dist/` build locally for final checks |
+| `/#/` | `src/pages/HomePage.jsx` — all 6 sections |
+| `/#/blog` | `src/pages/BlogPage.jsx` — post grid |
+| `/#/article` | `src/pages/ArticlePage.jsx` — single post |
 
-#### Routes
-
-| URL (hash) | Component | Description |
-|---|---|---|
-| `/#/` | `src/pages/HomePage.jsx` | Full portfolio — all 6 sections |
-| `/#/blog` | `src/pages/BlogPage.jsx` | Blog post grid |
-| `/#/article` | `src/pages/ArticlePage.jsx` | Single article view |
-
-#### Project layout
+### Project layout
 
 ```
 src/
-├── main.jsx               Entry point — mounts <App /> to #root
-├── App.jsx                Router + ThemeProvider wrapper
+├── main.jsx               Entry point
+├── App.jsx                Router + ThemeProvider
 ├── context/
-│   └── ThemeContext.jsx   Global accent / background / font state
+│   └── ThemeContext.jsx   Global accent / bg / font state
 ├── pages/
-│   ├── HomePage.jsx       Hero, AI, Services, About, Testimonials, Contact
-│   ├── BlogPage.jsx       Post grid with category filter
-│   └── ArticlePage.jsx    Single post with TOC and related posts
+│   ├── HomePage.jsx
+│   ├── BlogPage.jsx
+│   └── ArticlePage.jsx
 └── components/
-    ├── Navbar.jsx         Sticky nav with scroll-spy and mobile drawer
-    ├── Footer.jsx         Footer with links and copyright
-    └── EditorPanel.jsx    Live tweaks panel (accent/bg/font switcher)
+    ├── Navbar.jsx
+    ├── Footer.jsx
+    └── EditorPanel.jsx    Live theme switcher (accent / bg / font)
 ```
 
-#### Theme context
-
-`ThemeContext` holds `accent`, `bg`, and `font` values and exposes a `setTheme()` helper. The `EditorPanel` component calls it to apply changes instantly via CSS variables on `:root`. Any component can consume the context:
-
-```jsx
-import { useTheme } from '../context/ThemeContext';
-
-function MyComponent() {
-    const { accent, setTheme } = useTheme();
-    return (
-        <button onClick={() => setTheme({ accent: 'violet' })}>
-            Switch to Violet
-        </button>
-    );
-}
-```
-
-#### Deploying the static build
+### Deploying
 
 ```bash
-npm run build          # outputs to dist/
+npm run build
 ```
 
-Deploy the `dist/` folder to any static host. Because the app uses `HashRouter`, all routes (`/#/blog`, etc.) work without server-side redirect rules.
-
-For Netlify / Vercel: point the publish directory to `dist/`. No `_redirects` file needed with hash routing.
+Deploy the `dist/` folder to any static host. HashRouter means all routes work without server-side redirect rules.
 
 ---
 
-### Which React project should I use?
-
-| Goal | Use |
-|---|---|
-| Edit block content in WordPress Admin | `blocks/` (Gutenberg build) |
-| Preview / demo the site without WordPress | `src/` (Vite app) |
-| Deploy a static portfolio site | `src/` → `npm run build` → deploy `dist/` |
-| Add a new editable field to a block | `blocks/` + `block.json` + PHP render callback |
-| Build a headless frontend consuming the WP REST API | `src/` + `GET /wp-json/dawn-simmons/v1/settings` |
-
-
+## Custom REST API Endpoint
 
 ```
 GET /wp-json/dawn-simmons/v1/settings
 ```
 
-Returns the active theme configuration — useful for headless or decoupled React components:
+Returns the active theme configuration:
 
 ```json
 {
@@ -514,15 +466,6 @@ Returns the active theme configuration — useful for headless or decoupled Reac
 
 ---
 
-## Custom Post Types
-
-| Type | Slug | Notes |
-|---|---|---|
-| Services | `ds_service` | Public, REST-enabled, supports title/editor/thumbnail/excerpt |
-| Testimonials | `ds_testimonial` | Private (admin only), REST-enabled |
-
----
-
 ## WP-CLI Reference
 
 ```bash
@@ -532,14 +475,8 @@ wp eval 'DS_Demo_Importer::run();'
 # Check current editor preference
 wp option get ds_editor_preference
 
-# Switch editor preference
-wp option update ds_editor_preference elementor
-
-# Reset setup wizard (will redirect on next admin visit)
+# Reset setup wizard (redirects on next admin visit)
 wp option delete ds_setup_complete
-
-# Flush Elementor CSS cache after theme changes
-wp eval '\Elementor\Plugin::$instance->files_manager->clear_cache();'
 
 # Flush all caches
 wp cache flush
@@ -553,23 +490,26 @@ wp rewrite flush
 **Homepage looks blank after import**
 Go to **Settings → Reading** and confirm *A static page* is selected, with **Home** as Homepage and **Blog** as Posts page.
 
-**Block editor shows no sidebar controls for custom blocks**
-Run `cd blocks && npm install && npm run build`. The frontend renders via PHP regardless — the build only enables the editor sidebar UI.
+**Block editor shows no sidebar controls**
+Run `cd blocks && npm install && npm run build`. The build only enables editor UI — the frontend renders via PHP regardless.
 
-**Elementor widgets don't appear in the panel**
-Make sure Elementor is active *and* the editor preference is set to Elementor. Widgets are registered only when `ELEMENTOR_VERSION` is defined.
+**Customizer changes not saving**
+Open the Customizer, make your changes, and click **Save & Publish** in the top-left panel. If the button is greyed out, a JavaScript error in the preview pane may be blocking it — check the browser console.
 
 **Contact form doesn't send email**
-Install and activate **Contact Form 7**, create a form, copy its ID, and set it in the Contact block/widget's CF7 ID field. Without CF7, the built-in native form is used (requires PHP `mail()` to work on your host).
+Install **Contact Form 7**, create a form, copy its numeric ID, and enter it in the Contact block's CF7 ID field. Without CF7, the built-in native form is used (requires PHP `mail()` to work on your host).
 
 **WooCommerce pages are unstyled**
-Verify WooCommerce is active. The `ds-woocommerce` stylesheet loads conditionally — deactivating WooCommerce removes it.
+Verify WooCommerce is active. The `ds-woocommerce` stylesheet loads conditionally on WooCommerce pages only.
+
+**"Start a Conversation" / "View My Work" buttons jump to top after clicking**
+This would indicate an outdated version of `frontend.js`. The current version correctly ignores hash-change events in the `popstate` handler so anchor links scroll smoothly without bouncing.
 
 **Re-run the setup wizard**
 ```bash
 wp option delete ds_setup_complete
 ```
-Then visit Admin → Dashboard → Theme Setup.
+Then visit **Admin → Dashboard → Theme Setup**.
 
 ---
 
@@ -580,7 +520,7 @@ Then visit Admin → Dashboard → Theme Setup.
 - `aria-expanded` / `aria-hidden` on the mobile drawer
 - `aria-current="page"` on breadcrumb active item
 - `#main-content` anchor for skip-link compatibility
-- Keyboard-navigable — no focus traps
+- Fully keyboard-navigable — no focus traps
 
 ---
 
@@ -590,4 +530,4 @@ GPL v2 or later — consistent with WordPress licensing.
 
 ---
 
-*Built to senior-engineer standards: PHP 8 typed functions · `@wordpress/scripts` block toolchain · Elementor Widget API · WooCommerce theme support · zero runtime JS dependencies on the frontend.*
+*PHP 8 typed functions · `@wordpress/scripts` block toolchain · WooCommerce theme support · zero runtime JS dependencies on the frontend.*
