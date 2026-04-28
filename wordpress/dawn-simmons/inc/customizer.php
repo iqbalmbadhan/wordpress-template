@@ -121,38 +121,9 @@ add_action( 'customize_register', function ( WP_Customize_Manager $wp_customize 
         'type'    => 'textarea',
     ] );
 
-    // ── Section: Editor Preference ────────────────────────────────────────
-    $wp_customize->add_section( 'ds_editor_section', [
-        'title' => __( 'Editor Settings', 'dawn-simmons' ),
-        'panel' => 'ds_theme_panel',
-    ] );
-
-    $wp_customize->add_setting( 'ds_editor_pref_display', [
-        'default'           => get_option( 'ds_editor_preference', 'gutenberg' ),
-        'sanitize_callback' => 'sanitize_key',
-        'transport'         => 'refresh',
-    ] );
-    $wp_customize->add_control( 'ds_editor_pref_display', [
-        'label'       => __( 'Page Builder Preference', 'dawn-simmons' ),
-        'description' => __( 'Switch between Gutenberg blocks and Elementor. Requires re-importing demo content to take full effect.', 'dawn-simmons' ),
-        'section'     => 'ds_editor_section',
-        'type'        => 'radio',
-        'choices'     => [
-            'gutenberg' => __( 'Block Editor (Gutenberg)', 'dawn-simmons' ),
-            'elementor' => __( 'Elementor', 'dawn-simmons' ),
-        ],
-    ] );
-
-    // Sync customizer preference to options table
-    add_action( 'customize_save_after', function() use ( $wp_customize ) {
-        $setting = $wp_customize->get_setting( 'ds_editor_pref_display' );
-        if ( $setting ) {
-            update_option( 'ds_editor_preference', $setting->post_value() );
-        }
-    } );
 } );
 
 // ── Customizer live preview (postMessage JS) ──────────────────────────────
 add_action( 'customize_preview_init', function () {
-    wp_enqueue_script( 'ds-customizer-preview', DS_ASSETS . '/js/customizer-preview.js', [ 'customize-preview', 'jquery' ], DS_VERSION, true );
+    wp_enqueue_script( 'ds-customizer-preview', DS_ASSETS . '/js/customizer-preview.js', [ 'customize-preview' ], DS_VERSION, true );
 } );

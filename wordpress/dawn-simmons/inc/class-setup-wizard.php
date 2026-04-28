@@ -11,9 +11,7 @@ class DS_Setup_Wizard {
     public static function init(): void {
         add_action( 'admin_menu',        [ __CLASS__, 'register_page'     ] );
         add_action( 'admin_enqueue_scripts', [ __CLASS__, 'enqueue'       ] );
-        add_action( 'wp_ajax_ds_save_editor_pref',        [ __CLASS__, 'ajax_save_editor'          ] );
         add_action( 'wp_ajax_ds_run_demo_import',         [ __CLASS__, 'ajax_demo_import'          ] );
-        add_action( 'wp_ajax_ds_rebuild_elementor',       [ __CLASS__, 'ajax_rebuild_elementor'    ] );
         add_action( 'wp_ajax_ds_finish_wizard',           [ __CLASS__, 'ajax_finish'               ] );
         add_action( 'wp_ajax_ds_install_plugin',          [ __CLASS__, 'ajax_install_plugin'       ] );
         add_action( 'wp_ajax_ds_activate_plugin',         [ __CLASS__, 'ajax_activate_plugin'      ] );
@@ -36,26 +34,6 @@ class DS_Setup_Wizard {
         }
     }
 
-    // ── AJAX: save editor preference ─────────────────────────────────────────
-    public static function ajax_save_editor(): void {
-        check_ajax_referer( 'ds_wizard_nonce', 'nonce' );
-        if ( ! current_user_can( 'manage_options' ) ) {
-            wp_send_json_error( 'Unauthorized', 403 );
-        }
-        $pref = sanitize_key( $_POST['preference'] ?? 'gutenberg' );
-        if ( ! in_array( $pref, [ 'gutenberg', 'elementor' ], true ) ) {
-            $pref = 'gutenberg';
-        }
-        update_option( 'ds_editor_preference', $pref );
-
-        // If Elementor selected but not active, flag it
-        $elementor_active = is_plugin_active( 'elementor/elementor.php' );
-        wp_send_json_success( [
-            'preference'      => $pref,
-            'elementor_ready' => $elementor_active,
-        ] );
-    }
-
     // ── AJAX: run demo import ────────────────────────────────────────────────
     public static function ajax_demo_import(): void {
         check_ajax_referer( 'ds_wizard_nonce', 'nonce' );
@@ -63,16 +41,6 @@ class DS_Setup_Wizard {
             wp_send_json_error( 'Unauthorized', 403 );
         }
         $result = DS_Demo_Importer::run();
-        wp_send_json_success( $result );
-    }
-
-    // ── AJAX: rebuild only the Elementor homepage data ───────────────────────
-    public static function ajax_rebuild_elementor(): void {
-        check_ajax_referer( 'ds_wizard_nonce', 'nonce' );
-        if ( ! current_user_can( 'manage_options' ) ) {
-            wp_send_json_error( 'Unauthorized', 403 );
-        }
-        $result = DS_Demo_Importer::rebuild_elementor_homepage();
         wp_send_json_success( $result );
     }
 
@@ -136,8 +104,7 @@ class DS_Setup_Wizard {
 
     // ── Render wizard page ───────────────────────────────────────────────────
     public static function render(): void {
-        $plugins     = DS_Plugin_Checker::all_plugins();
-        $editor_pref = get_option( 'ds_editor_preference', '' );
+        $plugins = DS_Plugin_Checker::all_plugins();
         ?>
         <!DOCTYPE html>
         <html <?php language_attributes(); ?>>
@@ -179,13 +146,6 @@ class DS_Setup_Wizard {
                 .btn-sm{padding:7px 16px;font-size:12px}
                 .btn-install{background:#3b82f6;color:#fff}
                 .btn-install:hover{background:#2563eb}
-                .editor-cards{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:32px}
-                .editor-card{background:#1a1d2e;border:2px solid #2a2d3e;border-radius:12px;padding:28px 24px;cursor:pointer;transition:all .2s;text-align:center}
-                .editor-card:hover{border-color:#00c9a7}
-                .editor-card.selected{border-color:#00c9a7;background:rgba(0,201,167,.05)}
-                .editor-icon{font-size:40px;margin-bottom:16px}
-                .editor-name{font-size:17px;font-weight:700;margin-bottom:6px}
-                .editor-desc{font-size:13px;color:#9ca3af;line-height:1.5}
                 .wizard-footer{padding:24px 48px;border-top:1px solid #2a2d3e;display:flex;justify-content:space-between;align-items:center}
                 .progress-dots{display:flex;gap:6px}
                 .dot{width:8px;height:8px;border-radius:50%;background:#2a2d3e;transition:background .2s}
@@ -217,9 +177,8 @@ class DS_Setup_Wizard {
             <!-- Step tabs -->
             <div class="wizard-steps">
                 <div class="step-tab active" data-step="1">1. Plugins</div>
-                <div class="step-tab"        data-step="2">2. Editor</div>
-                <div class="step-tab"        data-step="3">3. Content</div>
-                <div class="step-tab"        data-step="4">4. Done</div>
+                <div class="step-tab"        data-step="2">2. Content</div>
+                <div class="step-tab"        data-step="3">3. Done</div>
             </div>
 
             <!-- Bodies -->
@@ -258,31 +217,8 @@ class DS_Setup_Wizard {
                     </div>
                 </div>
 
-                <!-- Step 2: Editor -->
+                <!-- Step 2: Demo Content -->
                 <div class="step" id="step-2">
-                    <div class="step-title"><?php esc_html_e( 'Choose Your Editor', 'dawn-simmons' ); ?></div>
-                    <div class="step-desc"><?php esc_html_e( 'Select your preferred page builder. You can switch later in Appearance → Theme Settings.', 'dawn-simmons' ); ?></div>
-                    <div class="editor-cards">
-                        <div class="editor-card <?php echo $editor_pref === 'gutenberg' ? 'selected' : ''; ?>" data-editor="gutenberg">
-                            <div class="editor-icon">⬡</div>
-                            <div class="editor-name">Block Editor</div>
-                            <div class="editor-desc">WordPress's native block editor. Fast, built-in, and ideal for content-focused sites. No extra plugins needed.</div>
-                        </div>
-                        <div class="editor-card <?php echo $editor_pref === 'elementor' ? 'selected' : ''; ?>" data-editor="elementor">
-                            <div class="editor-icon">⚡</div>
-                            <div class="editor-name">Elementor</div>
-                            <div class="editor-desc">Drag-and-drop visual builder. Requires Elementor plugin (free). Maximum design flexibility.</div>
-                        </div>
-                    </div>
-                    <?php if ( ! is_plugin_active( 'elementor/elementor.php' ) ) : ?>
-                    <p style="font-size:13px;color:#f59e0b;background:rgba(245,158,11,.08);border:1px solid rgba(245,158,11,.25);border-radius:6px;padding:10px 14px;">
-                        <?php esc_html_e( '⚠ Elementor is not active. If you choose Elementor, install it first (Step 1) or your demo content will use Block Editor.', 'dawn-simmons' ); ?>
-                    </p>
-                    <?php endif; ?>
-                </div>
-
-                <!-- Step 3: Demo Content -->
-                <div class="step" id="step-3">
                     <div class="step-title"><?php esc_html_e( 'Import Demo Content', 'dawn-simmons' ); ?></div>
                     <div class="step-desc"><?php esc_html_e( 'Auto-create the homepage, blog, shop pages, menus, and sample content to match the theme demo.', 'dawn-simmons' ); ?></div>
                     <div class="import-options">
@@ -304,8 +240,8 @@ class DS_Setup_Wizard {
                     <div class="log" id="import-log" style="display:none"></div>
                 </div>
 
-                <!-- Step 4: Done -->
-                <div class="step" id="step-4">
+                <!-- Step 3: Done -->
+                <div class="step" id="step-3">
                     <div class="success-icon">🎉</div>
                     <div class="success-title"><?php esc_html_e( "You're all set!", 'dawn-simmons' ); ?></div>
                     <p style="text-align:center;color:#9ca3af;font-size:15px;line-height:1.6"><?php esc_html_e( 'Your Dawn Simmons theme is configured and ready. Visit your site or head to the dashboard to start editing.', 'dawn-simmons' ); ?></p>
@@ -313,17 +249,6 @@ class DS_Setup_Wizard {
                         <a href="<?php echo esc_url( home_url( '/' ) ); ?>" target="_blank" class="btn btn-primary">View Site →</a>
                         <a href="<?php echo esc_url( admin_url() ); ?>" class="btn btn-outline">Go to Dashboard</a>
                     </div>
-                    <?php if ( defined( 'ELEMENTOR_VERSION' ) ) : ?>
-                    <div style="margin-top:28px;padding-top:24px;border-top:1px solid #2a2d3e">
-                        <p style="text-align:center;color:#9ca3af;font-size:13px;margin-bottom:12px"><?php esc_html_e( 'Elementor homepage showing empty? Rebuild its content in one click:', 'dawn-simmons' ); ?></p>
-                        <div style="display:flex;justify-content:center">
-                            <button class="btn btn-outline btn-sm" id="btn-rebuild-elementor">
-                                ⚡ <?php esc_html_e( 'Rebuild Elementor Homepage', 'dawn-simmons' ); ?>
-                            </button>
-                        </div>
-                        <div class="log" id="rebuild-log" style="display:none;margin-top:14px"></div>
-                    </div>
-                    <?php endif; ?>
                 </div>
 
             </div><!-- /.wizard-body -->
@@ -334,7 +259,6 @@ class DS_Setup_Wizard {
                     <div class="dot active" data-for="1"></div>
                     <div class="dot"        data-for="2"></div>
                     <div class="dot"        data-for="3"></div>
-                    <div class="dot"        data-for="4"></div>
                 </div>
                 <div style="display:flex;gap:10px">
                     <button class="btn btn-outline" id="btn-skip" style="display:none">
@@ -356,7 +280,7 @@ class DS_Setup_Wizard {
             const nonce   = <?php echo wp_json_encode( wp_create_nonce( 'ds_wizard_nonce' ) ); ?>;
             const ajaxUrl = <?php echo wp_json_encode( admin_url( 'admin-ajax.php' ) ); ?>;
             let currentStep = 1;
-            const totalSteps = 4;
+            const totalSteps = 3;
 
             const steps   = document.querySelectorAll('.step');
             const tabs    = document.querySelectorAll('.step-tab');
@@ -376,20 +300,12 @@ class DS_Setup_Wizard {
                     d.classList.toggle('active', i === n-1);
                     d.classList.toggle('done',   i < n-1);
                 });
-                btnBack.style.display = n > 1 && n < 4 ? '' : 'none';
-                btnSkip.style.display = n < 3 ? '' : 'none';
+                btnBack.style.display = n > 1 && n < totalSteps ? '' : 'none';
+                btnSkip.style.display = n < 2 ? '' : 'none';
                 if (n === totalSteps) { btnNext.style.display = 'none'; }
                 else { btnNext.style.display = ''; }
-                btnNext.textContent = n === 3 ? 'Import & Finish →' : 'Next →';
+                btnNext.textContent = n === 2 ? 'Import & Finish →' : 'Next →';
             }
-
-            // Editor card selection
-            document.querySelectorAll('.editor-card').forEach(card => {
-                card.addEventListener('click', () => {
-                    document.querySelectorAll('.editor-card').forEach(c => c.classList.remove('selected'));
-                    card.classList.add('selected');
-                });
-            });
 
             // Import option selection
             document.querySelectorAll('.import-option').forEach(opt => {
@@ -404,17 +320,6 @@ class DS_Setup_Wizard {
 
             btnNext.addEventListener('click', async () => {
                 if (currentStep === 2) {
-                    // Save editor preference
-                    const sel = document.querySelector('.editor-card.selected');
-                    if (!sel) { alert('Please choose an editor.'); return; }
-                    const pref = sel.dataset.editor;
-                    const fd = new FormData();
-                    fd.append('action', 'ds_save_editor_pref');
-                    fd.append('nonce', nonce);
-                    fd.append('preference', pref);
-                    await fetch(ajaxUrl, { method: 'POST', body: fd });
-                    goTo(3);
-                } else if (currentStep === 3) {
                     // Demo import
                     const choice = document.querySelector('input[name=import_choice]:checked')?.value;
                     if (choice === 'yes') {
@@ -437,7 +342,7 @@ class DS_Setup_Wizard {
                     fd2.append('action', 'ds_finish_wizard');
                     fd2.append('nonce', nonce);
                     await fetch(ajaxUrl, { method:'POST', body:fd2 });
-                    goTo(4);
+                    goTo(3);
                 } else {
                     goTo(currentStep + 1);
                 }
@@ -479,37 +384,6 @@ class DS_Setup_Wizard {
                     btn.textContent = action === 'install' ? 'Install' : 'Activate';
                 }
             });
-
-            // Rebuild Elementor homepage button
-            const rebuildBtn = document.getElementById('btn-rebuild-elementor');
-            if (rebuildBtn) {
-                rebuildBtn.addEventListener('click', async function() {
-                    const log = document.getElementById('rebuild-log');
-                    log.style.display = 'block';
-                    log.textContent = 'Rebuilding Elementor homepage…\n';
-                    rebuildBtn.disabled = true;
-                    rebuildBtn.innerHTML = '<span class="spinner"></span> Rebuilding…';
-                    const fd = new FormData();
-                    fd.append('action', 'ds_rebuild_elementor');
-                    fd.append('nonce', nonce);
-                    try {
-                        const res  = await fetch(ajaxUrl, { method: 'POST', body: fd });
-                        const json = await res.json();
-                        if (json.success) {
-                            (json.data.log || []).forEach(l => { log.textContent += l + '\n'; });
-                            rebuildBtn.textContent = '✓ Done — open homepage in Elementor';
-                        } else {
-                            log.textContent += 'Error: ' + (json.data || 'Unknown error');
-                            rebuildBtn.disabled = false;
-                            rebuildBtn.textContent = '⚡ Rebuild Elementor Homepage';
-                        }
-                    } catch(err) {
-                        log.textContent += 'Network error. Please try again.';
-                        rebuildBtn.disabled = false;
-                        rebuildBtn.textContent = '⚡ Rebuild Elementor Homepage';
-                    }
-                });
-            }
 
             goTo(1);
         })();

@@ -62,13 +62,3 @@ add_action( 'admin_enqueue_scripts', function ( string $hook ) {
     wp_enqueue_style( 'ds-editor-admin', DS_ASSETS . '/css/editor.css', [], DS_VERSION );
 } );
 
-// Elementor preview iframe — load full theme styles so custom widgets render.
-// wp_enqueue_scripts already fires in the preview frame; this action lets us
-// target the preview specifically without affecting the Elementor editor UI.
-add_action( 'elementor/preview/enqueue_styles', function () {
-    wp_enqueue_style( 'ds-fonts',
-        'https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&family=Playfair+Display:ital,wght@0,700;0,900;1,400&display=swap',
-        [], null
-    );
-    wp_enqueue_style( 'ds-main', DS_ASSETS . '/css/main.css', [ 'ds-fonts' ], DS_VERSION );
-} );

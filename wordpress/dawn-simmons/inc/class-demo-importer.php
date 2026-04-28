@@ -157,8 +157,12 @@ class DS_Demo_Importer {
         ];
 
         foreach ( $posts as $p ) {
-            // Avoid duplicates
-            $existing = get_page_by_title( $p['title'], OBJECT, 'post' );
+            // Avoid duplicates — get_page_by_title() is deprecated since WP 6.2.
+            global $wpdb;
+            $existing = $wpdb->get_var( $wpdb->prepare(
+                "SELECT ID FROM {$wpdb->posts} WHERE post_title = %s AND post_type = 'post' AND post_status != 'trash' LIMIT 1",
+                $p['title']
+            ) );
             if ( $existing ) {
                 self::$log[] = "→ Post '{$p['title']}' already exists, skipping.";
                 continue;
@@ -223,7 +227,7 @@ class DS_Demo_Importer {
         self::$log[] = '✓ Footer widgets configured.';
     }
 
-    // ── Homepage content (Elementor or Gutenberg) ────────────────────────────
+    // ── Homepage content (Gutenberg only) ───────────────────────────────────
     private static function create_homepage_content(): void {
         $home_id = (int) get_option( 'ds_page_home' );
         if ( ! $home_id ) {
@@ -231,38 +235,8 @@ class DS_Demo_Importer {
             return;
         }
 
-        $pref = get_option( 'ds_editor_preference', 'gutenberg' );
-
-        // Always write Gutenberg blocks (used when Elementor is not active or not preferred).
+        update_option( 'ds_editor_preference', 'gutenberg' );
         self::create_gutenberg_homepage( $home_id );
-
-        // Always write Elementor data when Elementor is active so that switching
-        // editor preference later never requires a full re-import.
-        if ( defined( 'ELEMENTOR_VERSION' ) ) {
-            self::create_elementor_homepage( $home_id, $pref === 'elementor' );
-        }
-    }
-
-    // ── Rebuild Elementor content only (callable via AJAX without full re-import) ──
-    public static function rebuild_elementor_homepage(): array {
-        self::$log = [];
-        $home_id   = (int) get_option( 'ds_page_home' );
-
-        if ( ! $home_id ) {
-            self::$log[] = '✗ Home page not found. Please run the full demo import first.';
-            return [ 'log' => self::$log ];
-        }
-
-        if ( ! defined( 'ELEMENTOR_VERSION' ) ) {
-            self::$log[] = '✗ Elementor is not active. Please install and activate Elementor first.';
-            return [ 'log' => self::$log ];
-        }
-
-        // Force the preference to elementor for this rebuild.
-        update_option( 'ds_editor_preference', 'elementor' );
-        self::create_elementor_homepage( $home_id, true );
-        self::$log[] = '✓ Elementor homepage rebuilt. Open the page in Elementor to confirm.';
-        return [ 'log' => self::$log ];
     }
 
     // ── Gutenberg homepage ───────────────────────────────────────────────────
