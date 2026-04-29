@@ -15,28 +15,34 @@
     },
     "title": {
       "type": "string",
-      "default": "What Leaders <em>Say</em>"
+      "default": "What Colleagues & Clients Say"
     },
     "testimonials": {
       "type": "array",
       "default": [
         {
-          "text": "Dawn’s ServiceNow implementation transformed our IT operations. Ticket resolution time dropped 60% in the first quarter.",
+          "text": "Dawn's ServiceNow implementation transformed our IT operations. Ticket resolution time dropped 60% in the first quarter.",
           "name": "Michael Chen",
           "role": "CIO, HealthFirst Systems",
-          "initial": "M"
+          "initial": "M",
+          "photoUrl": "",
+          "photoId": 0
         },
         {
           "text": "The AI automation framework Dawn architected processes 40,000 requests monthly with 94% auto-resolution. Transformative.",
           "name": "Sarah Johnson",
           "role": "VP Technology, Apex Capital",
-          "initial": "S"
+          "initial": "S",
+          "photoUrl": "",
+          "photoId": 0
         },
         {
           "text": "Dawn translates complex technical solutions into clear business value. Our board finally understands IT investment ROI.",
           "name": "Robert Williams",
           "role": "COO, Federal Agency",
-          "initial": "R"
+          "initial": "R",
+          "photoUrl": "",
+          "photoId": 0
         }
       ]
     }

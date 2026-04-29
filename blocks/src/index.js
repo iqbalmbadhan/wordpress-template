@@ -4,15 +4,6 @@
  * Compiled by wp-scripts (webpack) from blocks/src/index.js.
  * This file is the canonical source — do NOT edit the compiled output at
  * assets/js/blocks/index.js directly; run `npm run build` instead.
- *
- * WordPress 6.x pre-registers server-defined block types (block.json via
- * register_block_type()) into the JS registry before this file executes.
- * We therefore unregister any pre-existing copy with safeReg() before
- * re-registering with our edit function — otherwise registerBlockType()
- * returns early silently and the inspector controls are never attached.
- *
- * All blocks use server-side rendering (save: null) with a live preview
- * via ServerSideRender in the editor canvas.
  */
 (function () {
     'use strict';
@@ -56,25 +47,199 @@
         } );
     }
 
-    function jsonTac( label, key, props ) {
-        var raw = props.attributes[ key ];
-        var display = ( Array.isArray( raw ) || ( raw && typeof raw === 'object' ) )
-            ? JSON.stringify( raw, null, 2 )
-            : ( typeof raw === 'string' ? raw : '' );
-        return el( TAC, {
-            label: label + ' (JSON array)',
-            rows: 6,
-            value: display,
-            onChange: function ( v ) {
-                try {
-                    var parsed = JSON.parse( v );
-                    var a = {}; a[ key ] = parsed; props.setAttributes( a );
-                } catch ( e ) { /* wait for valid JSON */ }
-            }
+    /* ─── Repeater control — replaces jsonTac for array attributes ──────────── */
+    /*
+     * fields: [{ key, label, type? }]  (type defaults to 'string'; 'number' coerces)
+     * defaultItem: plain object with default values for a new row
+     */
+    function repeaterControl( label, key, fields, defaultItem, props ) {
+        var items = Array.isArray( props.attributes[ key ] ) ? props.attributes[ key ] : [];
+
+        function setItems( next ) {
+            var a = {}; a[ key ] = next; props.setAttributes( a );
+        }
+
+        function updateField( idx, fieldKey, val ) {
+            var copy = items.map( function ( item, i ) {
+                if ( i !== idx ) return item;
+                var updated = Object.assign( {}, item );
+                updated[ fieldKey ] = val;
+                return updated;
+            } );
+            setItems( copy );
+        }
+
+        function removeItem( idx ) {
+            setItems( items.filter( function ( _, i ) { return i !== idx; } ) );
+        }
+
+        function addItem() {
+            setItems( items.concat( [ Object.assign( {}, defaultItem ) ] ) );
+        }
+
+        var itemEls = items.map( function ( item, idx ) {
+            var fieldEls = fields.map( function ( f ) {
+                return el( TC, {
+                    key: f.key,
+                    label: f.label,
+                    value: item[ f.key ] !== undefined ? String( item[ f.key ] ) : '',
+                    onChange: function ( v ) {
+                        updateField( idx, f.key, f.type === 'number' ? parseFloat( v ) || 0 : v );
+                    }
+                } );
+            } );
+
+            return el( 'div', {
+                key: idx,
+                style: {
+                    background: '#f0f0f0', borderRadius: '4px',
+                    padding: '10px 12px', marginBottom: '8px'
+                }
+            },
+                el( 'p', { style: { fontSize: '10px', color: '#666', marginBottom: '6px', fontWeight: '600' } },
+                    '#' + ( idx + 1 )
+                ),
+                fieldEls,
+                el( Btn, {
+                    onClick: function () { removeItem( idx ); },
+                    variant: 'link',
+                    isDestructive: true,
+                    style: { fontSize: '11px', marginTop: '4px', padding: '0' }
+                }, __( '✕ Remove', 'dawn-simmons' ) )
+            );
         } );
+
+        return el( 'div', { style: { marginBottom: '16px' } },
+            el( 'p', {
+                style: {
+                    fontSize: '11px', fontWeight: '600', textTransform: 'uppercase',
+                    letterSpacing: '0.06em', marginBottom: '8px', color: '#1e1e1e'
+                }
+            }, label ),
+            itemEls,
+            el( Btn, {
+                onClick: addItem,
+                variant: 'secondary',
+                style: { width: '100%', justifyContent: 'center', marginTop: '4px' }
+            }, __( '+ Add Item', 'dawn-simmons' ) )
+        );
     }
 
-    /* ─── Photo upload control ─────────────────────────────────────────────── */
+    /* ─── Testimonial repeater — same as above but with per-item photo upload ─ */
+    function testimonialRepeater( props ) {
+        var key   = 'testimonials';
+        var items = Array.isArray( props.attributes[ key ] ) ? props.attributes[ key ] : [];
+
+        function setItems( next ) {
+            var a = {}; a[ key ] = next; props.setAttributes( a );
+        }
+
+        function updateField( idx, fieldKey, val ) {
+            var copy = items.map( function ( item, i ) {
+                if ( i !== idx ) return item;
+                var updated = Object.assign( {}, item );
+                updated[ fieldKey ] = val;
+                return updated;
+            } );
+            setItems( copy );
+        }
+
+        function removeItem( idx ) {
+            setItems( items.filter( function ( _, i ) { return i !== idx; } ) );
+        }
+
+        function addItem() {
+            setItems( items.concat( [ { text: '', name: '', role: '', initial: '', photoUrl: '', photoId: 0 } ] ) );
+        }
+
+        var itemEls = items.map( function ( item, idx ) {
+            var photoUrl = item.photoUrl || '';
+            var photoId  = item.photoId  || 0;
+
+            var photoControl = el( MediaUploadCheck, { key: 'photo-check' },
+                el( MediaUpload, {
+                    allowedTypes: [ 'image' ],
+                    value: photoId,
+                    onSelect: function ( media ) {
+                        updateField( idx, 'photoUrl', media.url );
+                        updateField( idx, 'photoId', media.id );
+                    },
+                    render: function ( ref ) {
+                        return el( 'div', { style: { marginBottom: '8px' } },
+                            el( 'p', { style: { fontSize: '10px', color: '#555', marginBottom: '4px' } },
+                                __( 'Client Photo', 'dawn-simmons' )
+                            ),
+                            photoUrl
+                                ? el( 'div', {},
+                                    el( 'img', {
+                                        src: photoUrl,
+                                        style: { display: 'block', width: '56px', height: '56px', borderRadius: '50%', objectFit: 'cover', marginBottom: '6px' }
+                                    } ),
+                                    el( 'div', { style: { display: 'flex', gap: '6px' } },
+                                        el( Btn, { onClick: ref.open, variant: 'secondary', size: 'small' }, __( 'Change', 'dawn-simmons' ) ),
+                                        el( Btn, {
+                                            onClick: function () { updateField( idx, 'photoUrl', '' ); updateField( idx, 'photoId', 0 ); },
+                                            variant: 'secondary', size: 'small', isDestructive: true
+                                        }, __( 'Remove', 'dawn-simmons' ) )
+                                    )
+                                )
+                                : el( Btn, { onClick: ref.open, variant: 'secondary', size: 'small' },
+                                    __( 'Upload Photo', 'dawn-simmons' )
+                                )
+                        );
+                    }
+                } )
+            );
+
+            return el( 'div', {
+                key: idx,
+                style: { background: '#f0f0f0', borderRadius: '4px', padding: '10px 12px', marginBottom: '8px' }
+            },
+                el( 'p', { style: { fontSize: '10px', color: '#666', marginBottom: '6px', fontWeight: '600' } }, '#' + ( idx + 1 ) ),
+                photoControl,
+                el( TAC, {
+                    label: __( 'Quote Text', 'dawn-simmons' ),
+                    rows: 3,
+                    value: item.text || '',
+                    onChange: function ( v ) { updateField( idx, 'text', v ); }
+                } ),
+                el( TC, {
+                    label: __( 'Name', 'dawn-simmons' ),
+                    value: item.name || '',
+                    onChange: function ( v ) { updateField( idx, 'name', v ); }
+                } ),
+                el( TC, {
+                    label: __( 'Role / Company', 'dawn-simmons' ),
+                    value: item.role || '',
+                    onChange: function ( v ) { updateField( idx, 'role', v ); }
+                } ),
+                el( TC, {
+                    label: __( 'Initials (fallback)', 'dawn-simmons' ),
+                    value: item.initial || '',
+                    onChange: function ( v ) { updateField( idx, 'initial', v ); }
+                } ),
+                el( Btn, {
+                    onClick: function () { removeItem( idx ); },
+                    variant: 'link', isDestructive: true,
+                    style: { fontSize: '11px', marginTop: '4px', padding: '0' }
+                }, __( '✕ Remove', 'dawn-simmons' ) )
+            );
+        } );
+
+        return el( 'div', { style: { marginBottom: '16px' } },
+            el( 'p', {
+                style: { fontSize: '11px', fontWeight: '600', textTransform: 'uppercase', letterSpacing: '0.06em', marginBottom: '8px', color: '#1e1e1e' }
+            }, __( 'Testimonials', 'dawn-simmons' ) ),
+            itemEls,
+            el( Btn, {
+                onClick: addItem,
+                variant: 'secondary',
+                style: { width: '100%', justifyContent: 'center', marginTop: '4px' }
+            }, __( '+ Add Testimonial', 'dawn-simmons' ) )
+        );
+    }
+
+    /* ─── Photo upload control (hero / about) ──────────────────────────────── */
     function photoUpload( props ) {
         var photoUrl = props.attributes.photoUrl;
         var photoId  = props.attributes.photoId || 0;
@@ -91,34 +256,25 @@
                         el( 'p', {
                             style: {
                                 fontSize: '11px', fontWeight: '600', marginBottom: '8px',
-                                textTransform: 'uppercase', letterSpacing: '0.06em',
-                                color: '#1e1e1e'
+                                textTransform: 'uppercase', letterSpacing: '0.06em', color: '#1e1e1e'
                             }
                         }, __( 'Profile Photo', 'dawn-simmons' ) ),
                         photoUrl
                             ? el( 'div', {},
                                 el( 'img', {
                                     src: photoUrl,
-                                    style: {
-                                        display: 'block', width: '100%', maxHeight: '160px',
-                                        objectFit: 'cover', borderRadius: '4px', marginBottom: '8px'
-                                    }
+                                    style: { display: 'block', width: '100%', maxHeight: '160px', objectFit: 'cover', borderRadius: '4px', marginBottom: '8px' }
                                 } ),
                                 el( 'div', { style: { display: 'flex', gap: '8px' } },
-                                    el( Btn, { onClick: ref.open, variant: 'secondary', size: 'small' },
-                                        __( 'Change', 'dawn-simmons' )
-                                    ),
+                                    el( Btn, { onClick: ref.open, variant: 'secondary', size: 'small' }, __( 'Change', 'dawn-simmons' ) ),
                                     el( Btn, {
-                                        onClick: function () {
-                                            props.setAttributes( { photoUrl: '', photoId: 0 } );
-                                        },
+                                        onClick: function () { props.setAttributes( { photoUrl: '', photoId: 0 } ); },
                                         variant: 'secondary', size: 'small', isDestructive: true
                                     }, __( 'Remove', 'dawn-simmons' ) )
                                 )
                             )
                             : el( Btn, {
-                                onClick: ref.open,
-                                variant: 'secondary',
+                                onClick: ref.open, variant: 'secondary',
                                 style: { width: '100%', justifyContent: 'center' }
                             }, __( 'Upload / Select Photo', 'dawn-simmons' ) )
                     );
@@ -176,16 +332,20 @@
         },
         edit: makeEdit( 'dawn-simmons/hero', function ( props ) {
             return [
-                tc(  'Eyebrow Text',                   'eyebrow',          props ),
+                tc(  'Eyebrow Text',                    'eyebrow',          props ),
                 tac( 'Heading (HTML: <em> for italic)', 'heading',          props ),
-                tac( 'Sub-heading',                    'subheading',       props ),
-                tc(  'Primary Button Text',             'btnPrimaryText',   props ),
-                tc(  'Primary Button URL',              'btnPrimaryUrl',    props ),
-                tc(  'Secondary Button Text',           'btnSecondaryText', props ),
-                tc(  'Secondary Button URL',            'btnSecondaryUrl',  props ),
-                tac( 'Roles — one per line',            'roles',            props ),
+                tac( 'Sub-heading',                     'subheading',       props ),
+                tc(  'Primary Button Text',              'btnPrimaryText',   props ),
+                tc(  'Primary Button URL',               'btnPrimaryUrl',    props ),
+                tc(  'Secondary Button Text',            'btnSecondaryText', props ),
+                tc(  'Secondary Button URL',             'btnSecondaryUrl',  props ),
+                tac( 'Roles — one per line',             'roles',            props ),
                 photoUpload( props ),
-                jsonTac( 'Stats [{num,suffix,label}]',  'stats',            props )
+                repeaterControl( 'Stats', 'stats',
+                    [ { key: 'num', label: 'Number', type: 'number' }, { key: 'suffix', label: 'Suffix (+/%)' }, { key: 'label', label: 'Label' } ],
+                    { num: 0, suffix: '+', label: 'Label' },
+                    props
+                )
             ];
         } ),
         save: function () { return null; }
@@ -225,12 +385,20 @@
         },
         edit: makeEdit( 'dawn-simmons/ai-section', function ( props ) {
             return [
-                tc(     'Eyebrow',                           'eyebrow',   props ),
-                tac(    'Headline (HTML allowed)',            'headline',  props ),
-                tac(    'Lead Paragraph',                    'lead',      props ),
-                tac(    'AI Pills — one per line',           'pills',     props ),
-                jsonTac('Flow Steps [{icon,name,desc}]',     'flowSteps', props ),
-                jsonTac('Feature Cards [{icon,title,desc}]', 'cards',     props )
+                tc(  'Eyebrow',             'eyebrow',   props ),
+                tac( 'Headline (HTML allowed)', 'headline',  props ),
+                tac( 'Lead Paragraph',      'lead',      props ),
+                tac( 'AI Pills — one per line', 'pills', props ),
+                repeaterControl( 'Flow Steps', 'flowSteps',
+                    [ { key: 'icon', label: 'Icon (emoji)' }, { key: 'name', label: 'Step Name' }, { key: 'desc', label: 'Description' } ],
+                    { icon: '⚙', name: 'New Step', desc: 'Step description' },
+                    props
+                ),
+                repeaterControl( 'Feature Cards', 'cards',
+                    [ { key: 'icon', label: 'Icon (emoji)' }, { key: 'title', label: 'Title' }, { key: 'desc', label: 'Description' } ],
+                    { icon: '🔧', title: 'New Feature', desc: 'Feature description.' },
+                    props
+                )
             ];
         } ),
         save: function () { return null; }
@@ -262,10 +430,19 @@
         },
         edit: makeEdit( 'dawn-simmons/services', function ( props ) {
             return [
-                tc(     'Eyebrow',                           'eyebrow',  props ),
-                tac(    'Title (HTML allowed)',               'title',    props ),
-                tac(    'Subtitle',                          'sub',      props ),
-                jsonTac('Services [{num,title,desc,tags}]',  'services', props )
+                tc(  'Eyebrow',             'eyebrow',  props ),
+                tac( 'Title (HTML allowed)', 'title',    props ),
+                tac( 'Subtitle',            'sub',      props ),
+                repeaterControl( 'Services', 'services',
+                    [
+                        { key: 'num',   label: 'Number (01, 02…)' },
+                        { key: 'title', label: 'Service Title' },
+                        { key: 'desc',  label: 'Description' },
+                        { key: 'tags',  label: 'Tags (comma-separated)' }
+                    ],
+                    { num: '07', title: 'New Service', desc: 'Service description.', tags: '' },
+                    props
+                )
             ];
         } ),
         save: function () { return null; }
@@ -307,13 +484,21 @@
         },
         edit: makeEdit( 'dawn-simmons/about', function ( props ) {
             return [
-                tc(     'Eyebrow',                     'eyebrow',  props ),
-                tac(    'Title (HTML allowed)',         'title',    props ),
-                tac(    'Bio Paragraph 1',             'bio1',     props ),
-                tac(    'Bio Paragraph 2',             'bio2',     props ),
+                tc(  'Eyebrow',             'eyebrow',  props ),
+                tac( 'Title (HTML allowed)', 'title',    props ),
+                tac( 'Bio Paragraph 1',     'bio1',     props ),
+                tac( 'Bio Paragraph 2',     'bio2',     props ),
                 photoUpload( props ),
-                jsonTac('Skills [{skill,pct}]',        'skills',   props ),
-                jsonTac('Details [{label,value}]',     'details',  props )
+                repeaterControl( 'Skills', 'skills',
+                    [ { key: 'skill', label: 'Skill Name' }, { key: 'pct', label: 'Percentage (0–100)', type: 'number' } ],
+                    { skill: 'New Skill', pct: 80 },
+                    props
+                ),
+                repeaterControl( 'Details', 'details',
+                    [ { key: 'label', label: 'Label' }, { key: 'value', label: 'Value' } ],
+                    { label: 'Label', value: 'Value' },
+                    props
+                )
             ];
         } ),
         save: function () { return null; }
@@ -329,21 +514,21 @@
         icon:       'format-quote',
         attributes: {
             eyebrow: { type: 'string', default: 'Client Voices' },
-            title:   { type: 'string', default: 'What Leaders <em>Say</em>' },
+            title:   { type: 'string', default: 'What Colleagues & Clients Say' },
             testimonials: {
                 type: 'array',
                 default: [
-                    { text: "Dawn's ServiceNow implementation transformed our IT operations. Ticket resolution time dropped 60% in the first quarter.", name: 'Michael Chen',    role: 'CIO, HealthFirst Systems',   initial: 'M' },
-                    { text: 'The AI automation framework Dawn architected processes 40,000 requests monthly with 94% auto-resolution. Transformative.',  name: 'Sarah Johnson',   role: 'VP Technology, Apex Capital', initial: 'S' },
-                    { text: 'Dawn translates complex technical solutions into clear business value. Our board finally understands IT investment ROI.',    name: 'Robert Williams', role: 'COO, Federal Agency',         initial: 'R' }
+                    { text: "Dawn's ServiceNow implementation transformed our IT operations. Ticket resolution time dropped 60% in the first quarter.", name: 'Michael Chen',    role: 'CIO, HealthFirst Systems',   initial: 'M', photoUrl: '', photoId: 0 },
+                    { text: 'The AI automation framework Dawn architected processes 40,000 requests monthly with 94% auto-resolution. Transformative.',  name: 'Sarah Johnson',   role: 'VP Technology, Apex Capital', initial: 'S', photoUrl: '', photoId: 0 },
+                    { text: 'Dawn translates complex technical solutions into clear business value. Our board finally understands IT investment ROI.',    name: 'Robert Williams', role: 'COO, Federal Agency',         initial: 'R', photoUrl: '', photoId: 0 }
                 ]
             }
         },
         edit: makeEdit( 'dawn-simmons/testimonials', function ( props ) {
             return [
-                tc(     'Eyebrow',                                   'eyebrow',      props ),
-                tac(    'Title (HTML allowed)',                       'title',        props ),
-                jsonTac('Testimonials [{text,name,role,initial}]',    'testimonials', props )
+                tc(  'Eyebrow',             'eyebrow', props ),
+                tac( 'Title (HTML allowed)', 'title',   props ),
+                testimonialRepeater( props )
             ];
         } ),
         save: function () { return null; }
@@ -381,7 +566,7 @@
     } );
 
     /* ═══════════════════════════════════════════════════════════════════════
-       BLOG SECTION (dynamic — no editable attributes beyond cosmetic labels)
+       BLOG SECTION
     ═══════════════════════════════════════════════════════════════════════ */
     safeReg( 'dawn-simmons/blog-section', {
         apiVersion: 3,
@@ -396,10 +581,10 @@
         },
         edit: makeEdit( 'dawn-simmons/blog-section', function ( props ) {
             return [
-                tc(  'Eyebrow Text',          'eyebrow',  props ),
-                tac( 'Title (HTML allowed)',   'title',    props ),
-                tc(  '"All Articles" Label',   'allLabel', props ),
-                tc(  'Number of Posts (1–6)',  'count',    props )
+                tc(  'Eyebrow Text',         'eyebrow',  props ),
+                tac( 'Title (HTML allowed)',  'title',    props ),
+                tc(  '"All Articles" Label',  'allLabel', props ),
+                tc(  'Number of Posts (1–6)', 'count',    props )
             ];
         } ),
         save: function () { return null; }
