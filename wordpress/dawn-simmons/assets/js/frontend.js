@@ -76,7 +76,13 @@
             btn.innerHTML = isLight ? moonIcon : sunIcon;
             btn.setAttribute('aria-label', isLight ? 'Switch to dark mode' : 'Switch to light mode');
         }
+
+        /* Always sync the icon with current state (called on every reinit after
+           AJAX nav). Only attach the click listener once — multiple listeners
+           would double-toggle per click, making the button appear to do nothing. */
         updateIcon();
+        if (btn.dataset.dmInit) return;
+        btn.dataset.dmInit = '1';
 
         btn.addEventListener('click', function () {
             document.documentElement.classList.toggle('ds-light');

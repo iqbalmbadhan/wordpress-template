@@ -253,6 +253,11 @@ html.ds-light .hero-photo-placeholder { background: var(--bg3); }
 .ds-page-links a { color: var(--accent); text-decoration: none; margin: 0 6px; }
 @media (max-width: 900px) {
   .ds-page-main { padding: 48px 24px; }
+  /* Center inner page (page.php / archive) hero on mobile */
+  .page-hero-inner > div { text-align: center; }
+  .page-hero-title { text-align: center; }
+  .page-hero-sub { text-align: center; }
+  .page-hero-inner { grid-template-columns: 1fr; gap: 0; }
 }
 @media (max-width: 600px) {
   .ds-page-main { padding: 36px 16px; }
@@ -456,14 +461,17 @@ html.ds-light .hero-photo-placeholder { background: var(--bg3); }
   .blog-layout { grid-template-columns: 1fr 260px; gap: 40px; padding: 48px 32px; }
 }
 @media (max-width: 900px) {
-  .page-hero { padding: 100px 24px 48px; }
+  .page-hero { padding: 100px 24px 48px; text-align: center; }
   .page-hero-inner { grid-template-columns: 1fr; }
+  .page-hero h1, .page-hero-sub { text-align: center; }
   .hero-stats { display: none; }
   .filter-bar { padding: 0 24px; }
   .blog-layout { grid-template-columns: 1fr; padding: 40px 24px; gap: 48px; }
   .sidebar { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
   .featured-post { grid-template-columns: 1fr; }
   .fp-img { min-height: 200px; border-right: none; border-bottom: 1px solid var(--border); }
+  .fp-body { text-align: left; }
+  .posts-section h2 { text-align: left; }
 }
 @media (max-width: 640px) {
   .page-hero { padding: 90px 16px 40px; }
@@ -936,7 +944,8 @@ textarea { resize: vertical; min-height: 120px; }
 }
 @media (max-width: 900px) {
   .article-hero { padding: 90px 24px 0; }
-  .article-hero-inner { padding-bottom: 40px; }
+  .article-hero-inner { padding-bottom: 40px; text-align: center; }
+  .article-title, .article-cat-badge, .breadcrumb { text-align: left; }
   .article-layout { padding: 40px 24px; }
   .comparison-table { font-size: 13px; }
   .comparison-table th, .comparison-table td { padding: 10px 12px; }
