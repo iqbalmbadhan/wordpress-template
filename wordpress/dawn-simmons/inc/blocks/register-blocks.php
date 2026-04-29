@@ -135,10 +135,11 @@ function ds_render_services( array $attrs ): string {
                 <?php if ( $sub ) : ?><p class="section-sub"><?php echo $sub; ?></p><?php endif; ?>
             </div>
             <div class="services-grid">
-                <?php foreach ( $services as $svc ) :
-                    $tags = array_filter( array_map( 'trim', explode( ',', $svc['tags'] ?? '' ) ) );
+                <?php foreach ( $services as $idx => $svc ) :
+                    $tags      = array_filter( array_map( 'trim', explode( ',', $svc['tags'] ?? '' ) ) );
+                    $delay_cls = [ '', ' fade-in-d1', ' fade-in-d2', ' fade-in-d3', ' fade-in-d4', ' fade-in-d5' ][ $idx % 6 ];
                 ?>
-                <div class="service-card fade-in">
+                <div class="service-card fade-in<?php echo $delay_cls; ?>">
                     <div class="service-num"><?php echo esc_html( $svc['num'] ); ?></div>
                     <div class="service-title"><?php echo esc_html( $svc['title'] ); ?></div>
                     <p class="service-desc"><?php echo esc_html( $svc['desc'] ); ?></p>
@@ -245,7 +246,7 @@ function ds_render_about( array $attrs ): string {
     <section id="about">
         <div class="container">
             <div class="about-grid">
-                <div class="about-photo">
+                <div class="about-photo fade-left">
                     <?php if ( $photo ) : ?>
                         <img src="<?php echo $photo; ?>" alt="<?php esc_attr_e( 'About photo', 'dawn-simmons' ); ?>" style="width:100%;height:100%;object-fit:cover;border-radius:12px;">
                     <?php else : ?>
@@ -253,7 +254,7 @@ function ds_render_about( array $attrs ): string {
                     <?php endif; ?>
                     <div class="about-photo-accent" aria-hidden="true"></div>
                 </div>
-                <div class="about-info">
+                <div class="about-info fade-right">
                     <div class="section-eyebrow"><?php echo $eyebrow; ?></div>
                     <h2 class="section-title"><?php echo $title; ?></h2>
                     <p><?php echo $bio1; ?></p>
@@ -305,12 +306,20 @@ function ds_render_testimonials( array $attrs ): string {
                 <h2 class="section-title"><?php echo $title; ?></h2>
             </div>
             <div class="testimonials-grid">
-                <?php foreach ( $items as $t ) : ?>
-                <div class="tcard fade-in">
+                <?php foreach ( $items as $t ) :
+                    $photo = esc_url( $t['photoUrl'] ?? '' );
+                ?>
+                <div class="tcard fade-scale">
                     <div class="tcard-quote" aria-hidden="true">"</div>
                     <p class="tcard-text"><?php echo esc_html( $t['text'] ); ?></p>
                     <div class="tcard-author">
-                        <div class="tcard-avatar" aria-hidden="true"><?php echo esc_html( $t['initial'] ); ?></div>
+                        <div class="tcard-avatar">
+                            <?php if ( $photo ) : ?>
+                                <img src="<?php echo $photo; ?>" alt="<?php echo esc_attr( $t['name'] ?? '' ); ?>">
+                            <?php else : ?>
+                                <?php echo esc_html( $t['initial'] ?? '' ); ?>
+                            <?php endif; ?>
+                        </div>
                         <div>
                             <div class="tcard-name"><?php echo esc_html( $t['name'] ); ?></div>
                             <div class="tcard-role"><?php echo esc_html( $t['role'] ); ?></div>
@@ -456,10 +465,16 @@ function ds_render_blog_section( array $attrs ): string {
                                     'style' => 'position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:1;',
                                     'alt'   => get_the_title( $p->ID ),
                                 ] ); ?>
-                            <?php else : ?>
-                                <span style="position:relative;z-index:1;font-size:11px;color:var(--muted);letter-spacing:.08em">
-                                    <?php echo $cat_str ?: esc_html__( 'article', 'dawn-simmons' ); ?>
-                                </span>
+                            <?php else :
+                                $fallback_url = ds_first_content_image( $p->ID );
+                            ?>
+                                <?php if ( $fallback_url ) : ?>
+                                    <img src="<?php echo esc_url( $fallback_url ); ?>" alt="<?php echo esc_attr( get_the_title( $p->ID ) ); ?>" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:1;">
+                                <?php else : ?>
+                                    <span style="position:relative;z-index:1;font-size:11px;color:var(--muted);letter-spacing:.08em">
+                                        <?php echo $cat_str ?: esc_html__( 'article', 'dawn-simmons' ); ?>
+                                    </span>
+                                <?php endif; ?>
                             <?php endif; ?>
                         </div>
                         <div class="blog-card-body">

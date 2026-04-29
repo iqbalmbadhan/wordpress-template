@@ -4,6 +4,7 @@
 <meta charset="<?php bloginfo( 'charset' ); ?>">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="profile" href="https://gmpg.org/xfn/11">
+<script>(function(){try{if(localStorage.getItem('ds-theme')==='light')document.documentElement.classList.add('ds-light');}catch(e){}}());</script>
 <?php wp_head(); ?>
 </head>
 <body <?php body_class(); ?>>

@@ -27,6 +27,9 @@ function ds_navbar(): void {
             <a href="<?php echo esc_url( $cta_url ); ?>" class="nav-cta">
                 <?php echo esc_html( $cta_text ); ?>
             </a>
+            <button class="ds-theme-toggle" id="ds-theme-toggle" aria-label="<?php esc_attr_e( 'Toggle dark/light mode', 'dawn-simmons' ); ?>">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+            </button>
             <button class="nav-hamburger" id="navHamburger" aria-label="<?php esc_attr_e( 'Toggle navigation', 'dawn-simmons' ); ?>" aria-expanded="false">
                 <span></span><span></span><span></span>
             </button>
@@ -123,6 +126,23 @@ function ds_css_variables(): void {
     echo '}</style>' . "\n";
 }
 add_action( 'wp_head', 'ds_css_variables', 50 );
+
+/**
+ * Get the first image URL from a post's content (fallback when no featured image).
+ */
+function ds_first_content_image( int $post_id ): string {
+    $content = get_post_field( 'post_content', $post_id );
+    if ( preg_match( '/<img[^>]+src=["\']([^"\']+)["\'][^>]*>/i', $content, $m ) ) {
+        return $m[1];
+    }
+    /* also check attached images */
+    $imgs = get_attached_media( 'image', $post_id );
+    if ( $imgs ) {
+        $img = reset( $imgs );
+        return wp_get_attachment_image_url( $img->ID, 'full' ) ?: '';
+    }
+    return '';
+}
 
 /**
  * Post thumbnail with fallback.

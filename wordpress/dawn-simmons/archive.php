@@ -89,20 +89,26 @@ if ( $filter_cats ) :
             ?>
 
             <!-- FEATURED POST -->
-            <a href="<?php the_permalink(); ?>" class="featured-post fade-in" aria-label="<?php echo esc_attr( sprintf( __( 'Featured: %s', 'dawn-simmons' ), get_the_title() ) ); ?>">
+            <a href="<?php the_permalink(); ?>" class="featured-post fade-in" aria-label="<?php echo esc_attr( get_the_title() ); ?>">
                 <div class="fp-img">
                     <div class="fp-img-glow"></div>
                     <?php if ( has_post_thumbnail() ) : ?>
                         <?php the_post_thumbnail( 'ds-featured', [ 'alt' => get_the_title(), 'style' => 'position:relative;z-index:1;width:100%;height:100%;object-fit:cover;' ] ); ?>
-                    <?php else : ?>
-                        <span><?php esc_html_e( 'featured image', 'dawn-simmons' ); ?></span>
+                    <?php else :
+                        $fp_fallback = ds_first_content_image( get_the_ID() );
+                    ?>
+                        <?php if ( $fp_fallback ) : ?>
+                            <img src="<?php echo esc_url( $fp_fallback ); ?>" alt="<?php echo esc_attr( get_the_title() ); ?>" style="position:relative;z-index:1;width:100%;height:100%;object-fit:cover;">
+                        <?php else : ?>
+                            <span><?php echo $fp_cat_str ?: esc_html__( 'article', 'dawn-simmons' ); ?></span>
+                        <?php endif; ?>
                     <?php endif; ?>
                 </div>
                 <div class="fp-body">
                     <div class="fp-eyebrow">
-                        <span class="fp-badge<?php echo $fp_is_sticky ? ' fp-badge-pinned' : ''; ?>">
-                            <?php echo $fp_is_sticky ? esc_html__( '★ Pinned', 'dawn-simmons' ) : esc_html__( 'Featured', 'dawn-simmons' ); ?>
-                        </span>
+                        <?php if ( $fp_is_sticky ) : ?>
+                        <span class="fp-badge fp-badge-pinned"><?php esc_html_e( '★ Pinned', 'dawn-simmons' ); ?></span>
+                        <?php endif; ?>
                         <span class="fp-cat"><?php echo $fp_cat_str; ?></span>
                     </div>
                     <h2 class="fp-title"><?php the_title(); ?></h2>
@@ -122,7 +128,6 @@ if ( $filter_cats ) :
             <!-- POSTS GRID (remaining posts) -->
             <?php if ( have_posts() ) : ?>
             <div class="posts-section">
-                <h2><?php esc_html_e( 'Recent Posts', 'dawn-simmons' ); ?></h2>
                 <div class="posts-grid">
                     <?php while ( have_posts() ) : the_post();
                         $pc_cats = get_the_category();
@@ -135,8 +140,14 @@ if ( $filter_cats ) :
                             <div class="post-img-accent"></div>
                             <?php if ( has_post_thumbnail() ) : ?>
                                 <?php the_post_thumbnail( 'ds-card', [ 'alt' => get_the_title(), 'style' => 'position:relative;z-index:1;width:100%;height:100%;object-fit:cover;' ] ); ?>
-                            <?php else : ?>
-                                <span><?php esc_html_e( 'image', 'dawn-simmons' ); ?></span>
+                            <?php else :
+                                $pc_fallback = ds_first_content_image( get_the_ID() );
+                            ?>
+                                <?php if ( $pc_fallback ) : ?>
+                                    <img src="<?php echo esc_url( $pc_fallback ); ?>" alt="<?php echo esc_attr( get_the_title() ); ?>" style="position:relative;z-index:1;width:100%;height:100%;object-fit:cover;">
+                                <?php else : ?>
+                                    <span><?php echo $pc_cat_str ?: esc_html__( 'article', 'dawn-simmons' ); ?></span>
+                                <?php endif; ?>
                             <?php endif; ?>
                         </div>
                         <div class="post-body">

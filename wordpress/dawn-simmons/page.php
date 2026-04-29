@@ -6,10 +6,6 @@
     <div class="hero-bg-text" aria-hidden="true"><?php echo esc_html( mb_substr( get_the_title(), 0, 4 ) ); ?></div>
     <div class="page-hero-inner">
         <div>
-            <div class="page-eyebrow">
-                <span class="page-eyebrow-line"></span>
-                <?php esc_html_e( 'Page', 'dawn-simmons' ); ?>
-            </div>
             <?php the_title( '<h1 class="page-hero-title">', '</h1>' ); ?>
         </div>
     </div>

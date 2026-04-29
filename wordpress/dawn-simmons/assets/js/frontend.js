@@ -47,9 +47,10 @@
         }, { passive: true });
     }
 
-    /* ── Fade-in on scroll ── */
+    /* ── Scroll reveal (fade-in / fade-left / fade-right / fade-scale) ── */
     function initFadeIn() {
-        var els = document.querySelectorAll('.fade-in');
+        var sel = '.fade-in, .fade-left, .fade-right, .fade-scale';
+        var els = document.querySelectorAll(sel);
         if (!els.length) return;
         var obs = new IntersectionObserver(function (entries) {
             entries.forEach(function (e) {
@@ -58,8 +59,30 @@
                     obs.unobserve(e.target);
                 }
             });
-        }, { threshold: 0.1 });
+        }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
         els.forEach(function (el) { obs.observe(el); });
+    }
+
+    /* ── Dark / light mode toggle ── */
+    function initDarkMode() {
+        var btn = document.getElementById('ds-theme-toggle');
+        if (!btn) return;
+
+        var sunIcon  = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>';
+        var moonIcon = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>';
+
+        function updateIcon() {
+            var isLight = document.documentElement.classList.contains('ds-light');
+            btn.innerHTML = isLight ? moonIcon : sunIcon;
+            btn.setAttribute('aria-label', isLight ? 'Switch to dark mode' : 'Switch to light mode');
+        }
+        updateIcon();
+
+        btn.addEventListener('click', function () {
+            document.documentElement.classList.toggle('ds-light');
+            try { localStorage.setItem('ds-theme', document.documentElement.classList.contains('ds-light') ? 'light' : 'dark'); } catch(e) {}
+            updateIcon();
+        });
     }
 
     /* ── Counter animation ── */
@@ -178,6 +201,7 @@
         initSkillBars();
         initTOC();
         initContactForm();
+        initDarkMode();
     }
 
     /* ── AJAX navigation (no full-page reload) ── */
@@ -347,6 +371,7 @@
         initSkillBars();
         initTOC();
         initContactForm();
+        initDarkMode();
         ajaxNav.init();
     });
 }());
