@@ -1,23 +1,40 @@
 <?php
 defined( 'ABSPATH' ) || exit;
 
+/* ── Resource hints: preconnect for Google Fonts (before any <link>) ──────── */
+add_action( 'wp_head', function () {
+    echo '<link rel="preconnect" href="https://fonts.googleapis.com">' . "\n";
+    echo '<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>' . "\n";
+    echo '<link rel="dns-prefetch" href="https://fonts.googleapis.com">' . "\n";
+}, 1 );
+
+/* ── Main enqueue ──────────────────────────────────────────────────────────── */
 add_action( 'wp_enqueue_scripts', function () {
+    /*
+     * Use file-modification timestamps as cache-busting versions so that any
+     * saved change is immediately visible without requiring a manual hard reload
+     * or cache-clear — avoids the "nothing changed after save" problem entirely.
+     */
+    $css_ver = filemtime( DS_DIR . '/assets/css/main.css' ) ?: DS_VERSION;
+    $js_ver  = filemtime( DS_DIR . '/assets/js/frontend.js' ) ?: DS_VERSION;
+
     // Google Fonts
     wp_enqueue_style( 'ds-fonts',
         'https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&family=Playfair+Display:ital,wght@0,700;0,900;1,400&display=swap',
         [], null
     );
 
-    // Main stylesheet
-    wp_enqueue_style( 'ds-main', DS_ASSETS . '/css/main.css', [ 'ds-fonts' ], DS_VERSION );
+    // Main stylesheet (cache-busted by mtime)
+    wp_enqueue_style( 'ds-main', DS_ASSETS . '/css/main.css', [ 'ds-fonts' ], $css_ver );
 
     // WooCommerce styles override
     if ( class_exists( 'WooCommerce' ) ) {
-        wp_enqueue_style( 'ds-woocommerce', DS_ASSETS . '/css/woocommerce.css', [ 'ds-main' ], DS_VERSION );
+        $woo_ver = filemtime( DS_DIR . '/assets/css/woocommerce.css' ) ?: DS_VERSION;
+        wp_enqueue_style( 'ds-woocommerce', DS_ASSETS . '/css/woocommerce.css', [ 'ds-main' ], $woo_ver );
     }
 
-    // Frontend JS (handles nav, counters, skill bars, fade-in)
-    wp_enqueue_script( 'ds-frontend', DS_ASSETS . '/js/frontend.js', [], DS_VERSION, true );
+    // Frontend JS — loaded in footer, cache-busted by mtime
+    wp_enqueue_script( 'ds-frontend', DS_ASSETS . '/js/frontend.js', [], $js_ver, true );
     wp_localize_script( 'ds-frontend', 'dsTheme', [
         'ajaxUrl' => admin_url( 'admin-ajax.php' ),
         'nonce'   => wp_create_nonce( 'ds_frontend_nonce' ),
@@ -26,6 +43,9 @@ add_action( 'wp_enqueue_scripts', function () {
         'bg'      => get_theme_mod( 'ds_bg_theme',     'dark' ),
         'font'    => get_theme_mod( 'ds_font_pair',    'playfair' ),
     ] );
+
+    // Add defer to frontend JS for non-blocking load
+    wp_script_add_data( 'ds-frontend', 'strategy', 'defer' );
 
     // Comments reply script
     if ( is_singular() && comments_open() ) {

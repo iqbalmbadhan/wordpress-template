@@ -45,9 +45,6 @@ function ds_navbar(): void {
             'fallback_cb'    => false,
         ] );
         ?>
-        <a href="<?php echo esc_url( $cta_url ); ?>" class="nav-mobile-cta">
-            <?php echo esc_html( $cta_text ); ?>
-        </a>
     </div>
     <?php
 }
