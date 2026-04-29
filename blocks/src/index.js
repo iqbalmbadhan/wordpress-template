@@ -161,8 +161,14 @@
                     allowedTypes: [ 'image' ],
                     value: photoId,
                     onSelect: function ( media ) {
-                        updateField( idx, 'photoUrl', media.url );
-                        updateField( idx, 'photoId', media.id );
+                        /* Batch both fields in one setItems call — two separate
+                           updateField calls both read the same stale `items`
+                           snapshot, so the second would silently drop the first. */
+                        var copy = items.map( function ( item, i ) {
+                            if ( i !== idx ) return item;
+                            return Object.assign( {}, item, { photoUrl: media.url, photoId: media.id } );
+                        } );
+                        setItems( copy );
                     },
                     render: function ( ref ) {
                         return el( 'div', { style: { marginBottom: '8px' } },
