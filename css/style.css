@@ -165,16 +165,21 @@ footer {
 
 /* ===== RESPONSIVE NAV & FOOTER ===== */
 @media (max-width: 960px) {
-  nav#navbar { padding: 0 24px; }
+  nav#navbar { padding: 0 20px; }
   .nav-links { display: none; }
-  .nav-cta { display: none; }
+  .nav-cta {
+    font-size: 12px; padding: 7px 14px;
+    box-shadow: none; letter-spacing: 0;
+  }
   .nav-hamburger { display: flex; }
   .nav-mobile-drawer { display: block; }
+  .nav-mobile-cta { display: none; }
   footer { flex-direction: column; text-align: center; padding: 28px 24px; }
   .footer-links { justify-content: center; }
 }
-@media (max-width: 640px) {
-  nav#navbar { padding: 0 16px; }
+@media (max-width: 480px) {
+  nav#navbar { padding: 0 14px; }
+  .nav-cta { font-size: 11px; padding: 6px 11px; }
 }
 /* ===== INNER PAGE (page.php) ===== */
 .page-eyebrow {

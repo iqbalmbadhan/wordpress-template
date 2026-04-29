@@ -320,6 +320,12 @@ class DS_Demo_Importer {
                     [ 'text' => 'Dawn is an excellent project and program manager — effective teamwork, attention to detail, excellent facilitation, and strong leadership. Dawn consistently produces results.',       'name' => 'Deepanker Baderia',      'role' => 'Solution Architect, Sun Microsystems',                   'initial' => 'DB' ],
                 ],
             ],
+            'dawn-simmons/blog-section' => [
+                'eyebrow'  => 'Latest Insights',
+                'title'    => 'From the <em>Blog</em>',
+                'allLabel' => 'All Articles',
+                'count'    => 3,
+            ],
             'dawn-simmons/contact' => [
                 'eyebrow'      => 'Get in Touch',
                 'title'        => "Let's Work <em>Together</em>",

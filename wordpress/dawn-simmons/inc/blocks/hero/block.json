@@ -46,6 +46,10 @@
       "type": "string",
       "default": ""
     },
+    "photoId": {
+      "type": "number",
+      "default": 0
+    },
     "roles": {
       "type": "string",
       "default": "ServiceNow Elite Partner Consultant\nAI/ML Integration Specialist\nDigital Transformation Lead"
