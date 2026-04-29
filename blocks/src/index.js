@@ -23,7 +23,10 @@
     var PB              = wp.components.PanelBody;
     var TC              = wp.components.TextControl;
     var TAC             = wp.components.TextareaControl;
+    var Btn             = wp.components.Button;
     var IC              = wp.blockEditor.InspectorControls;
+    var MediaUpload     = wp.blockEditor.MediaUpload;
+    var MediaUploadCheck = wp.blockEditor.MediaUploadCheck;
     var SSR             = wp.serverSideRender;
     var useBlockProps   = wp.blockEditor.useBlockProps;
 
@@ -71,6 +74,59 @@
         } );
     }
 
+    /* ─── Photo upload control ─────────────────────────────────────────────── */
+    function photoUpload( props ) {
+        var photoUrl = props.attributes.photoUrl;
+        var photoId  = props.attributes.photoId || 0;
+
+        return el( MediaUploadCheck, {},
+            el( MediaUpload, {
+                allowedTypes: [ 'image' ],
+                value: photoId,
+                onSelect: function ( media ) {
+                    props.setAttributes( { photoUrl: media.url, photoId: media.id } );
+                },
+                render: function ( ref ) {
+                    return el( 'div', { style: { marginBottom: '16px' } },
+                        el( 'p', {
+                            style: {
+                                fontSize: '11px', fontWeight: '600', marginBottom: '8px',
+                                textTransform: 'uppercase', letterSpacing: '0.06em',
+                                color: '#1e1e1e'
+                            }
+                        }, __( 'Profile Photo', 'dawn-simmons' ) ),
+                        photoUrl
+                            ? el( 'div', {},
+                                el( 'img', {
+                                    src: photoUrl,
+                                    style: {
+                                        display: 'block', width: '100%', maxHeight: '160px',
+                                        objectFit: 'cover', borderRadius: '4px', marginBottom: '8px'
+                                    }
+                                } ),
+                                el( 'div', { style: { display: 'flex', gap: '8px' } },
+                                    el( Btn, { onClick: ref.open, variant: 'secondary', size: 'small' },
+                                        __( 'Change', 'dawn-simmons' )
+                                    ),
+                                    el( Btn, {
+                                        onClick: function () {
+                                            props.setAttributes( { photoUrl: '', photoId: 0 } );
+                                        },
+                                        variant: 'secondary', size: 'small', isDestructive: true
+                                    }, __( 'Remove', 'dawn-simmons' ) )
+                                )
+                            )
+                            : el( Btn, {
+                                onClick: ref.open,
+                                variant: 'secondary',
+                                style: { width: '100%', justifyContent: 'center' }
+                            }, __( 'Upload / Select Photo', 'dawn-simmons' ) )
+                    );
+                }
+            } )
+        );
+    }
+
     /* ─── Edit wrapper ──────────────────────────────────────────────────────── */
     function makeEdit( blockName, controlsFn ) {
         return function ( props ) {
@@ -107,6 +163,7 @@
             btnSecondaryText: { type: 'string', default: "Let's Connect" },
             btnSecondaryUrl:  { type: 'string', default: '#contact' },
             photoUrl:         { type: 'string', default: '' },
+            photoId:          { type: 'number', default: 0 },
             roles:            { type: 'string', default: "ServiceNow Elite Partner Consultant\nAI/ML Integration Specialist\nDigital Transformation Lead" },
             stats: {
                 type: 'array',
@@ -127,7 +184,7 @@
                 tc(  'Secondary Button Text',           'btnSecondaryText', props ),
                 tc(  'Secondary Button URL',            'btnSecondaryUrl',  props ),
                 tac( 'Roles — one per line',            'roles',            props ),
-                tc(  'Profile Photo URL',               'photoUrl',         props ),
+                photoUpload( props ),
                 jsonTac( 'Stats [{num,suffix,label}]',  'stats',            props )
             ];
         } ),
@@ -228,6 +285,7 @@
             bio1:     { type: 'string', default: "With over 12 years in enterprise IT and digital transformation, I've helped organisations across healthcare, finance, and government modernise their service management platforms." },
             bio2:     { type: 'string', default: 'My approach combines technical depth with strategic vision — ensuring technology investments translate into measurable business outcomes and improved employee experiences.' },
             photoUrl: { type: 'string', default: '' },
+            photoId:  { type: 'number', default: 0 },
             skills: {
                 type: 'array',
                 default: [
@@ -253,7 +311,7 @@
                 tac(    'Title (HTML allowed)',         'title',    props ),
                 tac(    'Bio Paragraph 1',             'bio1',     props ),
                 tac(    'Bio Paragraph 2',             'bio2',     props ),
-                tc(     'Profile Photo URL',           'photoUrl', props ),
+                photoUpload( props ),
                 jsonTac('Skills [{skill,pct}]',        'skills',   props ),
                 jsonTac('Details [{label,value}]',     'details',  props )
             ];
@@ -317,6 +375,31 @@
                 tc(  'Location',                       'location',     props ),
                 tc(  'Response Time',                  'responseTime', props ),
                 tc(  'Contact Form 7 ID (0 = native)', 'cf7Id',        props )
+            ];
+        } ),
+        save: function () { return null; }
+    } );
+
+    /* ═══════════════════════════════════════════════════════════════════════
+       BLOG SECTION (dynamic — no editable attributes beyond cosmetic labels)
+    ═══════════════════════════════════════════════════════════════════════ */
+    safeReg( 'dawn-simmons/blog-section', {
+        apiVersion: 3,
+        title:      __( 'DS Blog Section', 'dawn-simmons' ),
+        category:   'dawn-simmons',
+        icon:       'rss',
+        attributes: {
+            eyebrow:  { type: 'string', default: 'Latest Insights' },
+            title:    { type: 'string', default: 'From the <em>Blog</em>' },
+            allLabel: { type: 'string', default: 'All Articles' },
+            count:    { type: 'number', default: 3 }
+        },
+        edit: makeEdit( 'dawn-simmons/blog-section', function ( props ) {
+            return [
+                tc(  'Eyebrow Text',          'eyebrow',  props ),
+                tac( 'Title (HTML allowed)',   'title',    props ),
+                tc(  '"All Articles" Label',   'allLabel', props ),
+                tc(  'Number of Posts (1–6)',  'count',    props )
             ];
         } ),
         save: function () { return null; }

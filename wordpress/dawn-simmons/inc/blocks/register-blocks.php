@@ -16,6 +16,7 @@ function ds_register_blocks(): void {
         'about'        => 'ds_render_about',
         'testimonials' => 'ds_render_testimonials',
         'contact'      => 'ds_render_contact',
+        'blog-section' => 'ds_render_blog_section',
     ];
 
     foreach ( $blocks as $block => $callback ) {
@@ -398,6 +399,77 @@ function ds_render_contact( array $attrs ): string {
                     </form>
                     <?php endif; ?>
                 </div>
+            </div>
+        </div>
+    </section>
+    <?php
+    return ob_get_clean();
+}
+
+// ── Blog section ─────────────────────────────────────────────────────────────
+
+function ds_render_blog_section( array $attrs ): string {
+    $eyebrow   = esc_html( $attrs['eyebrow']   ?? 'Latest Insights' );
+    $title     = wp_kses_post( $attrs['title']  ?? 'From the <em>Blog</em>' );
+    $all_label = esc_html( $attrs['allLabel']   ?? 'All Articles' );
+    $count     = max( 1, min( 6, (int)( $attrs['count'] ?? 3 ) ) );
+
+    /* Link points to the WordPress Posts page (set in Settings → Reading) */
+    $blog_url = get_permalink( get_option( 'page_for_posts' ) )
+        ?: get_post_type_archive_link( 'post' )
+        ?: home_url( '/blog/' );
+
+    $posts = get_posts( [
+        'posts_per_page' => $count,
+        'post_status'    => 'publish',
+        'orderby'        => 'date',
+        'order'          => 'DESC',
+    ] );
+
+    if ( empty( $posts ) ) return '';
+
+    ob_start();
+    ?>
+    <section id="blog" aria-labelledby="blog-heading">
+        <div class="container">
+            <div class="section-header fade-in" style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:48px">
+                <div>
+                    <div class="section-eyebrow"><?php echo $eyebrow; ?></div>
+                    <h2 class="section-title" id="blog-heading" style="margin-bottom:0"><?php echo $title; ?></h2>
+                </div>
+                <a href="<?php echo esc_url( $blog_url ); ?>" class="btn-outline" style="flex-shrink:0">
+                    <?php echo $all_label; ?> →
+                </a>
+            </div>
+            <div class="blog-grid" role="list">
+                <?php foreach ( $posts as $i => $p ) :
+                    $cats      = get_the_category( $p->ID );
+                    $cat_str   = $cats ? esc_html( $cats[0]->name ) : '';
+                    $delay_cls = $i === 1 ? ' fade-in-d1' : ( $i === 2 ? ' fade-in-d2' : '' );
+                ?>
+                <article class="blog-card fade-in<?php echo $delay_cls; ?>" role="listitem">
+                    <a href="<?php echo esc_url( get_permalink( $p->ID ) ); ?>">
+                        <div class="blog-card-img">
+                            <div class="blog-card-img-accent"></div>
+                            <?php if ( has_post_thumbnail( $p->ID ) ) : ?>
+                                <?php echo get_the_post_thumbnail( $p->ID, 'ds-card', [
+                                    'style' => 'position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:1;',
+                                    'alt'   => get_the_title( $p->ID ),
+                                ] ); ?>
+                            <?php else : ?>
+                                <span style="position:relative;z-index:1;font-size:11px;color:var(--muted);letter-spacing:.08em">
+                                    <?php echo $cat_str ?: esc_html__( 'article', 'dawn-simmons' ); ?>
+                                </span>
+                            <?php endif; ?>
+                        </div>
+                        <div class="blog-card-body">
+                            <div class="blog-date"><?php echo esc_html( get_the_date( '', $p->ID ) ); ?></div>
+                            <h3 class="blog-title"><?php echo esc_html( get_the_title( $p->ID ) ); ?></h3>
+                            <p class="blog-excerpt"><?php echo esc_html( wp_trim_words( get_the_excerpt( $p->ID ), 20 ) ); ?></p>
+                        </div>
+                    </a>
+                </article>
+                <?php endforeach; ?>
             </div>
         </div>
     </section>

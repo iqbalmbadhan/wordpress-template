@@ -1,0 +1,19 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "dawn-simmons/blog-section",
+  "title": "DS Blog Section",
+  "category": "dawn-simmons",
+  "icon": "rss",
+  "description": "Dynamic recent-posts grid with a link to the full blog archive.",
+  "keywords": ["blog", "posts", "articles"],
+  "version": "1.0.0",
+  "textdomain": "dawn-simmons",
+  "attributes": {
+    "eyebrow":  { "type": "string", "default": "Latest Insights" },
+    "title":    { "type": "string", "default": "From the <em>Blog</em>" },
+    "allLabel": { "type": "string", "default": "All Articles" },
+    "count":    { "type": "number", "default": 3 }
+  },
+  "supports": { "align": false, "html": false }
+}

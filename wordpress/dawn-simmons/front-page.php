@@ -54,6 +54,7 @@ if ( ! $rendered ) :
     echo ds_render_services( [] );
     echo ds_render_about( [] );
     echo ds_render_testimonials( [] );
+    echo ds_render_blog_section( [] );
     echo ds_render_contact( [] );
 endif;
 ?>

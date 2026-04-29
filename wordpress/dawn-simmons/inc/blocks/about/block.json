@@ -29,6 +29,10 @@
       "type": "string",
       "default": ""
     },
+    "photoId": {
+      "type": "number",
+      "default": 0
+    },
     "skills": {
       "type": "array",
       "default": [
