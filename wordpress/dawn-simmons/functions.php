@@ -20,6 +20,7 @@ require_once DS_INC . '/enqueue.php';
 require_once DS_INC . '/customizer.php';
 require_once DS_INC . '/template-functions.php';
 require_once DS_INC . '/blocks/register-blocks.php';
+require_once DS_INC . '/seo.php';
 
 // ── Initialize classes ───────────────────────────────────────────────────────
 DS_Plugin_Checker::init();

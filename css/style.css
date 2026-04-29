@@ -132,15 +132,23 @@ footer {
 .footer-links a:hover { color: var(--accent); }
 
 /* ===== SCROLL ANIMATIONS ===== */
+/* Clip horizontal animations at the section level so translateX never creates
+   a horizontal scrollbar or extra space on mobile. */
+section, .about-grid, .hero-grid { overflow: clip; }
 .fade-in, .fade-left, .fade-right, .fade-scale {
   transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1), transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
 }
-.fade-in  { opacity: 0; transform: translateY(36px); }
+.fade-in    { opacity: 0; transform: translateY(36px); }
 .fade-left  { opacity: 0; transform: translateX(-44px); }
 .fade-right { opacity: 0; transform: translateX(44px); }
 .fade-scale { opacity: 0; transform: scale(0.9) translateY(16px); }
 .fade-in.visible, .fade-left.visible, .fade-right.visible, .fade-scale.visible {
   opacity: 1; transform: none;
+}
+/* On mobile collapse horizontal slides to vertical to prevent overflow */
+@media (max-width: 900px) {
+  .fade-left  { transform: translateY(28px); }
+  .fade-right { transform: translateY(28px); }
 }
 /* Stagger delays — shared across all animation types */
 .fade-in-d1, .fade-left-d1, .fade-right-d1, .fade-scale-d1 { transition-delay: 0.1s; }
@@ -245,10 +253,51 @@ html.ds-light .hero-photo-placeholder { background: var(--bg3); }
 .ds-entry-content a:hover { border-color: var(--accent); }
 .ds-entry-content strong { color: var(--text); font-weight: 600; }
 .ds-entry-content blockquote { border-left: 3px solid var(--accent); padding: 16px 24px; background: oklch(72% 0.155 195 / 0.05); border-radius: 0 8px 8px 0; margin: 28px 0; }
-.ds-entry-content img { max-width: 100%; border-radius: 10px; border: 1px solid var(--border); }
+.ds-entry-content img { max-width: 100%; border-radius: 10px; border: 1px solid var(--border); height: auto; }
 .ds-entry-content code { background: var(--bg3); border: 1px solid var(--border); padding: 2px 7px; border-radius: 4px; font-size: 13px; color: var(--accent); }
 .ds-entry-content pre { background: var(--bg3); border: 1px solid var(--border); border-radius: 8px; padding: 20px; overflow-x: auto; margin: 24px 0; }
 .ds-entry-content pre code { background: none; border: none; padding: 0; color: var(--text); font-size: 13px; }
+/* ── Responsive video / YouTube embeds ── */
+.ds-entry-content .wp-block-embed,
+.ds-entry-content .wp-block-video,
+.article-body .wp-block-embed { margin: 28px 0; }
+.ds-entry-content .wp-block-embed__wrapper,
+.article-body .wp-block-embed__wrapper {
+  position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;
+  border-radius: 10px; border: 1px solid var(--border);
+}
+.ds-entry-content .wp-block-embed__wrapper iframe,
+.ds-entry-content .wp-block-embed__wrapper video,
+.article-body .wp-block-embed__wrapper iframe {
+  position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0;
+}
+/* Fallback for bare iframes (classic editor) */
+.ds-entry-content iframe {
+  max-width: 100%; border-radius: 8px; border: 1px solid var(--border);
+}
+/* ── Tables ── */
+.ds-entry-content table {
+  width: 100%; border-collapse: collapse; margin: 28px 0;
+  font-size: 14px; border-radius: 10px; overflow: hidden;
+  border: 1px solid var(--border);
+}
+.ds-entry-content table th {
+  background: var(--surface); color: var(--text); font-weight: 600;
+  font-size: 11px; letter-spacing: .06em; text-transform: uppercase;
+  padding: 12px 16px; text-align: left; border-bottom: 2px solid var(--accent);
+}
+.ds-entry-content table td {
+  padding: 12px 16px; border-bottom: 1px solid var(--border);
+  color: var(--text2); vertical-align: top; line-height: 1.65;
+}
+.ds-entry-content table tr:last-child td { border-bottom: none; }
+.ds-entry-content table tr:hover td { background: oklch(72% 0.155 195 / 0.04); transition: background .15s; }
+@media (max-width: 640px) {
+  .ds-entry-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; border-radius: 8px; }
+  .ds-entry-content table th, .ds-entry-content table td { padding: 10px 12px; white-space: nowrap; }
+  /* Reset nowrap for first column to show row label */
+  .ds-entry-content table th:first-child, .ds-entry-content table td:first-child { white-space: normal; min-width: 100px; }
+}
 .ds-page-links { margin-top: 32px; padding-top: 24px; border-top: 1px solid var(--border); font-size: 13px; color: var(--muted); }
 .ds-page-links a { color: var(--accent); text-decoration: none; margin: 0 6px; }
 @media (max-width: 900px) {
