@@ -168,6 +168,13 @@ add_action( 'admin_init', function () {
     }
 } );
 
+// ── Block asset loading: force all block CSS on every page ───────────────────
+// WordPress 5.8+ splits block CSS per-page. AJAX navigation only swaps <main>,
+// so a page loaded via AJAX never gets the new page's block stylesheets injected
+// into <head>. Disabling the split loads all block CSS globally, which fixes
+// buttons, galleries, columns etc. appearing unstyled after AJAX navigation.
+add_filter( 'should_load_separate_core_block_assets', '__return_false' );
+
 // ── Helper: get current editor preference ───────────────────────────────────
 function ds_editor_preference(): string {
     return get_option( 'ds_editor_preference', 'gutenberg' );

@@ -257,7 +257,7 @@ html.ds-light .hero-photo-placeholder { background: var(--bg3); }
 }
 .ds-page-main { padding: 64px 48px; max-width: 1200px; margin: 0 auto; }
 .ds-fullwidth-article { width: 100%; }
-.ds-page-container { max-width: 860px; margin: 0 auto; }
+.ds-page-container { max-width: 1200px; margin: 0 auto; }
 .ds-page-article { }
 .ds-entry-content > * { margin-bottom: 20px; }
 .ds-entry-content p { font-size: 16px; color: var(--text2); line-height: 1.85; }
@@ -275,6 +275,36 @@ html.ds-light .hero-photo-placeholder { background: var(--bg3); }
 .ds-entry-content .wp-block-gallery img,
 .ds-entry-content .wp-block-cover img,
 .ds-entry-content .wp-block-media-text img { border: none; border-radius: 0; }
+/* ── WordPress block fallback styles (active even before WP block CSS loads) ── */
+/* Button block */
+.wp-block-button__link, .wp-element-button {
+  display: inline-block;
+  padding: 12px 28px;
+  border-radius: 9999px;
+  font-size: 15px;
+  font-weight: 600;
+  text-decoration: none !important;
+  border-bottom: none !important;
+  cursor: pointer;
+  transition: opacity .2s;
+}
+.wp-block-button__link:hover, .wp-element-button:hover { opacity: 0.85; }
+/* Image block centering */
+.wp-block-image { margin-left: auto; margin-right: auto; }
+.wp-block-image.aligncenter { text-align: center; }
+.wp-block-image.aligncenter img { margin: 0 auto; display: block; }
+.wp-block-image.alignleft { float: left; margin-right: 1.5em; }
+.wp-block-image.alignright { float: right; margin-left: 1.5em; }
+/* Columns block gap */
+.wp-block-columns { display: flex; flex-wrap: wrap; gap: 2em; }
+.wp-block-column { flex: 1 1 0; min-width: 0; }
+@media (max-width: 640px) { .wp-block-columns { flex-direction: column; } }
+/* Group block */
+.wp-block-group { box-sizing: border-box; }
+/* Separator */
+.wp-block-separator { border: none; border-top: 1px solid var(--border); margin: 2em 0; }
+/* Spacer */
+.wp-block-spacer { display: block; }
 .ds-entry-content code { background: var(--bg3); border: 1px solid var(--border); padding: 2px 7px; border-radius: 4px; font-size: 13px; color: var(--accent); }
 .ds-entry-content pre { background: var(--bg3); border: 1px solid var(--border); border-radius: 8px; padding: 20px; overflow-x: auto; margin: 24px 0; }
 .ds-entry-content pre code { background: none; border: none; padding: 0; color: var(--text); font-size: 13px; }
