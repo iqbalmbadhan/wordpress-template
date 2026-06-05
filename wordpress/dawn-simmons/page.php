@@ -15,7 +15,7 @@
     <div class="ds-page-container">
         <?php while ( have_posts() ) : the_post(); ?>
         <article id="post-<?php the_ID(); ?>" <?php post_class( 'ds-page-article' ); ?>>
-            <div class="ds-entry-content">
+            <div class="ds-entry-content entry-content">
                 <?php the_content(); ?>
             </div>
             <?php

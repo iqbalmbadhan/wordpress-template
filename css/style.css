@@ -16,6 +16,22 @@
 
 /* ===== RESET & BASE ===== */
 * { box-sizing: border-box; margin: 0; padding: 0; }
+/* Restore block-level spacing stripped by the reset above */
+.entry-content .wp-block-group,
+.entry-content .wp-block-columns,
+.entry-content .wp-block-column,
+.entry-content .wp-block-cover,
+.entry-content .wp-block-media-text,
+.entry-content .wp-block-quote,
+.entry-content .wp-block-pullquote,
+.entry-content .wp-block-separator,
+.entry-content .wp-block-spacer,
+.entry-content .wp-block-buttons,
+.entry-content .wp-block-button,
+.entry-content .wp-block-list,
+.entry-content .wp-block-gallery,
+.entry-content .wp-block-image,
+.entry-content .wp-block-heading { margin-bottom: revert; padding: revert; }
 html { scroll-behavior: smooth; }
 body {
   font-family: var(--ff-body);
@@ -254,6 +270,11 @@ html.ds-light .hero-photo-placeholder { background: var(--bg3); }
 .ds-entry-content strong { color: var(--text); font-weight: 600; }
 .ds-entry-content blockquote { border-left: 3px solid var(--accent); padding: 16px 24px; background: oklch(72% 0.155 195 / 0.05); border-radius: 0 8px 8px 0; margin: 28px 0; }
 .ds-entry-content img { max-width: 100%; border-radius: 10px; border: 1px solid var(--border); height: auto; }
+/* Block images shouldn't get the decorative border/radius */
+.ds-entry-content .wp-block-image img,
+.ds-entry-content .wp-block-gallery img,
+.ds-entry-content .wp-block-cover img,
+.ds-entry-content .wp-block-media-text img { border: none; border-radius: 0; }
 .ds-entry-content code { background: var(--bg3); border: 1px solid var(--border); padding: 2px 7px; border-radius: 4px; font-size: 13px; color: var(--accent); }
 .ds-entry-content pre { background: var(--bg3); border: 1px solid var(--border); border-radius: 8px; padding: 20px; overflow-x: auto; margin: 24px 0; }
 .ds-entry-content pre code { background: none; border: none; padding: 0; color: var(--text); font-size: 13px; }
