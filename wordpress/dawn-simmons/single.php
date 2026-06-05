@@ -57,7 +57,7 @@
             <meta itemprop="headline" content="<?php echo esc_attr( get_the_title() ); ?>">
             <meta itemprop="datePublished" content="<?php echo esc_attr( get_the_date( 'c' ) ); ?>">
             <meta itemprop="author" content="<?php echo esc_attr( get_the_author() ); ?>">
-            <div class="ds-entry-content">
+            <div class="ds-entry-content entry-content">
                 <?php the_content(); ?>
             </div>
             <div class="article-tags" role="list" aria-label="<?php esc_attr_e( 'Article tags', 'dawn-simmons' ); ?>">
